@@ -1,0 +1,5 @@
+{
+  "title": "Typesense Benchmark",
+  "description": "Performance results of AI coding models on Typesense tasks, measuring success rate and execution time with high precision.",
+  "github_repo": "https://github.com/kweizh/typesense-benchmark"
+}
