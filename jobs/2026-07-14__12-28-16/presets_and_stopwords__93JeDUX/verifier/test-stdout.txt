@@ -1,0 +1,483 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-7.4.4, pluggy-1.4.0
+rootdir: /tests
+plugins: json-ctrf-0.5.2, anyio-4.14.2
+collected 9 items
+
+../tests/test_final_state.py EEEEEEEEE                                   [100%]
+
+==================================== ERRORS ====================================
+__________________ ERROR at setup of test_setup_is_idempotent __________________
+
+tmp_path_factory = TempPathFactory(_given_basetemp=None, _trace=<pluggy._tracing.TagTracerSub object at 0x7a11954af200>, _basetemp=None, _retention_count=3, _retention_policy='all')
+
+    @pytest.fixture(scope="session")
+    def typesense_env(tmp_path_factory):
+        """Ensure a Typesense server is running and the task resources are set up.
+    
+        If the agent already left a server running on port 8108 we reuse it;
+        otherwise we start one ourselves so the API checks can proceed.
+        """
+        started_proc = None
+        if not _health_ok(3):
+            data_dir = tmp_path_factory.mktemp("typesense-data")
+            started_proc = subprocess.Popen(
+                [
+                    TYPESENSE_BINARY,
+                    f"--data-dir={data_dir}",
+                    f"--api-key={API_KEY}",
+                    f"--port={PORT}",
+                    "--enable-cors",
+                ],
+                stdout=subprocess.PIPE,
+                stderr=subprocess.STDOUT,
+                text=True,
+            )
+            assert _health_ok(30), "Typesense server did not become healthy within 30s."
+    
+        # Ensure the collection, documents, stopwords set and preset exist.
+        result = _run_setup()
+        print("=== run.py --setup stdout ===")
+        print(result.stdout)
+        print("=== run.py --setup stderr ===")
+        print(result.stderr)
+>       assert result.returncode == 0, (
+            f"'python3 run.py --setup' failed with code {result.returncode}: {result.stderr}"
+        )
+E       AssertionError: 'python3 run.py --setup' failed with code 1: Traceback (most recent call last):
+E           File "/home/user/typesense-app/run.py", line 231, in <module>
+E             main()
+E           File "/home/user/typesense-app/run.py", line 220, in main
+E             setup()
+E           File "/home/user/typesense-app/run.py", line 150, in setup
+E             raise RuntimeError(f"Failed to index documents: {r.status_code} {r.text}")
+E         RuntimeError: Failed to index documents: 400 {"message":"Bad JSON: [json.exception.parse_error.101] parse error at line 2, column 1: syntax error while parsing value - unexpected '{'; expected end of input"}
+E         
+E       assert 1 == 0
+E        +  where 1 = CompletedProcess(args=['python3', 'run.py', '--setup'], returncode=1, stdout='', stderr='Traceback (most recent call l....101] parse error at line 2, column 1: syntax error while parsing value - unexpected \'{\'; expected end of input"}\n').returncode
+
+/tests/test_final_state.py:72: AssertionError
+---------------------------- Captured stdout setup -----------------------------
+=== run.py --setup stdout ===
+
+=== run.py --setup stderr ===
+Traceback (most recent call last):
+  File "/home/user/typesense-app/run.py", line 231, in <module>
+    main()
+  File "/home/user/typesense-app/run.py", line 220, in main
+    setup()
+  File "/home/user/typesense-app/run.py", line 150, in setup
+    raise RuntimeError(f"Failed to index documents: {r.status_code} {r.text}")
+RuntimeError: Failed to index documents: 400 {"message":"Bad JSON: [json.exception.parse_error.101] parse error at line 2, column 1: syntax error while parsing value - unexpected '{'; expected end of input"}
+
+_______________________ ERROR at setup of test_health_ok _______________________
+
+tmp_path_factory = TempPathFactory(_given_basetemp=None, _trace=<pluggy._tracing.TagTracerSub object at 0x7a11954af200>, _basetemp=None, _retention_count=3, _retention_policy='all')
+
+    @pytest.fixture(scope="session")
+    def typesense_env(tmp_path_factory):
+        """Ensure a Typesense server is running and the task resources are set up.
+    
+        If the agent already left a server running on port 8108 we reuse it;
+        otherwise we start one ourselves so the API checks can proceed.
+        """
+        started_proc = None
+        if not _health_ok(3):
+            data_dir = tmp_path_factory.mktemp("typesense-data")
+            started_proc = subprocess.Popen(
+                [
+                    TYPESENSE_BINARY,
+                    f"--data-dir={data_dir}",
+                    f"--api-key={API_KEY}",
+                    f"--port={PORT}",
+                    "--enable-cors",
+                ],
+                stdout=subprocess.PIPE,
+                stderr=subprocess.STDOUT,
+                text=True,
+            )
+            assert _health_ok(30), "Typesense server did not become healthy within 30s."
+    
+        # Ensure the collection, documents, stopwords set and preset exist.
+        result = _run_setup()
+        print("=== run.py --setup stdout ===")
+        print(result.stdout)
+        print("=== run.py --setup stderr ===")
+        print(result.stderr)
+>       assert result.returncode == 0, (
+            f"'python3 run.py --setup' failed with code {result.returncode}: {result.stderr}"
+        )
+E       AssertionError: 'python3 run.py --setup' failed with code 1: Traceback (most recent call last):
+E           File "/home/user/typesense-app/run.py", line 231, in <module>
+E             main()
+E           File "/home/user/typesense-app/run.py", line 220, in main
+E             setup()
+E           File "/home/user/typesense-app/run.py", line 150, in setup
+E             raise RuntimeError(f"Failed to index documents: {r.status_code} {r.text}")
+E         RuntimeError: Failed to index documents: 400 {"message":"Bad JSON: [json.exception.parse_error.101] parse error at line 2, column 1: syntax error while parsing value - unexpected '{'; expected end of input"}
+E         
+E       assert 1 == 0
+E        +  where 1 = CompletedProcess(args=['python3', 'run.py', '--setup'], returncode=1, stdout='', stderr='Traceback (most recent call l....101] parse error at line 2, column 1: syntax error while parsing value - unexpected \'{\'; expected end of input"}\n').returncode
+
+/tests/test_final_state.py:72: AssertionError
+____________ ERROR at setup of test_collection_exists_and_populated ____________
+
+tmp_path_factory = TempPathFactory(_given_basetemp=None, _trace=<pluggy._tracing.TagTracerSub object at 0x7a11954af200>, _basetemp=None, _retention_count=3, _retention_policy='all')
+
+    @pytest.fixture(scope="session")
+    def typesense_env(tmp_path_factory):
+        """Ensure a Typesense server is running and the task resources are set up.
+    
+        If the agent already left a server running on port 8108 we reuse it;
+        otherwise we start one ourselves so the API checks can proceed.
+        """
+        started_proc = None
+        if not _health_ok(3):
+            data_dir = tmp_path_factory.mktemp("typesense-data")
+            started_proc = subprocess.Popen(
+                [
+                    TYPESENSE_BINARY,
+                    f"--data-dir={data_dir}",
+                    f"--api-key={API_KEY}",
+                    f"--port={PORT}",
+                    "--enable-cors",
+                ],
+                stdout=subprocess.PIPE,
+                stderr=subprocess.STDOUT,
+                text=True,
+            )
+            assert _health_ok(30), "Typesense server did not become healthy within 30s."
+    
+        # Ensure the collection, documents, stopwords set and preset exist.
+        result = _run_setup()
+        print("=== run.py --setup stdout ===")
+        print(result.stdout)
+        print("=== run.py --setup stderr ===")
+        print(result.stderr)
+>       assert result.returncode == 0, (
+            f"'python3 run.py --setup' failed with code {result.returncode}: {result.stderr}"
+        )
+E       AssertionError: 'python3 run.py --setup' failed with code 1: Traceback (most recent call last):
+E           File "/home/user/typesense-app/run.py", line 231, in <module>
+E             main()
+E           File "/home/user/typesense-app/run.py", line 220, in main
+E             setup()
+E           File "/home/user/typesense-app/run.py", line 150, in setup
+E             raise RuntimeError(f"Failed to index documents: {r.status_code} {r.text}")
+E         RuntimeError: Failed to index documents: 400 {"message":"Bad JSON: [json.exception.parse_error.101] parse error at line 2, column 1: syntax error while parsing value - unexpected '{'; expected end of input"}
+E         
+E       assert 1 == 0
+E        +  where 1 = CompletedProcess(args=['python3', 'run.py', '--setup'], returncode=1, stdout='', stderr='Traceback (most recent call l....101] parse error at line 2, column 1: syntax error while parsing value - unexpected \'{\'; expected end of input"}\n').returncode
+
+/tests/test_final_state.py:72: AssertionError
+_________________ ERROR at setup of test_stopwords_set_created _________________
+
+tmp_path_factory = TempPathFactory(_given_basetemp=None, _trace=<pluggy._tracing.TagTracerSub object at 0x7a11954af200>, _basetemp=None, _retention_count=3, _retention_policy='all')
+
+    @pytest.fixture(scope="session")
+    def typesense_env(tmp_path_factory):
+        """Ensure a Typesense server is running and the task resources are set up.
+    
+        If the agent already left a server running on port 8108 we reuse it;
+        otherwise we start one ourselves so the API checks can proceed.
+        """
+        started_proc = None
+        if not _health_ok(3):
+            data_dir = tmp_path_factory.mktemp("typesense-data")
+            started_proc = subprocess.Popen(
+                [
+                    TYPESENSE_BINARY,
+                    f"--data-dir={data_dir}",
+                    f"--api-key={API_KEY}",
+                    f"--port={PORT}",
+                    "--enable-cors",
+                ],
+                stdout=subprocess.PIPE,
+                stderr=subprocess.STDOUT,
+                text=True,
+            )
+            assert _health_ok(30), "Typesense server did not become healthy within 30s."
+    
+        # Ensure the collection, documents, stopwords set and preset exist.
+        result = _run_setup()
+        print("=== run.py --setup stdout ===")
+        print(result.stdout)
+        print("=== run.py --setup stderr ===")
+        print(result.stderr)
+>       assert result.returncode == 0, (
+            f"'python3 run.py --setup' failed with code {result.returncode}: {result.stderr}"
+        )
+E       AssertionError: 'python3 run.py --setup' failed with code 1: Traceback (most recent call last):
+E           File "/home/user/typesense-app/run.py", line 231, in <module>
+E             main()
+E           File "/home/user/typesense-app/run.py", line 220, in main
+E             setup()
+E           File "/home/user/typesense-app/run.py", line 150, in setup
+E             raise RuntimeError(f"Failed to index documents: {r.status_code} {r.text}")
+E         RuntimeError: Failed to index documents: 400 {"message":"Bad JSON: [json.exception.parse_error.101] parse error at line 2, column 1: syntax error while parsing value - unexpected '{'; expected end of input"}
+E         
+E       assert 1 == 0
+E        +  where 1 = CompletedProcess(args=['python3', 'run.py', '--setup'], returncode=1, stdout='', stderr='Traceback (most recent call l....101] parse error at line 2, column 1: syntax error while parsing value - unexpected \'{\'; expected end of input"}\n').returncode
+
+/tests/test_final_state.py:72: AssertionError
+________ ERROR at setup of test_preset_created_with_expected_parameters ________
+
+tmp_path_factory = TempPathFactory(_given_basetemp=None, _trace=<pluggy._tracing.TagTracerSub object at 0x7a11954af200>, _basetemp=None, _retention_count=3, _retention_policy='all')
+
+    @pytest.fixture(scope="session")
+    def typesense_env(tmp_path_factory):
+        """Ensure a Typesense server is running and the task resources are set up.
+    
+        If the agent already left a server running on port 8108 we reuse it;
+        otherwise we start one ourselves so the API checks can proceed.
+        """
+        started_proc = None
+        if not _health_ok(3):
+            data_dir = tmp_path_factory.mktemp("typesense-data")
+            started_proc = subprocess.Popen(
+                [
+                    TYPESENSE_BINARY,
+                    f"--data-dir={data_dir}",
+                    f"--api-key={API_KEY}",
+                    f"--port={PORT}",
+                    "--enable-cors",
+                ],
+                stdout=subprocess.PIPE,
+                stderr=subprocess.STDOUT,
+                text=True,
+            )
+            assert _health_ok(30), "Typesense server did not become healthy within 30s."
+    
+        # Ensure the collection, documents, stopwords set and preset exist.
+        result = _run_setup()
+        print("=== run.py --setup stdout ===")
+        print(result.stdout)
+        print("=== run.py --setup stderr ===")
+        print(result.stderr)
+>       assert result.returncode == 0, (
+            f"'python3 run.py --setup' failed with code {result.returncode}: {result.stderr}"
+        )
+E       AssertionError: 'python3 run.py --setup' failed with code 1: Traceback (most recent call last):
+E           File "/home/user/typesense-app/run.py", line 231, in <module>
+E             main()
+E           File "/home/user/typesense-app/run.py", line 220, in main
+E             setup()
+E           File "/home/user/typesense-app/run.py", line 150, in setup
+E             raise RuntimeError(f"Failed to index documents: {r.status_code} {r.text}")
+E         RuntimeError: Failed to index documents: 400 {"message":"Bad JSON: [json.exception.parse_error.101] parse error at line 2, column 1: syntax error while parsing value - unexpected '{'; expected end of input"}
+E         
+E       assert 1 == 0
+E        +  where 1 = CompletedProcess(args=['python3', 'run.py', '--setup'], returncode=1, stdout='', stderr='Traceback (most recent call l....101] parse error at line 2, column 1: syntax error while parsing value - unexpected \'{\'; expected end of input"}\n').returncode
+
+/tests/test_final_state.py:72: AssertionError
+______ ERROR at setup of test_preset_search_returns_points_sorted_results ______
+
+tmp_path_factory = TempPathFactory(_given_basetemp=None, _trace=<pluggy._tracing.TagTracerSub object at 0x7a11954af200>, _basetemp=None, _retention_count=3, _retention_policy='all')
+
+    @pytest.fixture(scope="session")
+    def typesense_env(tmp_path_factory):
+        """Ensure a Typesense server is running and the task resources are set up.
+    
+        If the agent already left a server running on port 8108 we reuse it;
+        otherwise we start one ourselves so the API checks can proceed.
+        """
+        started_proc = None
+        if not _health_ok(3):
+            data_dir = tmp_path_factory.mktemp("typesense-data")
+            started_proc = subprocess.Popen(
+                [
+                    TYPESENSE_BINARY,
+                    f"--data-dir={data_dir}",
+                    f"--api-key={API_KEY}",
+                    f"--port={PORT}",
+                    "--enable-cors",
+                ],
+                stdout=subprocess.PIPE,
+                stderr=subprocess.STDOUT,
+                text=True,
+            )
+            assert _health_ok(30), "Typesense server did not become healthy within 30s."
+    
+        # Ensure the collection, documents, stopwords set and preset exist.
+        result = _run_setup()
+        print("=== run.py --setup stdout ===")
+        print(result.stdout)
+        print("=== run.py --setup stderr ===")
+        print(result.stderr)
+>       assert result.returncode == 0, (
+            f"'python3 run.py --setup' failed with code {result.returncode}: {result.stderr}"
+        )
+E       AssertionError: 'python3 run.py --setup' failed with code 1: Traceback (most recent call last):
+E           File "/home/user/typesense-app/run.py", line 231, in <module>
+E             main()
+E           File "/home/user/typesense-app/run.py", line 220, in main
+E             setup()
+E           File "/home/user/typesense-app/run.py", line 150, in setup
+E             raise RuntimeError(f"Failed to index documents: {r.status_code} {r.text}")
+E         RuntimeError: Failed to index documents: 400 {"message":"Bad JSON: [json.exception.parse_error.101] parse error at line 2, column 1: syntax error while parsing value - unexpected '{'; expected end of input"}
+E         
+E       assert 1 == 0
+E        +  where 1 = CompletedProcess(args=['python3', 'run.py', '--setup'], returncode=1, stdout='', stderr='Traceback (most recent call l....101] parse error at line 2, column 1: syntax error while parsing value - unexpected \'{\'; expected end of input"}\n').returncode
+
+/tests/test_final_state.py:72: AssertionError
+__________ ERROR at setup of test_stopwords_are_ignored_during_query ___________
+
+tmp_path_factory = TempPathFactory(_given_basetemp=None, _trace=<pluggy._tracing.TagTracerSub object at 0x7a11954af200>, _basetemp=None, _retention_count=3, _retention_policy='all')
+
+    @pytest.fixture(scope="session")
+    def typesense_env(tmp_path_factory):
+        """Ensure a Typesense server is running and the task resources are set up.
+    
+        If the agent already left a server running on port 8108 we reuse it;
+        otherwise we start one ourselves so the API checks can proceed.
+        """
+        started_proc = None
+        if not _health_ok(3):
+            data_dir = tmp_path_factory.mktemp("typesense-data")
+            started_proc = subprocess.Popen(
+                [
+                    TYPESENSE_BINARY,
+                    f"--data-dir={data_dir}",
+                    f"--api-key={API_KEY}",
+                    f"--port={PORT}",
+                    "--enable-cors",
+                ],
+                stdout=subprocess.PIPE,
+                stderr=subprocess.STDOUT,
+                text=True,
+            )
+            assert _health_ok(30), "Typesense server did not become healthy within 30s."
+    
+        # Ensure the collection, documents, stopwords set and preset exist.
+        result = _run_setup()
+        print("=== run.py --setup stdout ===")
+        print(result.stdout)
+        print("=== run.py --setup stderr ===")
+        print(result.stderr)
+>       assert result.returncode == 0, (
+            f"'python3 run.py --setup' failed with code {result.returncode}: {result.stderr}"
+        )
+E       AssertionError: 'python3 run.py --setup' failed with code 1: Traceback (most recent call last):
+E           File "/home/user/typesense-app/run.py", line 231, in <module>
+E             main()
+E           File "/home/user/typesense-app/run.py", line 220, in main
+E             setup()
+E           File "/home/user/typesense-app/run.py", line 150, in setup
+E             raise RuntimeError(f"Failed to index documents: {r.status_code} {r.text}")
+E         RuntimeError: Failed to index documents: 400 {"message":"Bad JSON: [json.exception.parse_error.101] parse error at line 2, column 1: syntax error while parsing value - unexpected '{'; expected end of input"}
+E         
+E       assert 1 == 0
+E        +  where 1 = CompletedProcess(args=['python3', 'run.py', '--setup'], returncode=1, stdout='', stderr='Traceback (most recent call l....101] parse error at line 2, column 1: syntax error while parsing value - unexpected \'{\'; expected end of input"}\n').returncode
+
+/tests/test_final_state.py:72: AssertionError
+__________ ERROR at setup of test_preset_matches_explicit_parameters ___________
+
+tmp_path_factory = TempPathFactory(_given_basetemp=None, _trace=<pluggy._tracing.TagTracerSub object at 0x7a11954af200>, _basetemp=None, _retention_count=3, _retention_policy='all')
+
+    @pytest.fixture(scope="session")
+    def typesense_env(tmp_path_factory):
+        """Ensure a Typesense server is running and the task resources are set up.
+    
+        If the agent already left a server running on port 8108 we reuse it;
+        otherwise we start one ourselves so the API checks can proceed.
+        """
+        started_proc = None
+        if not _health_ok(3):
+            data_dir = tmp_path_factory.mktemp("typesense-data")
+            started_proc = subprocess.Popen(
+                [
+                    TYPESENSE_BINARY,
+                    f"--data-dir={data_dir}",
+                    f"--api-key={API_KEY}",
+                    f"--port={PORT}",
+                    "--enable-cors",
+                ],
+                stdout=subprocess.PIPE,
+                stderr=subprocess.STDOUT,
+                text=True,
+            )
+            assert _health_ok(30), "Typesense server did not become healthy within 30s."
+    
+        # Ensure the collection, documents, stopwords set and preset exist.
+        result = _run_setup()
+        print("=== run.py --setup stdout ===")
+        print(result.stdout)
+        print("=== run.py --setup stderr ===")
+        print(result.stderr)
+>       assert result.returncode == 0, (
+            f"'python3 run.py --setup' failed with code {result.returncode}: {result.stderr}"
+        )
+E       AssertionError: 'python3 run.py --setup' failed with code 1: Traceback (most recent call last):
+E           File "/home/user/typesense-app/run.py", line 231, in <module>
+E             main()
+E           File "/home/user/typesense-app/run.py", line 220, in main
+E             setup()
+E           File "/home/user/typesense-app/run.py", line 150, in setup
+E             raise RuntimeError(f"Failed to index documents: {r.status_code} {r.text}")
+E         RuntimeError: Failed to index documents: 400 {"message":"Bad JSON: [json.exception.parse_error.101] parse error at line 2, column 1: syntax error while parsing value - unexpected '{'; expected end of input"}
+E         
+E       assert 1 == 0
+E        +  where 1 = CompletedProcess(args=['python3', 'run.py', '--setup'], returncode=1, stdout='', stderr='Traceback (most recent call l....101] parse error at line 2, column 1: syntax error while parsing value - unexpected \'{\'; expected end of input"}\n').returncode
+
+/tests/test_final_state.py:72: AssertionError
+__________________ ERROR at setup of test_single_token_search __________________
+
+tmp_path_factory = TempPathFactory(_given_basetemp=None, _trace=<pluggy._tracing.TagTracerSub object at 0x7a11954af200>, _basetemp=None, _retention_count=3, _retention_policy='all')
+
+    @pytest.fixture(scope="session")
+    def typesense_env(tmp_path_factory):
+        """Ensure a Typesense server is running and the task resources are set up.
+    
+        If the agent already left a server running on port 8108 we reuse it;
+        otherwise we start one ourselves so the API checks can proceed.
+        """
+        started_proc = None
+        if not _health_ok(3):
+            data_dir = tmp_path_factory.mktemp("typesense-data")
+            started_proc = subprocess.Popen(
+                [
+                    TYPESENSE_BINARY,
+                    f"--data-dir={data_dir}",
+                    f"--api-key={API_KEY}",
+                    f"--port={PORT}",
+                    "--enable-cors",
+                ],
+                stdout=subprocess.PIPE,
+                stderr=subprocess.STDOUT,
+                text=True,
+            )
+            assert _health_ok(30), "Typesense server did not become healthy within 30s."
+    
+        # Ensure the collection, documents, stopwords set and preset exist.
+        result = _run_setup()
+        print("=== run.py --setup stdout ===")
+        print(result.stdout)
+        print("=== run.py --setup stderr ===")
+        print(result.stderr)
+>       assert result.returncode == 0, (
+            f"'python3 run.py --setup' failed with code {result.returncode}: {result.stderr}"
+        )
+E       AssertionError: 'python3 run.py --setup' failed with code 1: Traceback (most recent call last):
+E           File "/home/user/typesense-app/run.py", line 231, in <module>
+E             main()
+E           File "/home/user/typesense-app/run.py", line 220, in main
+E             setup()
+E           File "/home/user/typesense-app/run.py", line 150, in setup
+E             raise RuntimeError(f"Failed to index documents: {r.status_code} {r.text}")
+E         RuntimeError: Failed to index documents: 400 {"message":"Bad JSON: [json.exception.parse_error.101] parse error at line 2, column 1: syntax error while parsing value - unexpected '{'; expected end of input"}
+E         
+E       assert 1 == 0
+E        +  where 1 = CompletedProcess(args=['python3', 'run.py', '--setup'], returncode=1, stdout='', stderr='Traceback (most recent call l....101] parse error at line 2, column 1: syntax error while parsing value - unexpected \'{\'; expected end of input"}\n').returncode
+
+/tests/test_final_state.py:72: AssertionError
+=========================== short test summary info ============================
+ERROR ../tests/test_final_state.py::test_setup_is_idempotent - AssertionError...
+ERROR ../tests/test_final_state.py::test_health_ok - AssertionError: 'python3...
+ERROR ../tests/test_final_state.py::test_collection_exists_and_populated - As...
+ERROR ../tests/test_final_state.py::test_stopwords_set_created - AssertionErr...
+ERROR ../tests/test_final_state.py::test_preset_created_with_expected_parameters
+ERROR ../tests/test_final_state.py::test_preset_search_returns_points_sorted_results
+ERROR ../tests/test_final_state.py::test_stopwords_are_ignored_during_query
+ERROR ../tests/test_final_state.py::test_preset_matches_explicit_parameters
+ERROR ../tests/test_final_state.py::test_single_token_search - AssertionError...
+============================== 9 errors in 0.28s ===============================

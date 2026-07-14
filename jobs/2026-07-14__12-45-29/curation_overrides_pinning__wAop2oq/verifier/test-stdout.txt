@@ -1,0 +1,47 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-7.4.4, pluggy-1.4.0
+rootdir: /tests
+plugins: json-ctrf-0.5.2
+collected 9 items
+
+../tests/test_final_state.py F........                                   [100%]
+
+=================================== FAILURES ===================================
+____________________ test_collection_exists_with_documents _____________________
+
+typesense_server = None
+
+    def test_collection_exists_with_documents(typesense_server):
+        resp = requests.get(
+            f"{BASE_URL}/collections/{COLLECTION}", headers=HEADERS, timeout=10
+        )
+        assert resp.status_code == 200, (
+            f"Collection '{COLLECTION}' not found (status {resp.status_code}): {resp.text}"
+        )
+        data = resp.json()
+        assert data.get("num_documents") == 7, (
+            f"Expected 7 documents in '{COLLECTION}', got {data.get('num_documents')}."
+        )
+        brand_fields = [f for f in data.get("fields", []) if f.get("name") == "brand"]
+        assert brand_fields, "Field 'brand' is missing from the collection schema."
+>       assert brand_fields[0].get("facet") is True, (
+            "Field 'brand' must be defined as facetable (facet: true)."
+        )
+E       AssertionError: Field 'brand' must be defined as facetable (facet: true).
+E       assert False is True
+E        +  where False = <built-in method get of dict object at 0x795bf2a45f40>('facet')
+E        +    where <built-in method get of dict object at 0x795bf2a45f40> = {'facet': False, 'index': True, 'infix': False, 'locale': '', ...}.get
+
+/tests/test_final_state.py:115: AssertionError
+==================================== PASSES ====================================
+=========================== short test summary info ============================
+PASSED ../tests/test_final_state.py::test_three_overrides_registered
+PASSED ../tests/test_final_state.py::test_exact_phone_override_definition
+PASSED ../tests/test_final_state.py::test_contains_deal_override_definition
+PASSED ../tests/test_final_state.py::test_dynamic_brand_filter_override_definition
+PASSED ../tests/test_final_state.py::test_exact_match_pinning_and_hiding
+PASSED ../tests/test_final_state.py::test_contains_match_pinning
+PASSED ../tests/test_final_state.py::test_dynamic_brand_filtering
+PASSED ../tests/test_final_state.py::test_setup_log_lists_override_ids
+FAILED ../tests/test_final_state.py::test_collection_exists_with_documents - ...
+========================= 1 failed, 8 passed in 4.31s ==========================

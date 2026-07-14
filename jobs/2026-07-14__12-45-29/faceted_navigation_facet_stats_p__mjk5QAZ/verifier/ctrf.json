@@ -1,0 +1,92 @@
+{
+    "reportFormat": "CTRF",
+    "specVersion": "0.0.0",
+    "timestamp": "2026-07-14T04:51:57.423808+00:00",
+    "generatedBy": "pytest",
+    "results": {
+        "tool": {
+            "name": "pytest",
+            "version": "7.4.4"
+        },
+        "summary": {
+            "tests": 7,
+            "passed": 7,
+            "failed": 0,
+            "skipped": 0,
+            "pending": 0,
+            "other": 0,
+            "start": 1784004712699,
+            "stop": 1784004717423
+        },
+        "environment": {
+            "buildName": "Pytest JSON CTRF Report",
+            "buildNumber": "000",
+            "buildUrl": "https://ctrf.io"
+        },
+        "tests": [
+            {
+                "name": "test_final_state.py::test_baseline_no_filters",
+                "status": "passed",
+                "duration": 3614,
+                "start": 1784004712756,
+                "stop": 1784004716370,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            },
+            {
+                "name": "test_final_state.py::test_single_filter_disjunctive",
+                "status": "passed",
+                "duration": 188,
+                "start": 1784004716370,
+                "stop": 1784004716558,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            },
+            {
+                "name": "test_final_state.py::test_multi_field_multi_select",
+                "status": "passed",
+                "duration": 179,
+                "start": 1784004716558,
+                "stop": 1784004716737,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            },
+            {
+                "name": "test_final_state.py::test_facet_query_prefix",
+                "status": "passed",
+                "duration": 174,
+                "start": 1784004716738,
+                "stop": 1784004716912,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            },
+            {
+                "name": "test_final_state.py::test_max_facet_values_cap",
+                "status": "passed",
+                "duration": 171,
+                "start": 1784004716913,
+                "stop": 1784004717084,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            },
+            {
+                "name": "test_final_state.py::test_price_range_filter",
+                "status": "passed",
+                "duration": 170,
+                "start": 1784004717084,
+                "stop": 1784004717254,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            },
+            {
+                "name": "test_final_state.py::test_keyword_query",
+                "status": "passed",
+                "duration": 169,
+                "start": 1784004717254,
+                "stop": 1784004717423,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            }
+        ]
+    }
+}

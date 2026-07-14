@@ -1,0 +1,95 @@
+{
+    "reportFormat": "CTRF",
+    "specVersion": "0.0.0",
+    "timestamp": "2026-07-14T04:38:52.241150+00:00",
+    "generatedBy": "pytest",
+    "results": {
+        "tool": {
+            "name": "pytest",
+            "version": "7.4.4"
+        },
+        "summary": {
+            "tests": 7,
+            "passed": 6,
+            "failed": 1,
+            "skipped": 0,
+            "pending": 0,
+            "other": 0,
+            "start": 1784003927529,
+            "stop": 1784003932240
+        },
+        "environment": {
+            "buildName": "Pytest JSON CTRF Report",
+            "buildNumber": "000",
+            "buildUrl": "https://ctrf.io"
+        },
+        "tests": [
+            {
+                "name": "test_final_state.py::test_baseline_no_filters",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 3600,
+                "start": 1784003927589,
+                "stop": 1784003931189,
+                "retries": 0,
+                "file_path": "test_final_state.py",
+                "trace": "indexed = 'http://127.0.0.1:8108'\n\n    def test_baseline_no_filters(indexed):\n        resp = run_cli({\"q\": \"*\"})\n        assert resp.get(\"found\") == 12, f\"Expected found=12, got {resp.get('found')}.\"\n        assert facet_map(resp, \"brand\") == {\n            \"Apple\": 3,\n            \"Dell\": 3,\n            \"Samsung\": 3,\n            \"Sony\": 2,\n            \"HP\": 1,\n        }, f\"Unexpected brand facet counts: {facet_map(resp, 'brand')}\"\n        assert facet_map(resp, \"category\") == {\n            \"Laptops\": 6,\n            \"Phones\": 2,\n            \"TVs\": 2,\n            \"Headphones\": 1,\n            \"Monitors\": 1,\n        }, f\"Unexpected category facet counts: {facet_map(resp, 'category')}\"\n        assert facet_map(resp, \"tags\") == {\n            \"premium\": 8,\n            \"portable\": 6,\n            \"budget\": 2,\n            \"home\": 2,\n            \"pro\": 1,\n            \"audio\": 1,\n        }, f\"Unexpected tags facet counts: {facet_map(resp, 'tags')}\"\n>       assert_price_stats(\n            resp, {\"min\": 299.0, \"max\": 1999.0, \"sum\": 12888.0, \"avg\": 1074.0}\n        )\n\n/tests/test_final_state.py:181: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nresponse = {'facets': {'brand': [{'count': 3, 'value': 'Apple'}, {'count': 3, 'value': 'Dell'}, {'count': 3, 'value': 'Samsung'},...ount': 1, 'value': 'pro'}]}, 'found': 12, 'price_stats': {'avg': 1144.45, 'max': 1999.0, 'min': 299.0, 'sum': 12589.0}}\nexpected = {'avg': 1074.0, 'max': 1999.0, 'min': 299.0, 'sum': 12888.0}\n\n    def assert_price_stats(response, expected):\n        assert \"price_stats\" in response, f\"Response missing 'price_stats': {response}\"\n        stats = response[\"price_stats\"]\n        for key, value in expected.items():\n            assert key in stats, f\"price_stats missing key '{key}': {stats}\"\n>           assert abs(float(stats[key]) - value) <= 0.01, (\n                f\"price_stats['{key}'] expected ~{value}, got {stats[key]}.\"\n            )\nE           AssertionError: price_stats['sum'] expected ~12888.0, got 12589.0.\nE           assert 299.0 <= 0.01\nE            +  where 299.0 = abs((12589.0 - 12888.0))\nE            +    where 12589.0 = float(12589.0)\n\n/tests/test_final_state.py:151: AssertionError",
+                "message": "The test failed in the call phase due to an assertion error"
+            },
+            {
+                "name": "test_final_state.py::test_single_filter_disjunctive",
+                "status": "passed",
+                "duration": 168,
+                "start": 1784003931190,
+                "stop": 1784003931358,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            },
+            {
+                "name": "test_final_state.py::test_multi_field_multi_select",
+                "status": "passed",
+                "duration": 181,
+                "start": 1784003931358,
+                "stop": 1784003931539,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            },
+            {
+                "name": "test_final_state.py::test_facet_query_prefix",
+                "status": "passed",
+                "duration": 186,
+                "start": 1784003931539,
+                "stop": 1784003931725,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            },
+            {
+                "name": "test_final_state.py::test_max_facet_values_cap",
+                "status": "passed",
+                "duration": 177,
+                "start": 1784003931725,
+                "stop": 1784003931902,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            },
+            {
+                "name": "test_final_state.py::test_price_range_filter",
+                "status": "passed",
+                "duration": 172,
+                "start": 1784003931903,
+                "stop": 1784003932075,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            },
+            {
+                "name": "test_final_state.py::test_keyword_query",
+                "status": "passed",
+                "duration": 165,
+                "start": 1784003932075,
+                "stop": 1784003932240,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            }
+        ]
+    }
+}

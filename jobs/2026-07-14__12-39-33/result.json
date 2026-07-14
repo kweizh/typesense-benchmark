@@ -1,0 +1,63 @@
+{
+    "id": "e4a586a0-418c-4464-94ce-911d48c00a20",
+    "started_at": "2026-07-14T12:39:36.853614",
+    "updated_at": "2026-07-14T12:45:28.937609",
+    "finished_at": "2026-07-14T12:45:28.937609",
+    "n_total_trials": 19,
+    "stats": {
+        "n_completed_trials": 19,
+        "n_errored_trials": 1,
+        "n_running_trials": 0,
+        "n_pending_trials": 0,
+        "n_cancelled_trials": 0,
+        "n_retries": 0,
+        "evals": {
+            "pochi__claude-4-6-sonnet__pending-tasks": {
+                "n_trials": 19,
+                "n_errors": 1,
+                "metrics": [
+                    {
+                        "mean": 0.7368421052631579
+                    }
+                ],
+                "pass_at_k": {},
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "hybrid-search-relevance-tuning__7XaqrSQ",
+                            "collection_clone_reindex__MRucEPQ",
+                            "cross_collection_joins_cli__kZwLKGP",
+                            "faceted_navigation_facet_stats_p__Dwn3Yzk",
+                            "synonyms_query_expansion__yDttw3N"
+                        ],
+                        "1.0": [
+                            "multi-tenant-scoped-api-keys__BwFH7JM",
+                            "zero-downtime-schema-migration__bb2aYzi",
+                            "api_key_rbac_actions__j4gH4Mf",
+                            "auto_embedding_model_migration__c5PRRAD",
+                            "bulk_import_error_recovery__qJg4RXu",
+                            "conditional_ranking_eval_express__cr27De3",
+                            "curation_overrides_pinning__FcbzhMa",
+                            "deep_nested_object_indexing__5TXFudr",
+                            "federated_multi_search__wk8V8t9",
+                            "geo_polygon_filtering__JeUq8hd",
+                            "geosearch_radius_sorting_py__EtFvFRM",
+                            "presets_and_stopwords__7o9isw4",
+                            "reference_fields_async_join__KjaAkkw",
+                            "typo_tolerance_tuning__tGRHUko"
+                        ]
+                    }
+                },
+                "exception_stats": {
+                    "NonZeroAgentExitCodeError": [
+                        "faceted_navigation_facet_stats_p__Dwn3Yzk"
+                    ]
+                }
+            }
+        },
+        "n_input_tokens": 0,
+        "n_cache_tokens": 0,
+        "n_output_tokens": 8704120,
+        "cost_usd": null
+    }
+}

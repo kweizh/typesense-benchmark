@@ -1,0 +1,45 @@
+{
+    "schema_version": 1,
+    "task": {
+        "name": "bulk_import_error_recovery",
+        "type": "local",
+        "digest": "sha256:6604ff1d2ef85b9695e21bc16fd30ccbb405be57ddff0db5a26e510c212beeb0",
+        "source": "pending-tasks",
+        "path": "/home/kw/code/zealt/typesense-benchmark/scratchpad/pending-tasks/bulk_import_error_recovery"
+    },
+    "install_only": false,
+    "timeout_multiplier": 1.0,
+    "agent": {
+        "import_path": "agents.pochi:Pochi",
+        "model_name": "minimax/MiniMax-M3",
+        "skills": [],
+        "extra_allowed_hosts": [],
+        "kwargs": {},
+        "env": {
+            "POCHI_API_KEY": "${POCHI_API_KEY}",
+            "MINIMAX_API_KEY": "${MINIMAX_API_KEY}"
+        },
+        "mcp_servers": []
+    },
+    "skills": [],
+    "environment": {
+        "type": "daytona",
+        "force_build": false,
+        "delete": true,
+        "cpu_enforcement_policy": "auto",
+        "memory_enforcement_policy": "auto",
+        "mounts": [
+            {
+                "type": "bind",
+                "source": "test_initial_state.py",
+                "target": "/bootstrap/test_initial_state.py"
+            }
+        ],
+        "extra_docker_compose": [],
+        "kwargs": {},
+        "extra_allowed_hosts": []
+    },
+    "verifier": {
+        "disable": false
+    }
+}

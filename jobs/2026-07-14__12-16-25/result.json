@@ -1,0 +1,63 @@
+{
+    "id": "d7270f96-3bab-496a-9df4-f5ada20be274",
+    "started_at": "2026-07-14T12:16:28.849195",
+    "updated_at": "2026-07-14T12:28:14.712960",
+    "finished_at": "2026-07-14T12:28:14.712960",
+    "n_total_trials": 19,
+    "stats": {
+        "n_completed_trials": 19,
+        "n_errored_trials": 1,
+        "n_running_trials": 0,
+        "n_pending_trials": 0,
+        "n_cancelled_trials": 0,
+        "n_retries": 0,
+        "evals": {
+            "pochi__gemini-3.5-flash__pending-tasks": {
+                "n_trials": 19,
+                "n_errors": 1,
+                "metrics": [
+                    {
+                        "mean": 0.8421052631578947
+                    }
+                ],
+                "pass_at_k": {},
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "hybrid-search-relevance-tuning__4NK9URy",
+                            "collection_clone_reindex__bd7Pwat",
+                            "cross_collection_joins_cli__LS2wKzi"
+                        ],
+                        "1.0": [
+                            "multi-tenant-scoped-api-keys__Hzxo4X3",
+                            "zero-downtime-schema-migration__XpVUJYb",
+                            "api_key_rbac_actions__2aqdLKQ",
+                            "auto_embedding_model_migration__i7uTLkc",
+                            "bulk_import_error_recovery__GSEareQ",
+                            "conditional_ranking_eval_express__W6SJqNb",
+                            "curation_overrides_pinning__cDZyTH5",
+                            "deep_nested_object_indexing__Jieh9oK",
+                            "faceted_navigation_facet_stats_p__SbSMrAV",
+                            "federated_multi_search__X8hbEUp",
+                            "geo_polygon_filtering__AWi25hC",
+                            "geosearch_radius_sorting_py__ULje4gi",
+                            "presets_and_stopwords__AMstqbk",
+                            "reference_fields_async_join__pJmVERQ",
+                            "synonyms_query_expansion__Ytx8TmP",
+                            "typo_tolerance_tuning__8mis59f"
+                        ]
+                    }
+                },
+                "exception_stats": {
+                    "AgentTimeoutError": [
+                        "synonyms_query_expansion__Ytx8TmP"
+                    ]
+                }
+            }
+        },
+        "n_input_tokens": 0,
+        "n_cache_tokens": 0,
+        "n_output_tokens": 20628404,
+        "cost_usd": null
+    }
+}

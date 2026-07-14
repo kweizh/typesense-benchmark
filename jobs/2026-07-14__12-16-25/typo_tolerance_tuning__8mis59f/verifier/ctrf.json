@@ -1,0 +1,167 @@
+{
+    "reportFormat": "CTRF",
+    "specVersion": "0.0.0",
+    "timestamp": "2026-07-14T04:27:27.344713+00:00",
+    "generatedBy": "pytest",
+    "results": {
+        "tool": {
+            "name": "pytest",
+            "version": "7.4.4"
+        },
+        "summary": {
+            "tests": 12,
+            "passed": 12,
+            "failed": 0,
+            "skipped": 0,
+            "pending": 0,
+            "other": 0,
+            "start": 1784003226585,
+            "stop": 1784003247344
+        },
+        "environment": {
+            "buildName": "Pytest JSON CTRF Report",
+            "buildNumber": "000",
+            "buildUrl": "https://ctrf.io"
+        },
+        "tests": [
+            {
+                "name": "test_final_state.py::test_search_script_exists",
+                "status": "passed",
+                "duration": 1,
+                "start": 1784003226631,
+                "stop": 1784003226632,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            },
+            {
+                "name": "test_final_state.py::test_catalog_collection_populated",
+                "status": "passed",
+                "duration": 4012,
+                "start": 1784003226632,
+                "stop": 1784003230644,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            },
+            {
+                "name": "test_final_state.py::test_typo_tolerance_behavior",
+                "status": "passed",
+                "duration": 197,
+                "start": 1784003230644,
+                "stop": 1784003230841,
+                "retries": 0,
+                "file_path": "test_final_state.py",
+                "tags": [
+                    "parametrize::case_name,query,expected::[('brand_exact', 'Keychron', {'2'}), ('brand_no_typo', 'keichron', set()), ('name_two_typo_six_letters', 'carema', {'3'}), ('four_letter_token_corrected', 'wiff', {'9'}), ('three_letter_token_not_corrected', 'usq', set()), ('drop_tokens_partial', 'Anker Speaker', {'6', '5'}), ('drop_tokens_not_overreaching', 'Camera Bag', {'3'}), ('split_join_join', 'basket ball', {'7'}), ('split_join_split', 'waterbottle', {'8'}), ('no_excess_typo_search', 'charger', {'6'})]::ids_['brand_exact', 'brand_no_typo', 'name_two_typo_six_letters', 'four_letter_token_corrected', 'three_letter_token_not_corrected', 'drop_tokens_partial', 'drop_tokens_not_overreaching', 'split_join_join', 'split_join_split', 'no_excess_typo_search']"
+                ]
+            },
+            {
+                "name": "test_final_state.py::test_typo_tolerance_behavior",
+                "status": "passed",
+                "duration": 161,
+                "start": 1784003230841,
+                "stop": 1784003231002,
+                "retries": 0,
+                "file_path": "test_final_state.py",
+                "tags": [
+                    "parametrize::case_name,query,expected::[('brand_exact', 'Keychron', {'2'}), ('brand_no_typo', 'keichron', set()), ('name_two_typo_six_letters', 'carema', {'3'}), ('four_letter_token_corrected', 'wiff', {'9'}), ('three_letter_token_not_corrected', 'usq', set()), ('drop_tokens_partial', 'Anker Speaker', {'6', '5'}), ('drop_tokens_not_overreaching', 'Camera Bag', {'3'}), ('split_join_join', 'basket ball', {'7'}), ('split_join_split', 'waterbottle', {'8'}), ('no_excess_typo_search', 'charger', {'6'})]::ids_['brand_exact', 'brand_no_typo', 'name_two_typo_six_letters', 'four_letter_token_corrected', 'three_letter_token_not_corrected', 'drop_tokens_partial', 'drop_tokens_not_overreaching', 'split_join_join', 'split_join_split', 'no_excess_typo_search']"
+                ]
+            },
+            {
+                "name": "test_final_state.py::test_typo_tolerance_behavior",
+                "status": "passed",
+                "duration": 167,
+                "start": 1784003231002,
+                "stop": 1784003231169,
+                "retries": 0,
+                "file_path": "test_final_state.py",
+                "tags": [
+                    "parametrize::case_name,query,expected::[('brand_exact', 'Keychron', {'2'}), ('brand_no_typo', 'keichron', set()), ('name_two_typo_six_letters', 'carema', {'3'}), ('four_letter_token_corrected', 'wiff', {'9'}), ('three_letter_token_not_corrected', 'usq', set()), ('drop_tokens_partial', 'Anker Speaker', {'6', '5'}), ('drop_tokens_not_overreaching', 'Camera Bag', {'3'}), ('split_join_join', 'basket ball', {'7'}), ('split_join_split', 'waterbottle', {'8'}), ('no_excess_typo_search', 'charger', {'6'})]::ids_['brand_exact', 'brand_no_typo', 'name_two_typo_six_letters', 'four_letter_token_corrected', 'three_letter_token_not_corrected', 'drop_tokens_partial', 'drop_tokens_not_overreaching', 'split_join_join', 'split_join_split', 'no_excess_typo_search']"
+                ]
+            },
+            {
+                "name": "test_final_state.py::test_typo_tolerance_behavior",
+                "status": "passed",
+                "duration": 168,
+                "start": 1784003231170,
+                "stop": 1784003231338,
+                "retries": 0,
+                "file_path": "test_final_state.py",
+                "tags": [
+                    "parametrize::case_name,query,expected::[('brand_exact', 'Keychron', {'2'}), ('brand_no_typo', 'keichron', set()), ('name_two_typo_six_letters', 'carema', {'3'}), ('four_letter_token_corrected', 'wiff', {'9'}), ('three_letter_token_not_corrected', 'usq', set()), ('drop_tokens_partial', 'Anker Speaker', {'6', '5'}), ('drop_tokens_not_overreaching', 'Camera Bag', {'3'}), ('split_join_join', 'basket ball', {'7'}), ('split_join_split', 'waterbottle', {'8'}), ('no_excess_typo_search', 'charger', {'6'})]::ids_['brand_exact', 'brand_no_typo', 'name_two_typo_six_letters', 'four_letter_token_corrected', 'three_letter_token_not_corrected', 'drop_tokens_partial', 'drop_tokens_not_overreaching', 'split_join_join', 'split_join_split', 'no_excess_typo_search']"
+                ]
+            },
+            {
+                "name": "test_final_state.py::test_typo_tolerance_behavior",
+                "status": "passed",
+                "duration": 159,
+                "start": 1784003231338,
+                "stop": 1784003231497,
+                "retries": 0,
+                "file_path": "test_final_state.py",
+                "tags": [
+                    "parametrize::case_name,query,expected::[('brand_exact', 'Keychron', {'2'}), ('brand_no_typo', 'keichron', set()), ('name_two_typo_six_letters', 'carema', {'3'}), ('four_letter_token_corrected', 'wiff', {'9'}), ('three_letter_token_not_corrected', 'usq', set()), ('drop_tokens_partial', 'Anker Speaker', {'6', '5'}), ('drop_tokens_not_overreaching', 'Camera Bag', {'3'}), ('split_join_join', 'basket ball', {'7'}), ('split_join_split', 'waterbottle', {'8'}), ('no_excess_typo_search', 'charger', {'6'})]::ids_['brand_exact', 'brand_no_typo', 'name_two_typo_six_letters', 'four_letter_token_corrected', 'three_letter_token_not_corrected', 'drop_tokens_partial', 'drop_tokens_not_overreaching', 'split_join_join', 'split_join_split', 'no_excess_typo_search']"
+                ]
+            },
+            {
+                "name": "test_final_state.py::test_typo_tolerance_behavior",
+                "status": "passed",
+                "duration": 163,
+                "start": 1784003231498,
+                "stop": 1784003231661,
+                "retries": 0,
+                "file_path": "test_final_state.py",
+                "tags": [
+                    "parametrize::case_name,query,expected::[('brand_exact', 'Keychron', {'2'}), ('brand_no_typo', 'keichron', set()), ('name_two_typo_six_letters', 'carema', {'3'}), ('four_letter_token_corrected', 'wiff', {'9'}), ('three_letter_token_not_corrected', 'usq', set()), ('drop_tokens_partial', 'Anker Speaker', {'6', '5'}), ('drop_tokens_not_overreaching', 'Camera Bag', {'3'}), ('split_join_join', 'basket ball', {'7'}), ('split_join_split', 'waterbottle', {'8'}), ('no_excess_typo_search', 'charger', {'6'})]::ids_['brand_exact', 'brand_no_typo', 'name_two_typo_six_letters', 'four_letter_token_corrected', 'three_letter_token_not_corrected', 'drop_tokens_partial', 'drop_tokens_not_overreaching', 'split_join_join', 'split_join_split', 'no_excess_typo_search']"
+                ]
+            },
+            {
+                "name": "test_final_state.py::test_typo_tolerance_behavior",
+                "status": "passed",
+                "duration": 170,
+                "start": 1784003231661,
+                "stop": 1784003231831,
+                "retries": 0,
+                "file_path": "test_final_state.py",
+                "tags": [
+                    "parametrize::case_name,query,expected::[('brand_exact', 'Keychron', {'2'}), ('brand_no_typo', 'keichron', set()), ('name_two_typo_six_letters', 'carema', {'3'}), ('four_letter_token_corrected', 'wiff', {'9'}), ('three_letter_token_not_corrected', 'usq', set()), ('drop_tokens_partial', 'Anker Speaker', {'6', '5'}), ('drop_tokens_not_overreaching', 'Camera Bag', {'3'}), ('split_join_join', 'basket ball', {'7'}), ('split_join_split', 'waterbottle', {'8'}), ('no_excess_typo_search', 'charger', {'6'})]::ids_['brand_exact', 'brand_no_typo', 'name_two_typo_six_letters', 'four_letter_token_corrected', 'three_letter_token_not_corrected', 'drop_tokens_partial', 'drop_tokens_not_overreaching', 'split_join_join', 'split_join_split', 'no_excess_typo_search']"
+                ]
+            },
+            {
+                "name": "test_final_state.py::test_typo_tolerance_behavior",
+                "status": "passed",
+                "duration": 168,
+                "start": 1784003231832,
+                "stop": 1784003232000,
+                "retries": 0,
+                "file_path": "test_final_state.py",
+                "tags": [
+                    "parametrize::case_name,query,expected::[('brand_exact', 'Keychron', {'2'}), ('brand_no_typo', 'keichron', set()), ('name_two_typo_six_letters', 'carema', {'3'}), ('four_letter_token_corrected', 'wiff', {'9'}), ('three_letter_token_not_corrected', 'usq', set()), ('drop_tokens_partial', 'Anker Speaker', {'6', '5'}), ('drop_tokens_not_overreaching', 'Camera Bag', {'3'}), ('split_join_join', 'basket ball', {'7'}), ('split_join_split', 'waterbottle', {'8'}), ('no_excess_typo_search', 'charger', {'6'})]::ids_['brand_exact', 'brand_no_typo', 'name_two_typo_six_letters', 'four_letter_token_corrected', 'three_letter_token_not_corrected', 'drop_tokens_partial', 'drop_tokens_not_overreaching', 'split_join_join', 'split_join_split', 'no_excess_typo_search']"
+                ]
+            },
+            {
+                "name": "test_final_state.py::test_typo_tolerance_behavior",
+                "status": "passed",
+                "duration": 168,
+                "start": 1784003232000,
+                "stop": 1784003232168,
+                "retries": 0,
+                "file_path": "test_final_state.py",
+                "tags": [
+                    "parametrize::case_name,query,expected::[('brand_exact', 'Keychron', {'2'}), ('brand_no_typo', 'keichron', set()), ('name_two_typo_six_letters', 'carema', {'3'}), ('four_letter_token_corrected', 'wiff', {'9'}), ('three_letter_token_not_corrected', 'usq', set()), ('drop_tokens_partial', 'Anker Speaker', {'6', '5'}), ('drop_tokens_not_overreaching', 'Camera Bag', {'3'}), ('split_join_join', 'basket ball', {'7'}), ('split_join_split', 'waterbottle', {'8'}), ('no_excess_typo_search', 'charger', {'6'})]::ids_['brand_exact', 'brand_no_typo', 'name_two_typo_six_letters', 'four_letter_token_corrected', 'three_letter_token_not_corrected', 'drop_tokens_partial', 'drop_tokens_not_overreaching', 'split_join_join', 'split_join_split', 'no_excess_typo_search']"
+                ]
+            },
+            {
+                "name": "test_final_state.py::test_typo_tolerance_behavior",
+                "status": "passed",
+                "duration": 15175,
+                "start": 1784003232169,
+                "stop": 1784003247344,
+                "retries": 0,
+                "file_path": "test_final_state.py",
+                "tags": [
+                    "parametrize::case_name,query,expected::[('brand_exact', 'Keychron', {'2'}), ('brand_no_typo', 'keichron', set()), ('name_two_typo_six_letters', 'carema', {'3'}), ('four_letter_token_corrected', 'wiff', {'9'}), ('three_letter_token_not_corrected', 'usq', set()), ('drop_tokens_partial', 'Anker Speaker', {'6', '5'}), ('drop_tokens_not_overreaching', 'Camera Bag', {'3'}), ('split_join_join', 'basket ball', {'7'}), ('split_join_split', 'waterbottle', {'8'}), ('no_excess_typo_search', 'charger', {'6'})]::ids_['brand_exact', 'brand_no_typo', 'name_two_typo_six_letters', 'four_letter_token_corrected', 'three_letter_token_not_corrected', 'drop_tokens_partial', 'drop_tokens_not_overreaching', 'split_join_join', 'split_join_split', 'no_excess_typo_search']"
+                ]
+            }
+        ]
+    }
+}

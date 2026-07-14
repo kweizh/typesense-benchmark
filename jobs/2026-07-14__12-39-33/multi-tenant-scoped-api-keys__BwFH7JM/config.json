@@ -1,0 +1,29 @@
+{
+    "task": {
+        "path": "/home/kw/code/zealt/typesense-benchmark/scratchpad/pending-tasks/multi-tenant-scoped-api-keys",
+        "source": "pending-tasks"
+    },
+    "trial_name": "multi-tenant-scoped-api-keys__BwFH7JM",
+    "trials_dir": "jobs/2026-07-14__12-39-33",
+    "agent": {
+        "import_path": "agents.pochi:Pochi",
+        "model_name": "anthropic/claude-4-6-sonnet",
+        "env": {
+            "POCHI_API_KEY": "${POCHI_API_KEY}"
+        }
+    },
+    "environment": {
+        "type": "daytona",
+        "mounts": [
+            {
+                "type": "bind",
+                "source": "test_initial_state.py",
+                "target": "/bootstrap/test_initial_state.py"
+            }
+        ]
+    },
+    "artifacts": [
+        "/home/user"
+    ],
+    "job_id": "e4a586a0-418c-4464-94ce-911d48c00a20"
+}

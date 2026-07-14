@@ -1,0 +1,74 @@
+{
+    "reportFormat": "CTRF",
+    "specVersion": "0.0.0",
+    "timestamp": "2026-07-14T04:34:43.696519+00:00",
+    "generatedBy": "pytest",
+    "results": {
+        "tool": {
+            "name": "pytest",
+            "version": "7.4.4"
+        },
+        "summary": {
+            "tests": 5,
+            "passed": 5,
+            "failed": 0,
+            "skipped": 0,
+            "pending": 0,
+            "other": 0,
+            "start": 1784003679836,
+            "stop": 1784003683696
+        },
+        "environment": {
+            "buildName": "Pytest JSON CTRF Report",
+            "buildNumber": "000",
+            "buildUrl": "https://ctrf.io"
+        },
+        "tests": [
+            {
+                "name": "test_final_state.py::test_collection_exists_and_seeded",
+                "status": "passed",
+                "duration": 3322,
+                "start": 1784003679898,
+                "stop": 1784003683220,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            },
+            {
+                "name": "test_final_state.py::test_polygon_with_exclusion_main_case",
+                "status": "passed",
+                "duration": 116,
+                "start": 1784003683220,
+                "stop": 1784003683336,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            },
+            {
+                "name": "test_final_state.py::test_polygon_without_exclusion",
+                "status": "passed",
+                "duration": 117,
+                "start": 1784003683336,
+                "stop": 1784003683453,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            },
+            {
+                "name": "test_final_state.py::test_bounding_box_polygon_with_exclusion",
+                "status": "passed",
+                "duration": 125,
+                "start": 1784003683454,
+                "stop": 1784003683579,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            },
+            {
+                "name": "test_final_state.py::test_edge_discrimination_inside_vs_outside",
+                "status": "passed",
+                "duration": 117,
+                "start": 1784003683579,
+                "stop": 1784003683696,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            }
+        ]
+    }
+}

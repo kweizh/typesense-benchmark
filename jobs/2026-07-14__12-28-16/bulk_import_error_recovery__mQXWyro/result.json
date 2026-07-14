@@ -1,0 +1,122 @@
+{
+    "id": "8d132654-0972-4171-912e-a16f06b255e0",
+    "task_name": "bulk_import_error_recovery",
+    "trial_name": "bulk_import_error_recovery__mQXWyro",
+    "trial_uri": "file:///home/kw/code/zealt/pochi-harbor/jobs/2026-07-14__12-28-16/bulk_import_error_recovery__mQXWyro",
+    "task_id": {
+        "path": "/home/kw/code/zealt/typesense-benchmark/scratchpad/pending-tasks/bulk_import_error_recovery"
+    },
+    "source": "pending-tasks",
+    "task_checksum": "a9e3f9f6800e80d9ea35f8e28496511674b5d44a64c8099c3b1fd286743d80f6",
+    "config": {
+        "task": {
+            "path": "/home/kw/code/zealt/typesense-benchmark/scratchpad/pending-tasks/bulk_import_error_recovery",
+            "git_url": null,
+            "git_commit_id": null,
+            "name": null,
+            "ref": null,
+            "overwrite": false,
+            "download_dir": null,
+            "source": "pending-tasks"
+        },
+        "trial_name": "bulk_import_error_recovery__mQXWyro",
+        "trials_dir": "jobs/2026-07-14__12-28-16",
+        "install_only": false,
+        "timeout_multiplier": 1.0,
+        "agent_timeout_multiplier": null,
+        "verifier_timeout_multiplier": null,
+        "agent_setup_timeout_multiplier": null,
+        "environment_build_timeout_multiplier": null,
+        "agent": {
+            "name": null,
+            "import_path": "agents.pochi:Pochi",
+            "model_name": "zai/glm-5.2",
+            "n_concurrent": null,
+            "concurrency_group": null,
+            "skills": [],
+            "override_timeout_sec": null,
+            "override_setup_timeout_sec": null,
+            "max_timeout_sec": null,
+            "extra_allowed_hosts": [],
+            "kwargs": {},
+            "env": {
+                "POCHI_API_KEY": "${POCHI_API_KEY}"
+            },
+            "mcp_servers": []
+        },
+        "environment": {
+            "type": "daytona",
+            "import_path": null,
+            "force_build": false,
+            "delete": true,
+            "cpu_enforcement_policy": "auto",
+            "memory_enforcement_policy": "auto",
+            "override_cpus": null,
+            "override_memory_mb": null,
+            "override_storage_mb": null,
+            "override_gpus": null,
+            "override_tpu": null,
+            "mounts": [
+                {
+                    "type": "bind",
+                    "source": "test_initial_state.py",
+                    "target": "/bootstrap/test_initial_state.py"
+                }
+            ],
+            "extra_docker_compose": [],
+            "kwargs": {},
+            "extra_allowed_hosts": []
+        },
+        "verifier": {
+            "override_timeout_sec": null,
+            "max_timeout_sec": null,
+            "disable": false
+        },
+        "artifacts": [
+            "/home/user"
+        ],
+        "extra_instruction_paths": [],
+        "job_id": "ebd73c10-358f-4b24-8c77-4d3bbdc0ef44"
+    },
+    "agent_info": {
+        "name": "pochi",
+        "version": "0.6.17",
+        "model_info": {
+            "name": "glm-5.2",
+            "provider": "zai"
+        }
+    },
+    "agent_result": {
+        "n_input_tokens": 0,
+        "n_cache_tokens": 0,
+        "n_output_tokens": 675352,
+        "cost_usd": null,
+        "rollout_details": null,
+        "metadata": null
+    },
+    "verifier_result": {
+        "rewards": {
+            "reward": 1.0
+        }
+    },
+    "exception_info": null,
+    "started_at": "2026-07-14T04:28:19.108055Z",
+    "finished_at": "2026-07-14T04:34:22.531948Z",
+    "environment_setup": {
+        "started_at": "2026-07-14T04:28:19.248525Z",
+        "finished_at": "2026-07-14T04:28:23.690381Z"
+    },
+    "agent_setup": {
+        "started_at": "2026-07-14T04:28:23.690422Z",
+        "finished_at": "2026-07-14T04:28:29.288040Z"
+    },
+    "agent_execution": {
+        "started_at": "2026-07-14T04:28:29.288103Z",
+        "finished_at": "2026-07-14T04:33:49.661131Z"
+    },
+    "verifier": {
+        "started_at": "2026-07-14T04:33:59.737824Z",
+        "finished_at": "2026-07-14T04:34:21.488680Z"
+    },
+    "step_results": null
+}

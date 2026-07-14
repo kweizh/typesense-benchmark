@@ -1,0 +1,3 @@
+Log directory is configured as: /home/user/geo-search/typesense-logs
+E20260714 04:30:38.536293  2860 raft_server.cpp:749] Node not ready yet (known_applied_index is 0).
+E20260714 04:30:38.536334  2995 raft_server.h:62] Peer refresh failed, error: Doing another configuration change

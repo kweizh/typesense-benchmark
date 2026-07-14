@@ -1,0 +1,128 @@
+{
+    "id": "edc54199-1fb6-4993-95ac-b7679656f3d6",
+    "task_name": "presets_and_stopwords",
+    "trial_name": "presets_and_stopwords__RgyvVEQ",
+    "trial_uri": "file:///home/kw/code/zealt/pochi-harbor/jobs/2026-07-14__12-45-29/presets_and_stopwords__RgyvVEQ",
+    "task_id": {
+        "path": "/home/kw/code/zealt/typesense-benchmark/scratchpad/pending-tasks/presets_and_stopwords"
+    },
+    "source": "pending-tasks",
+    "task_checksum": "3eb95eef662da2033025b4aefeee88c3a3c30a41ded76e41bd20ee056b2bdb01",
+    "config": {
+        "task": {
+            "path": "/home/kw/code/zealt/typesense-benchmark/scratchpad/pending-tasks/presets_and_stopwords",
+            "git_url": null,
+            "git_commit_id": null,
+            "name": null,
+            "ref": null,
+            "overwrite": false,
+            "download_dir": null,
+            "source": "pending-tasks"
+        },
+        "trial_name": "presets_and_stopwords__RgyvVEQ",
+        "trials_dir": "jobs/2026-07-14__12-45-29",
+        "install_only": false,
+        "timeout_multiplier": 1.0,
+        "agent_timeout_multiplier": null,
+        "verifier_timeout_multiplier": null,
+        "agent_setup_timeout_multiplier": null,
+        "environment_build_timeout_multiplier": null,
+        "agent": {
+            "name": null,
+            "import_path": "agents.pochi:Pochi",
+            "model_name": "minimax/MiniMax-M3",
+            "n_concurrent": null,
+            "concurrency_group": null,
+            "skills": [],
+            "override_timeout_sec": null,
+            "override_setup_timeout_sec": null,
+            "max_timeout_sec": null,
+            "extra_allowed_hosts": [],
+            "kwargs": {},
+            "env": {
+                "POCHI_API_KEY": "${POCHI_API_KEY}",
+                "MINIMAX_API_KEY": "${MINIMAX_API_KEY}"
+            },
+            "mcp_servers": []
+        },
+        "environment": {
+            "type": "daytona",
+            "import_path": null,
+            "force_build": false,
+            "delete": true,
+            "cpu_enforcement_policy": "auto",
+            "memory_enforcement_policy": "auto",
+            "override_cpus": null,
+            "override_memory_mb": null,
+            "override_storage_mb": null,
+            "override_gpus": null,
+            "override_tpu": null,
+            "mounts": [
+                {
+                    "type": "bind",
+                    "source": "test_initial_state.py",
+                    "target": "/bootstrap/test_initial_state.py"
+                }
+            ],
+            "extra_docker_compose": [],
+            "kwargs": {},
+            "extra_allowed_hosts": []
+        },
+        "verifier": {
+            "override_timeout_sec": null,
+            "max_timeout_sec": null,
+            "disable": false
+        },
+        "artifacts": [
+            "/home/user"
+        ],
+        "extra_instruction_paths": [],
+        "job_id": "290f08cf-66f8-4af2-9b50-ab7bcface3aa"
+    },
+    "agent_info": {
+        "name": "pochi",
+        "version": "0.6.17",
+        "model_info": {
+            "name": "MiniMax-M3",
+            "provider": "minimax"
+        }
+    },
+    "agent_result": {
+        "n_input_tokens": 0,
+        "n_cache_tokens": 0,
+        "n_output_tokens": 477980,
+        "cost_usd": null,
+        "rollout_details": null,
+        "metadata": null
+    },
+    "verifier_result": {
+        "rewards": {
+            "reward": 1.0
+        }
+    },
+    "exception_info": {
+        "exception_type": "NonZeroAgentExitCodeError",
+        "exception_message": "Command failed (exit 143): cat > /tmp/pochi_cmd.sh << 'CMD_EOF'\nset -o pipefail\npochi --model minimax/MiniMax-M3 --max-steps 200 --max-retries 10 --blobs-dir /logs/agent/pochi/blobs --experimental-stream-trajectory /logs/agent/pochi/trajectory.jsonl --experimental-stream-trajectory-strip-duplicates > >(tee /logs/agent/pochi/stdout.txt) 2> >(tee /logs/agent/pochi/stderr.txt >&2) <<'EOF'\n# Typesense Search Presets and Stopwords\n\n## Background\nYou are building a small search backend on top of [Typesense](https://typesense.org), a fast, typo-tolerant in-memory search engine. The Typesense server binary is already installed in the environment at `/usr/local/bin/typesense-server`, but it is **not running**. Two of Typesense's operational features are central to this task:\n\n- **Presets**: a named, server-side bundle of search parameters that a client can reference by name at query time (via the `preset` parameter) instead of resending every parameter on each request.\n- **Stopwords sets**: a named list of keywords that Typesense removes from the *search query* (not from indexed documents) before matching.\n\nYour job is to stand up a Typesense instance, index a fixed catalogue of books, register a reusable preset and a stopwords set, and expose a small command-line tool that runs searches. The tool must be able to run the exact same logical search in two ways — driven purely by the stored preset, or by passing the equivalent parameters explicitly — and both must return identical results.\n\n## Requirements\n- Start a Typesense server locally on port `8108`, using the API key `xyz` (the standard local key, matching the research setup), with a persistent data directory.\n- Create a collection named `library` with these fields: `title` (`string`), `author` (`string`), `points` (`int32`), and set `points` as the `default_sorting_field`.\n- Index exactly the following 5 documents (use these `id` values verbatim):\n\n  ```json\n  [\n    {\"id\": \"1\", \"title\": \"The Great Gatsby\", \"author\": \"F Scott Fitzgerald\", \"points\": 90},\n    {\"id\": \"2\", \"title\": \"The Wizard of Oz\", \"author\": \"L Frank Baum\", \"points\": 70},\n    {\"id\": \"3\", \"title\": \"A Wizard of Earthsea\", \"author\": \"Ursula K Le Guin\", \"points\": 85},\n    {\"id\": \"4\", \"title\": \"Harry Potter and the Sorcerers Stone\", \"author\": \"J K Rowling\", \"points\": 95},\n    {\"id\": \"5\", \"title\": \"The Lord of the Rings\", \"author\": \"J R R Tolkien\", \"points\": 99}\n  ]\n  ```\n\n- Create a stopwords set named `en_stopwords` (locale `en`) containing the keywords `the`, `a`, `of`, and `and`.\n- Create a preset named `library_default` whose stored parameters query the `title` and `author` fields, sort by `points` in descending order, and apply the `en_stopwords` stopwords set.\n- Provide a rerunnable CLI that searches the `library` collection and can either drive the search entirely from the `library_default` preset or from the equivalent parameters passed explicitly.\n\n## Implementation Hints\n- Any language/SDK or plain HTTP calls to the Typesense REST API are acceptable; interact with the *real* running server (do not mock it).\n- Stopwords are removed from the query at *search* time only — they are not stripped from indexed documents — and Typesense tokenizes and lowercases stopword entries when it stores the set.\n- Remember that a preset referenced by the single-collection document-search endpoint must store its `value` as a flat object of search parameters (not a multi-search `searches` array); the `stopwords` set name can be one of those stored parameters.\n- Explicit search parameters and the preset must produce identical result sets, so keep the explicit path and the preset content in agreement.\n- Setup must be idempotent (safe to run more than once even if the collection, preset, or stopwords set already exists).\n- Project path: /home/user/typesense-app\n- Setup command: `python3 run.py --setup` — starts/ensures the server, creates the collection, indexes the documents, and registers the `en_stopwords` set and `library_default` preset. It must be safe to re-run.\n- Search command: `python3 run.py --q \"<query text>\"` — runs a search on the `library` collection using **only** the `library_default` preset (send just the preset reference plus the query text `q`; do not resend query_by/sort_by/stopwords).\n- Explicit variant: `python3 run.py --q \"<query text>\" --explicit` — runs the logically equivalent search **without** referencing the preset, passing `query_by`, `sort_by`, and the `stopwords` set explicitly instead.\n- Both search commands must print to stdout a single JSON object with exactly the keys `found` (integer total number of matches) and `hits` (an array of the matching document `id` strings, in the order Typesense returns them). Example shape: `{\"found\": 2, \"hits\": [\"3\", \"2\"]}`.\n\n\nEOF\nCMD_EOF\nsetsid --wait bash /tmp/pochi_cmd.sh &\nSETSID_PID=$!\necho $SETSID_PID > /tmp/setsid_bash_pochi_cmd.pid\nwait $SETSID_PID 2>/dev/null\nstdout: - Initializing MCP connections...\nYou\n# Typesense Search Presets and Stopwords ## Background You are building a small search backend on top of https://typesense.org, a fast, typo-tolerant in-memory search engine. The Typesense server binary is already installed in the environment at `/usr/local/bin/typesense-server`, but it is **not running**. Two of Typesense's operational features are central to this task: * **Presets**: a named, server-side bundle of search parameters that a client can reference by name at query time (via the `preset` parameter) instead of resending every parameter on each request. * **Stopwords sets**: a named list of keywords that Typesense removes from the *search query* (not from indexed documents) before matching. Your job is to stand up a Typesense instance, index a fixed catalogue of books, register a reusable preset and a stopwords set, and expose a small command-line tool that runs searches. The tool must be able to run the exact same logical search in two  ... [truncated]\nstderr: \u001b[37m2026-07-14 04:45:46.399\u001b[39m\u001b[0m\u001b[0m\t\u001b[32m\u001b[1mDEBUG\u001b[22m\u001b[39m\u001b[0m\u001b[0m\t\u001b[37m\u001b[39m\u001b[0m\u001b[0m\u001b[1m\u001b[37m\tPochi\u001b[39m\u001b[22m\u001b[0m\u001b[0m\tpochi v0.6.17\n\u001b[37m2026-07-14 04:45:46.405\u001b[39m\u001b[0m\u001b[0m\t\u001b[32m\u001b[1mDEBUG\u001b[22m\u001b[39m\u001b[0m\u001b[0m\t\u001b[37mnative:7\u001b[39m\u001b[0m\u001b[0m\u001b[1m\u001b[37m\tPochiConfigManager\u001b[39m\u001b[22m\u001b[0m\u001b[0m\tadd workspace config: /root/.pochi/config.jsonc\n\u001b[37m2026-07-14 04:45:46.489\u001b[39m\u001b[0m\u001b[0m\t\u001b[32m\u001b[1mDEBUG\u001b[22m\u001b[39m\u001b[0m\u001b[0m\t\u001b[37mnative:7\u001b[39m\u001b[0m\u001b[0m\u001b[1m\u001b[37m\tBuiltInBundle\u001b[39m\u001b[22m\u001b[0m\u001b[0m\tMaterializing 16 built-in files to /tmp/pochi-builtin-2e56a4fb1f88f581\n\u001b[37m2026-07-14 04:45:46.711\u001b[39m\u001b[0m\u001b[0m\t\u001b[32m\u001b[1mDEBUG\u001b[22m\u001b[39m\u001b[0m\u001b[0m\t\u001b[37m/$bunfs/pochi:524760\u001b[39m\u001b[0m\u001b[0m\u001b[1m\u001b[37m\tloadAgents\u001b[39m\u001b[22m\u001b[0m\u001b[0m\tLoaded 6 custom agents (6 valid, 0 invalid)\n\u001b[37m2026-07-14 04:45:46.808\u001b[39m\u001b[0m\u001b[0m\t\u001b[32m\u001b[1mDEBUG\u001b[22m\u001b[39m\u001b[0m\u001b[0m\t\u001b[37m/$bunfs/pochi:524761\u001b[39m\u001b[0m\u001b[0m\u001b[1m\u001b[37m\tloadSkills\u001b[39m\u001b[22m\u001b[0m\u001b[0m\tLoaded 3 skills (3 valid, 0 invalid)\n\u001b[37m2026-07-14 04:45:46.902\u001b[39m\u001b[0m\u001b[0m\t\u001b[32m\u001b[1mDEBUG\u001b[22m\u001b[3 ... [truncated]",
+        "exception_traceback": "Traceback (most recent call last):\n  File \"/home/kw/.local/share/uv/tools/harbor/lib/python3.12/site-packages/harbor/trial/single_step.py\", line 77, in _run_agent\n    await self._run_agent_phase(\n  File \"/home/kw/.local/share/uv/tools/harbor/lib/python3.12/site-packages/harbor/trial/trial.py\", line 442, in _run_agent_phase\n    await asyncio.wait_for(\n  File \"/opt/miniconda3/lib/python3.12/asyncio/tasks.py\", line 520, in wait_for\n    return await fut\n           ^^^^^^^^^\n  File \"/home/kw/.local/share/uv/tools/harbor/lib/python3.12/site-packages/harbor/agents/installed/base.py\", line 105, in wrapper\n    return await fn(self, instruction, *args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/kw/code/zealt/pochi-harbor/agents/pochi.py\", line 230, in run\n    await self.exec_as_agent(\n  File \"/home/kw/.local/share/uv/tools/harbor/lib/python3.12/site-packages/harbor/agents/installed/base.py\", line 477, in exec_as_agent\n    return await self._exec(\n           ^^^^^^^^^^^^^^^^^\n  File \"/home/kw/.local/share/uv/tools/harbor/lib/python3.12/site-packages/harbor/agents/installed/base.py\", line 444, in _exec\n    raise self._classify_exec_error(command, result)\nharbor.agents.installed.base.NonZeroAgentExitCodeError: Command failed (exit 143): cat > /tmp/pochi_cmd.sh << 'CMD_EOF'\nset -o pipefail\npochi --model minimax/MiniMax-M3 --max-steps 200 --max-retries 10 --blobs-dir /logs/agent/pochi/blobs --experimental-stream-trajectory /logs/agent/pochi/trajectory.jsonl --experimental-stream-trajectory-strip-duplicates > >(tee /logs/agent/pochi/stdout.txt) 2> >(tee /logs/agent/pochi/stderr.txt >&2) <<'EOF'\n# Typesense Search Presets and Stopwords\n\n## Background\nYou are building a small search backend on top of [Typesense](https://typesense.org), a fast, typo-tolerant in-memory search engine. The Typesense server binary is already installed in the environment at `/usr/local/bin/typesense-server`, but it is **not running**. Two of Typesense's operational features are central to this task:\n\n- **Presets**: a named, server-side bundle of search parameters that a client can reference by name at query time (via the `preset` parameter) instead of resending every parameter on each request.\n- **Stopwords sets**: a named list of keywords that Typesense removes from the *search query* (not from indexed documents) before matching.\n\nYour job is to stand up a Typesense instance, index a fixed catalogue of books, register a reusable preset and a stopwords set, and expose a small command-line tool that runs searches. The tool must be able to run the exact same logical search in two ways — driven purely by the stored preset, or by passing the equivalent parameters explicitly — and both must return identical results.\n\n## Requirements\n- Start a Typesense server locally on port `8108`, using the API key `xyz` (the standard local key, matching the research setup), with a persistent data directory.\n- Create a collection named `library` with these fields: `title` (`string`), `author` (`string`), `points` (`int32`), and set `points` as the `default_sorting_field`.\n- Index exactly the following 5 documents (use these `id` values verbatim):\n\n  ```json\n  [\n    {\"id\": \"1\", \"title\": \"The Great Gatsby\", \"author\": \"F Scott Fitzgerald\", \"points\": 90},\n    {\"id\": \"2\", \"title\": \"The Wizard of Oz\", \"author\": \"L Frank Baum\", \"points\": 70},\n    {\"id\": \"3\", \"title\": \"A Wizard of Earthsea\", \"author\": \"Ursula K Le Guin\", \"points\": 85},\n    {\"id\": \"4\", \"title\": \"Harry Potter and the Sorcerers Stone\", \"author\": \"J K Rowling\", \"points\": 95},\n    {\"id\": \"5\", \"title\": \"The Lord of the Rings\", \"author\": \"J R R Tolkien\", \"points\": 99}\n  ]\n  ```\n\n- Create a stopwords set named `en_stopwords` (locale `en`) containing the keywords `the`, `a`, `of`, and `and`.\n- Create a preset named `library_default` whose stored parameters query the `title` and `author` fields, sort by `points` in descending order, and apply the `en_stopwords` stopwords set.\n- Provide a rerunnable CLI that searches the `library` collection and can either drive the search entirely from the `library_default` preset or from the equivalent parameters passed explicitly.\n\n## Implementation Hints\n- Any language/SDK or plain HTTP calls to the Typesense REST API are acceptable; interact with the *real* running server (do not mock it).\n- Stopwords are removed from the query at *search* time only — they are not stripped from indexed documents — and Typesense tokenizes and lowercases stopword entries when it stores the set.\n- Remember that a preset referenced by the single-collection document-search endpoint must store its `value` as a flat object of search parameters (not a multi-search `searches` array); the `stopwords` set name can be one of those stored parameters.\n- Explicit search parameters and the preset must produce identical result sets, so keep the explicit path and the preset content in agreement.\n- Setup must be idempotent (safe to run more than once even if the collection, preset, or stopwords set already exists).\n- Project path: /home/user/typesense-app\n- Setup command: `python3 run.py --setup` — starts/ensures the server, creates the collection, indexes the documents, and registers the `en_stopwords` set and `library_default` preset. It must be safe to re-run.\n- Search command: `python3 run.py --q \"<query text>\"` — runs a search on the `library` collection using **only** the `library_default` preset (send just the preset reference plus the query text `q`; do not resend query_by/sort_by/stopwords).\n- Explicit variant: `python3 run.py --q \"<query text>\" --explicit` — runs the logically equivalent search **without** referencing the preset, passing `query_by`, `sort_by`, and the `stopwords` set explicitly instead.\n- Both search commands must print to stdout a single JSON object with exactly the keys `found` (integer total number of matches) and `hits` (an array of the matching document `id` strings, in the order Typesense returns them). Example shape: `{\"found\": 2, \"hits\": [\"3\", \"2\"]}`.\n\n\nEOF\nCMD_EOF\nsetsid --wait bash /tmp/pochi_cmd.sh &\nSETSID_PID=$!\necho $SETSID_PID > /tmp/setsid_bash_pochi_cmd.pid\nwait $SETSID_PID 2>/dev/null\nstdout: - Initializing MCP connections...\nYou\n# Typesense Search Presets and Stopwords ## Background You are building a small search backend on top of https://typesense.org, a fast, typo-tolerant in-memory search engine. The Typesense server binary is already installed in the environment at `/usr/local/bin/typesense-server`, but it is **not running**. Two of Typesense's operational features are central to this task: * **Presets**: a named, server-side bundle of search parameters that a client can reference by name at query time (via the `preset` parameter) instead of resending every parameter on each request. * **Stopwords sets**: a named list of keywords that Typesense removes from the *search query* (not from indexed documents) before matching. Your job is to stand up a Typesense instance, index a fixed catalogue of books, register a reusable preset and a stopwords set, and expose a small command-line tool that runs searches. The tool must be able to run the exact same logical search in two  ... [truncated]\nstderr: \u001b[37m2026-07-14 04:45:46.399\u001b[39m\u001b[0m\u001b[0m\t\u001b[32m\u001b[1mDEBUG\u001b[22m\u001b[39m\u001b[0m\u001b[0m\t\u001b[37m\u001b[39m\u001b[0m\u001b[0m\u001b[1m\u001b[37m\tPochi\u001b[39m\u001b[22m\u001b[0m\u001b[0m\tpochi v0.6.17\n\u001b[37m2026-07-14 04:45:46.405\u001b[39m\u001b[0m\u001b[0m\t\u001b[32m\u001b[1mDEBUG\u001b[22m\u001b[39m\u001b[0m\u001b[0m\t\u001b[37mnative:7\u001b[39m\u001b[0m\u001b[0m\u001b[1m\u001b[37m\tPochiConfigManager\u001b[39m\u001b[22m\u001b[0m\u001b[0m\tadd workspace config: /root/.pochi/config.jsonc\n\u001b[37m2026-07-14 04:45:46.489\u001b[39m\u001b[0m\u001b[0m\t\u001b[32m\u001b[1mDEBUG\u001b[22m\u001b[39m\u001b[0m\u001b[0m\t\u001b[37mnative:7\u001b[39m\u001b[0m\u001b[0m\u001b[1m\u001b[37m\tBuiltInBundle\u001b[39m\u001b[22m\u001b[0m\u001b[0m\tMaterializing 16 built-in files to /tmp/pochi-builtin-2e56a4fb1f88f581\n\u001b[37m2026-07-14 04:45:46.711\u001b[39m\u001b[0m\u001b[0m\t\u001b[32m\u001b[1mDEBUG\u001b[22m\u001b[39m\u001b[0m\u001b[0m\t\u001b[37m/$bunfs/pochi:524760\u001b[39m\u001b[0m\u001b[0m\u001b[1m\u001b[37m\tloadAgents\u001b[39m\u001b[22m\u001b[0m\u001b[0m\tLoaded 6 custom agents (6 valid, 0 invalid)\n\u001b[37m2026-07-14 04:45:46.808\u001b[39m\u001b[0m\u001b[0m\t\u001b[32m\u001b[1mDEBUG\u001b[22m\u001b[39m\u001b[0m\u001b[0m\t\u001b[37m/$bunfs/pochi:524761\u001b[39m\u001b[0m\u001b[0m\u001b[1m\u001b[37m\tloadSkills\u001b[39m\u001b[22m\u001b[0m\u001b[0m\tLoaded 3 skills (3 valid, 0 invalid)\n\u001b[37m2026-07-14 04:45:46.902\u001b[39m\u001b[0m\u001b[0m\t\u001b[32m\u001b[1mDEBUG\u001b[22m\u001b[3 ... [truncated]\n",
+        "occurred_at": "2026-07-14T12:49:14.953860"
+    },
+    "started_at": "2026-07-14T04:45:32.778328Z",
+    "finished_at": "2026-07-14T04:49:33.465607Z",
+    "environment_setup": {
+        "started_at": "2026-07-14T04:45:32.918920Z",
+        "finished_at": "2026-07-14T04:45:37.772838Z"
+    },
+    "agent_setup": {
+        "started_at": "2026-07-14T04:45:37.772882Z",
+        "finished_at": "2026-07-14T04:45:43.373362Z"
+    },
+    "agent_execution": {
+        "started_at": "2026-07-14T04:45:43.373526Z",
+        "finished_at": "2026-07-14T04:49:14.949526Z"
+    },
+    "verifier": {
+        "started_at": "2026-07-14T04:49:24.937307Z",
+        "finished_at": "2026-07-14T04:49:32.850980Z"
+    },
+    "step_results": null
+}

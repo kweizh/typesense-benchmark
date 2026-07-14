@@ -1,0 +1,18 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-7.4.4, pluggy-1.4.0
+rootdir: /tests
+plugins: json-ctrf-0.5.2
+collected 7 items
+
+../tests/test_final_state.py .......                                     [100%]
+
+==================================== PASSES ====================================
+=========================== short test summary info ============================
+PASSED ../tests/test_final_state.py::test_collection_still_exists_in_place
+PASSED ../tests/test_final_state.py::test_vector_field_migrated_to_8_dims
+PASSED ../tests/test_final_state.py::test_non_vector_fields_intact
+PASSED ../tests/test_final_state.py::test_document_count_unchanged
+PASSED ../tests/test_final_state.py::test_documents_preserved
+PASSED ../tests/test_final_state.py::test_embeddings_regenerated_to_8_dims
+PASSED ../tests/test_final_state.py::test_vector_search_works
+============================== 7 passed in 4.12s ===============================

@@ -1,0 +1,128 @@
+Log file created at: 2026/07/14 04:40:26
+Running on machine: 2ca56491-6f61-47b0-9819-08f39d0f2c99
+Running duration (h:mm:ss): 0:00:00
+Log line format: [IWEF]yyyymmdd hh:mm:ss.uuuuuu threadid file:line] msg
+I20260714 04:40:26.354136   369 typesense_server_utils.cpp:341] Starting Typesense 26.0
+I20260714 04:40:26.354291   369 typesense_server_utils.cpp:344] Typesense is using jemalloc.
+I20260714 04:40:26.355379   369 typesense_server_utils.cpp:395] Thread pool size: 512
+I20260714 04:40:26.444986   369 store.h:64] Initializing DB by opening state dir: /home/user/typesense-task/typesense-data/db
+I20260714 04:40:26.512326   369 store.h:64] Initializing DB by opening state dir: /home/user/typesense-task/typesense-data/meta
+I20260714 04:40:26.519747   369 ratelimit_manager.cpp:546] Loaded 0 rate limit rules.
+I20260714 04:40:26.519770   369 ratelimit_manager.cpp:547] Loaded 0 rate limit bans.
+I20260714 04:40:26.519850   369 typesense_server_utils.cpp:458] Loaded 0(s) conversations.
+I20260714 04:40:26.519865   369 typesense_server_utils.cpp:466] Loaded 0(s) conversation models.
+I20260714 04:40:26.519928   369 typesense_server_utils.cpp:547] Starting API service...
+I20260714 04:40:26.520107   369 http_server.cpp:178] Typesense has started listening on port 8108
+I20260714 04:40:26.520228  1998 batched_indexer.cpp:183] Starting batch indexer with 512 threads.
+I20260714 04:40:26.520308  1997 typesense_server_utils.cpp:243] Since no --nodes argument is provided, starting a single node Typesense cluster.
+I20260714 04:40:26.520329  2000 typesense_server_utils.cpp:490] Conversation garbage collector thread started.
+I20260714 04:40:26.529304  1997 server.cpp:1181] Server[braft::RaftStatImpl+braft::FileServiceImpl+braft::RaftServiceImpl+braft::CliServiceImpl] is serving on port=8107.
+I20260714 04:40:26.529332  1997 server.cpp:1184] Check out http://2ca56491-6f61-47b0-9819-08f39d0f2c99:8107 in web browser.
+I20260714 04:40:26.529536  1997 raft_server.cpp:68] Nodes configuration: 172.20.0.2:8107:8108
+I20260714 04:40:26.529582  1997 raft_server.cpp:111] Snapshot does not exist. We will remove db dir and init db fresh.
+I20260714 04:40:26.530076  1997 store.h:299] rm /home/user/typesense-task/typesense-data/db success
+I20260714 04:40:26.530169  1997 store.h:64] Initializing DB by opening state dir: /home/user/typesense-task/typesense-data/db
+I20260714 04:40:26.535465  1997 store.h:323] DB open success!
+I20260714 04:40:26.535485  1997 raft_server.cpp:616] Loading collections from disk...
+I20260714 04:40:26.535504  1997 collection_manager.cpp:263] CollectionManager::load()
+I20260714 04:40:26.535526  1997 auth_manager.cpp:34] Indexing 0 API key(s) found on disk.
+I20260714 04:40:26.535539  1997 collection_manager.cpp:299] Loading upto 256 collections in parallel, 1000 documents at a time.
+I20260714 04:40:26.535549  1997 collection_manager.cpp:308] Found 0 collection(s) on disk.
+I20260714 04:40:26.542456  1998 batched_indexer.cpp:188] BatchedIndexer skip_index: -9999
+I20260714 04:40:26.546080  1997 collection_manager.cpp:425] Loaded 0 collection(s).
+I20260714 04:40:26.601572  1997 raft_server.cpp:623] Finished loading collections from disk.
+I20260714 04:40:26.601629  1997 raft_server.cpp:630] Initializing batched indexer from snapshot state...
+I20260714 04:40:26.602506  1997 log.cpp:690] Use murmurhash32 as the checksum type of appending entries
+W20260714 04:40:26.602571  1997 protobuf_file.cpp:91] open file failed, path: /home/user/typesense-task/typesense-data/state/log/log_meta: FILE_ERROR_NOT_FOUND
+W20260714 04:40:26.602591  1997 log.cpp:698] /home/user/typesense-task/typesense-data/state/log is empty
+I20260714 04:40:26.603202  1997 log.cpp:1150] log save_meta /home/user/typesense-task/typesense-data/state/log/log_meta first_log_index: 1 time: 568
+W20260714 04:40:26.603485  1997 protobuf_file.cpp:91] open file failed, path: /home/user/typesense-task/typesense-data/state/meta/raft_meta: FILE_ERROR_NOT_FOUND
+I20260714 04:40:26.603529  1997 raft_meta.cpp:521] Loaded single stable meta, path /home/user/typesense-task/typesense-data/state/meta term 1 votedfor 0.0.0.0:0:0 time: 41
+I20260714 04:40:26.603564  1997 node.cpp:608] node default_group:172.20.0.2:8107:8108 init, term: 1 last_log_id: (index=0,term=0) conf: 172.20.0.2:8107:8108 old_conf: 
+I20260714 04:40:26.603617  1997 node.cpp:1645] node default_group:172.20.0.2:8107:8108 term 1 start vote and grant vote self
+I20260714 04:40:26.604032  1997 raft_meta.cpp:546] Saved single stable meta, path /home/user/typesense-task/typesense-data/state/meta term 2 votedfor 172.20.0.2:8107:8108 time: 384
+I20260714 04:40:26.604069  1997 node.cpp:1899] node default_group:172.20.0.2:8107:8108 term 2 become leader of group 172.20.0.2:8107:8108 
+I20260714 04:40:26.604763  1997 raft_server.cpp:134] Node last_index: 0
+I20260714 04:40:26.604791  1997 typesense_server_utils.cpp:291] Typesense peering service is running on 172.20.0.2:8107
+I20260714 04:40:26.604809  1997 typesense_server_utils.cpp:292] Snapshot interval configured as: 3600s
+I20260714 04:40:26.604827  1997 typesense_server_utils.cpp:293] Snapshot max byte count configured as: 4194304
+W20260714 04:40:26.604847  1997 controller.cpp:1550] SIGINT was installed with 1
+I20260714 04:40:26.604877  1997 raft_server.cpp:693] Term: 2, pending_queue: 1, last_index: 0, committed: 0, known_applied: 0, applying: 0, pending_writes: 0, queued_writes: 0, local_sequence: 0
+W20260714 04:40:26.604897  1997 node.cpp:843] [default_group:172.20.0.2:8107:8108 ] Refusing concurrent configuration changing
+I20260714 04:40:26.604923  2120 log.cpp:114] Created new segment `/home/user/typesense-task/typesense-data/state/log/log_inprogress_00000000000000000001' with fd=24
+E20260714 04:40:26.604926  1997 raft_server.cpp:749] Node not ready yet (known_applied_index is 0).
+E20260714 04:40:26.604986  2122 raft_server.h:62] Peer refresh failed, error: Doing another configuration change
+I20260714 04:40:26.605420  2120 raft_server.h:293] Configuration of this group is 172.20.0.2:8107:8108
+I20260714 04:40:26.605448  2120 node.cpp:3298] node default_group:172.20.0.2:8107:8108 reset ConfigurationCtx, new_peers: 172.20.0.2:8107:8108, old_peers: 172.20.0.2:8107:8108
+I20260714 04:40:26.605464  2120 raft_server.h:276] Node becomes leader, term: 2
+I20260714 04:40:36.605792  1997 raft_server.cpp:693] Term: 2, pending_queue: 0, last_index: 1, committed: 1, known_applied: 1, applying: 0, pending_writes: 0, queued_writes: 0, local_sequence: 0
+I20260714 04:40:36.605979  2141 raft_server.h:60] Peer refresh succeeded!
+I20260714 04:40:46.606725  1997 raft_server.cpp:693] Term: 2, pending_queue: 0, last_index: 1, committed: 1, known_applied: 1, applying: 0, pending_writes: 0, queued_writes: 0, local_sequence: 0
+I20260714 04:40:46.606988  2153 raft_server.h:60] Peer refresh succeeded!
+I20260714 04:40:56.607609  1997 raft_server.cpp:693] Term: 2, pending_queue: 0, last_index: 1, committed: 1, known_applied: 1, applying: 0, pending_writes: 0, queued_writes: 0, local_sequence: 0
+I20260714 04:40:56.607823  2138 raft_server.h:60] Peer refresh succeeded!
+I20260714 04:41:06.608700  1997 raft_server.cpp:693] Term: 2, pending_queue: 0, last_index: 1, committed: 1, known_applied: 1, applying: 0, pending_writes: 0, queued_writes: 0, local_sequence: 0
+I20260714 04:41:06.608989  2124 raft_server.h:60] Peer refresh succeeded!
+W20260714 04:41:15.144493  2385 field.cpp:17] Collection schema cannot contain a field with name `id`. Ignoring field.
+I20260714 04:41:16.609804  1997 raft_server.cpp:693] Term: 2, pending_queue: 0, last_index: 5, committed: 5, known_applied: 5, applying: 0, pending_writes: 0, queued_writes: 0, local_sequence: 40
+I20260714 04:41:16.610123  2135 raft_server.h:60] Peer refresh succeeded!
+W20260714 04:41:25.627255  2385 field.cpp:17] Collection schema cannot contain a field with name `id`. Ignoring field.
+I20260714 04:41:26.520464  2000 conversation_manager.cpp:187] Cleared 0 expired conversations
+I20260714 04:41:26.610909  1997 raft_server.cpp:693] Term: 2, pending_queue: 0, last_index: 8, committed: 8, known_applied: 8, applying: 0, pending_writes: 0, queued_writes: 0, local_sequence: 79
+I20260714 04:41:26.611047  2167 raft_server.h:60] Peer refresh succeeded!
+I20260714 04:41:27.548522  1998 batched_indexer.cpp:415] Running GC for aborted requests, req map size: 0
+I20260714 04:41:36.611833  1997 raft_server.cpp:693] Term: 2, pending_queue: 0, last_index: 10, committed: 10, known_applied: 10, applying: 0, pending_writes: 0, queued_writes: 0, local_sequence: 86
+I20260714 04:41:36.611995  2122 raft_server.h:60] Peer refresh succeeded!
+I20260714 04:41:46.612852  1997 raft_server.cpp:693] Term: 2, pending_queue: 0, last_index: 10, committed: 10, known_applied: 10, applying: 0, pending_writes: 0, queued_writes: 0, local_sequence: 86
+I20260714 04:41:46.613021  2135 raft_server.h:60] Peer refresh succeeded!
+I20260714 04:41:56.613737  1997 raft_server.cpp:693] Term: 2, pending_queue: 0, last_index: 10, committed: 10, known_applied: 10, applying: 0, pending_writes: 0, queued_writes: 0, local_sequence: 86
+I20260714 04:41:56.613842  2141 raft_server.h:60] Peer refresh succeeded!
+I20260714 04:42:06.614655  1997 raft_server.cpp:693] Term: 2, pending_queue: 0, last_index: 10, committed: 10, known_applied: 10, applying: 0, pending_writes: 0, queued_writes: 0, local_sequence: 86
+I20260714 04:42:06.614794  2120 raft_server.h:60] Peer refresh succeeded!
+I20260714 04:42:16.615569  1997 raft_server.cpp:693] Term: 2, pending_queue: 0, last_index: 10, committed: 10, known_applied: 10, applying: 0, pending_writes: 0, queued_writes: 0, local_sequence: 86
+I20260714 04:42:16.615660  2153 raft_server.h:60] Peer refresh succeeded!
+I20260714 04:42:26.520635  2000 conversation_manager.cpp:187] Cleared 0 expired conversations
+I20260714 04:42:26.616500  1997 raft_server.cpp:693] Term: 2, pending_queue: 0, last_index: 10, committed: 10, known_applied: 10, applying: 0, pending_writes: 0, queued_writes: 0, local_sequence: 86
+I20260714 04:42:26.616640  2124 raft_server.h:60] Peer refresh succeeded!
+I20260714 04:42:28.553205  1998 batched_indexer.cpp:415] Running GC for aborted requests, req map size: 0
+I20260714 04:42:36.617401  1997 raft_server.cpp:693] Term: 2, pending_queue: 0, last_index: 10, committed: 10, known_applied: 10, applying: 0, pending_writes: 0, queued_writes: 0, local_sequence: 86
+I20260714 04:42:36.617519  2138 raft_server.h:60] Peer refresh succeeded!
+I20260714 04:42:46.618268  1997 raft_server.cpp:693] Term: 2, pending_queue: 0, last_index: 10, committed: 10, known_applied: 10, applying: 0, pending_writes: 0, queued_writes: 0, local_sequence: 86
+I20260714 04:42:46.618534  2139 raft_server.h:60] Peer refresh succeeded!
+I20260714 04:42:56.619215  1997 raft_server.cpp:693] Term: 2, pending_queue: 0, last_index: 10, committed: 10, known_applied: 10, applying: 0, pending_writes: 0, queued_writes: 0, local_sequence: 86
+I20260714 04:42:56.619411  2182 raft_server.h:60] Peer refresh succeeded!
+I20260714 04:43:00.981053   369 typesense_server_utils.cpp:58] Stopping Typesense server...
+I20260714 04:43:01.619782  1997 typesense_server_utils.cpp:324] Typesense peering service is going to quit.
+I20260714 04:43:01.619860  1997 raft_server.cpp:973] Set shutting_down = true
+I20260714 04:43:01.619889  1997 raft_server.cpp:977] Waiting for in-flight writes to finish...
+I20260714 04:43:01.619913  1997 raft_server.cpp:983] Replication state shutdown, store sequence: 86
+I20260714 04:43:01.619940  1997 raft_server.cpp:987] node->shutdown
+I20260714 04:43:01.619964  1997 node.cpp:961] node default_group:172.20.0.2:8107:8108 shutdown, current_term 2 state LEADER
+I20260714 04:43:01.620065  1997 replicator.cpp:1499] Group default_group Fail to find the next candidate
+I20260714 04:43:01.620105  1997 raft_server.cpp:991] node->join
+I20260714 04:43:01.620121  2128 raft_server.h:281] Node stepped down : Raft node is going to quit.
+I20260714 04:43:01.620182  2128 raft_server.h:285] This node is down
+I20260714 04:43:01.620225  1997 node.cpp:961] node default_group:172.20.0.2:8107:8108 shutdown, current_term 2 state SHUTDOWN
+I20260714 04:43:01.620414  1997 typesense_server_utils.cpp:329] raft_server.stop()
+I20260714 04:43:01.620448  1997 server.cpp:1241] Server[braft::RaftStatImpl+braft::FileServiceImpl+braft::RaftServiceImpl+braft::CliServiceImpl] is going to quit
+I20260714 04:43:01.620769  1997 typesense_server_utils.cpp:332] raft_server.join()
+I20260714 04:43:01.620901  1997 typesense_server_utils.cpp:335] Typesense peering service has quit.
+I20260714 04:43:01.621821  1997 typesense_server_utils.cpp:511] Shutting down batch indexer...
+I20260714 04:43:01.621865  1997 typesense_server_utils.cpp:514] Waiting for batch indexing thread to be done...
+I20260714 04:43:02.555799  1998 batched_indexer.cpp:468] Notifying batch indexer threads about shutdown...
+I20260714 04:43:02.558269  1998 batched_indexer.cpp:474] Notifying reference sequence thread about shutdown...
+I20260714 04:43:02.558477  1998 batched_indexer.cpp:478] Batched indexer threadpool shutdown...
+I20260714 04:43:02.596700  1997 typesense_server_utils.cpp:517] Shutting down event sink thread...
+I20260714 04:43:02.596779  1997 typesense_server_utils.cpp:520] Waiting for event sink thread to be done...
+I20260714 04:43:02.596882  1997 typesense_server_utils.cpp:523] Shutting down conversation garbage collector thread...
+I20260714 04:43:02.596920  1997 typesense_server_utils.cpp:526] Waiting for conversation garbage collector thread to be done...
+I20260714 04:43:02.597013  1997 typesense_server_utils.cpp:529] Waiting for housekeeping thread to be done...
+I20260714 04:43:02.597150  1997 typesense_server_utils.cpp:533] Shutting down server_thread_pool
+I20260714 04:43:02.606640  1997 typesense_server_utils.cpp:537] Shutting down app_thread_pool.
+I20260714 04:43:02.616181  1997 typesense_server_utils.cpp:541] Shutting down replication_thread_pool.
+I20260714 04:43:02.709182   369 typesense_server_utils.cpp:554] Typesense API service has quit.
+I20260714 04:43:02.709295   369 typesense_server_utils.cpp:558] Deleting batch indexer
+I20260714 04:43:02.709354   369 typesense_server_utils.cpp:562] CURL clean up
+I20260714 04:43:02.709367   369 typesense_server_utils.cpp:566] Deleting server
+I20260714 04:43:02.709534   369 typesense_server_utils.cpp:570] CollectionManager dispose, this might take some time...
+I20260714 04:43:02.712606   369 typesense_server_utils.cpp:577] Bye.

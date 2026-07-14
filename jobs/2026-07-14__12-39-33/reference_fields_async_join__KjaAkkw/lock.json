@@ -1,0 +1,44 @@
+{
+    "schema_version": 1,
+    "task": {
+        "name": "reference_fields_async_join",
+        "type": "local",
+        "digest": "sha256:41fc005095d130b953a7fea61c6c19f1a4fecd7b7897448d1a71702db01ac8b3",
+        "source": "pending-tasks",
+        "path": "/home/kw/code/zealt/typesense-benchmark/scratchpad/pending-tasks/reference_fields_async_join"
+    },
+    "install_only": false,
+    "timeout_multiplier": 1.0,
+    "agent": {
+        "import_path": "agents.pochi:Pochi",
+        "model_name": "anthropic/claude-4-6-sonnet",
+        "skills": [],
+        "extra_allowed_hosts": [],
+        "kwargs": {},
+        "env": {
+            "POCHI_API_KEY": "${POCHI_API_KEY}"
+        },
+        "mcp_servers": []
+    },
+    "skills": [],
+    "environment": {
+        "type": "daytona",
+        "force_build": false,
+        "delete": true,
+        "cpu_enforcement_policy": "auto",
+        "memory_enforcement_policy": "auto",
+        "mounts": [
+            {
+                "type": "bind",
+                "source": "test_initial_state.py",
+                "target": "/bootstrap/test_initial_state.py"
+            }
+        ],
+        "extra_docker_compose": [],
+        "kwargs": {},
+        "extra_allowed_hosts": []
+    },
+    "verifier": {
+        "disable": false
+    }
+}

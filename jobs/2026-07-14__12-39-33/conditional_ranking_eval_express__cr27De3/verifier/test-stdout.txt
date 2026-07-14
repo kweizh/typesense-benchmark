@@ -1,0 +1,16 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-7.4.4, pluggy-1.4.0
+rootdir: /tests
+plugins: json-ctrf-0.5.2, anyio-4.14.2
+collected 5 items
+
+../tests/test_final_state.py .....                                       [100%]
+
+==================================== PASSES ====================================
+=========================== short test summary info ============================
+PASSED ../tests/test_final_state.py::test_collection_indexed
+PASSED ../tests/test_final_state.py::test_document_fields_p3
+PASSED ../tests/test_final_state.py::test_document_fields_p6
+PASSED ../tests/test_final_state.py::test_ranking_full_multi_signal
+PASSED ../tests/test_final_state.py::test_ranking_second_query
+============================== 5 passed in 0.29s ===============================

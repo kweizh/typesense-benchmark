@@ -1,0 +1,155 @@
+{
+    "reportFormat": "CTRF",
+    "specVersion": "0.0.0",
+    "timestamp": "2026-07-14T04:22:30.393368+00:00",
+    "generatedBy": "pytest",
+    "results": {
+        "tool": {
+            "name": "pytest",
+            "version": "7.4.4"
+        },
+        "summary": {
+            "tests": 14,
+            "passed": 14,
+            "failed": 0,
+            "skipped": 0,
+            "pending": 0,
+            "other": 0,
+            "start": 1784002944134,
+            "stop": 1784002950393
+        },
+        "environment": {
+            "buildName": "Pytest JSON CTRF Report",
+            "buildNumber": "000",
+            "buildUrl": "https://ctrf.io"
+        },
+        "tests": [
+            {
+                "name": "test_final_state.py::test_collection_schema",
+                "status": "passed",
+                "duration": 4210,
+                "start": 1784002944181,
+                "stop": 1784002948391,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            },
+            {
+                "name": "test_final_state.py::test_report_total",
+                "status": "passed",
+                "duration": 1,
+                "start": 1784002948391,
+                "stop": 1784002948392,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            },
+            {
+                "name": "test_final_state.py::test_report_imported_first_pass",
+                "status": "passed",
+                "duration": 0,
+                "start": 1784002948393,
+                "stop": 1784002948393,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            },
+            {
+                "name": "test_final_state.py::test_report_recovered_count",
+                "status": "passed",
+                "duration": 0,
+                "start": 1784002948394,
+                "stop": 1784002948394,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            },
+            {
+                "name": "test_final_state.py::test_report_failed_count",
+                "status": "passed",
+                "duration": 0,
+                "start": 1784002948395,
+                "stop": 1784002948395,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            },
+            {
+                "name": "test_final_state.py::test_report_counts_consistent",
+                "status": "passed",
+                "duration": 0,
+                "start": 1784002948396,
+                "stop": 1784002948396,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            },
+            {
+                "name": "test_final_state.py::test_report_recovered_ids",
+                "status": "passed",
+                "duration": 0,
+                "start": 1784002948397,
+                "stop": 1784002948397,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            },
+            {
+                "name": "test_final_state.py::test_report_failed_ids",
+                "status": "passed",
+                "duration": 1,
+                "start": 1784002948398,
+                "stop": 1784002948399,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            },
+            {
+                "name": "test_final_state.py::test_final_collection_document_count",
+                "status": "passed",
+                "duration": 3,
+                "start": 1784002948399,
+                "stop": 1784002948402,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            },
+            {
+                "name": "test_final_state.py::test_failed_documents_absent",
+                "status": "passed",
+                "duration": 6,
+                "start": 1784002948403,
+                "stop": 1784002948409,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            },
+            {
+                "name": "test_final_state.py::test_recovered_currency_price_document",
+                "status": "passed",
+                "duration": 3,
+                "start": 1784002948410,
+                "stop": 1784002948413,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            },
+            {
+                "name": "test_final_state.py::test_recovered_missing_category_document",
+                "status": "passed",
+                "duration": 3,
+                "start": 1784002948413,
+                "stop": 1784002948416,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            },
+            {
+                "name": "test_final_state.py::test_recovered_combined_document",
+                "status": "passed",
+                "duration": 3,
+                "start": 1784002948417,
+                "stop": 1784002948420,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            },
+            {
+                "name": "test_final_state.py::test_first_pass_coercion_documents",
+                "status": "passed",
+                "duration": 1972,
+                "start": 1784002948420,
+                "stop": 1784002950392,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            }
+        ]
+    }
+}

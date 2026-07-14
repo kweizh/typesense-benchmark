@@ -1,0 +1,92 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-7.4.4, pluggy-1.4.0
+rootdir: /tests
+plugins: xprocess-1.0.2, json-ctrf-0.5.2, anyio-4.14.2
+collected 7 items
+
+../tests/test_final_state.py .......                                     [100%]
+
+==================================== PASSES ====================================
+___________________________ test_baseline_no_filters ___________________________
+---------------------------- Captured stdout setup -----------------------------
+/tests/.pytest_cache/d/.xprocess/typesense_server$ /usr/local/bin/typesense-server --data-dir=/tmp/ts-verify-data --api-key=xyz --port=8108 --enable-cors
+process 'typesense_server' started pid=3792
+typesense_server process startup detected
+===== [STARTED] typesense_server log begin =====
+@@__xproc_block_delimiter__@@
+I20260714 04:51:52.772414  3792 typesense_server_utils.cpp:341] Starting Typesense 26.0
+I20260714 04:51:52.772469  3792 typesense_server_utils.cpp:344] Typesense is using jemalloc.
+I20260714 04:51:52.773262  3792 typesense_server_utils.cpp:395] Thread pool size: 512
+I20260714 04:51:52.841131  3792 store.h:64] Initializing DB by opening state dir: /tmp/ts-verify-data/db
+I20260714 04:51:52.847035  3792 store.h:64] Initializing DB by opening state dir: /tmp/ts-verify-data/meta
+I20260714 04:51:52.852648  3792 ratelimit_manager.cpp:546] Loaded 0 rate limit rules.
+I20260714 04:51:52.852669  3792 ratelimit_manager.cpp:547] Loaded 0 rate limit bans.
+I20260714 04:51:52.852737  3792 typesense_server_utils.cpp:458] Loaded 0(s) conversations.
+I20260714 04:51:52.852749  3792 typesense_server_utils.cpp:466] Loaded 0(s) conversation models.
+I20260714 04:51:52.852803  3792 typesense_server_utils.cpp:547] Starting API service...
+I20260714 04:51:52.852958  3792 http_server.cpp:178] Typesense has started listening on port 8108
+I20260714 04:51:52.853091  5393 batched_indexer.cpp:183] Starting batch indexer with 512 threads.
+I20260714 04:51:52.853129  5392 typesense_server_utils.cpp:243] Since no --nodes argument is provided, starting a single node Typesense cluster.
+I20260714 04:51:52.853169  5395 typesense_server_utils.cpp:490] Conversation garbage collector thread started.
+I20260714 04:51:52.897044  5392 server.cpp:1181] Server[braft::RaftStatImpl+braft::FileServiceImpl+braft::RaftServiceImpl+braft::CliServiceImpl] is serving on port=8107.
+I20260714 04:51:52.897078  5392 server.cpp:1184] Check out http://ec0c51d8-4634-4dfa-a54b-99d48bc87f83:8107 in web browser.
+I20260714 04:51:52.897279  5392 raft_server.cpp:68] Nodes configuration: 172.20.0.13:8107:8108
+I20260714 04:51:52.897321  5392 raft_server.cpp:111] Snapshot does not exist. We will remove db dir and init db fresh.
+I20260714 04:51:52.897768  5392 store.h:299] rm /tmp/ts-verify-data/db success
+I20260714 04:51:52.897835  5392 store.h:64] Initializing DB by opening state dir: /tmp/ts-verify-data/db
+I20260714 04:51:52.902483  5392 store.h:323] DB open success!
+I20260714 04:51:52.902499  5392 raft_server.cpp:616] Loading collections from disk...
+I20260714 04:51:52.902511  5392 collection_manager.cpp:263] CollectionManager::load()
+I20260714 04:51:52.902531  5392 auth_manager.cpp:34] Indexing 0 API key(s) found on disk.
+I20260714 04:51:52.902544  5392 collection_manager.cpp:299] Loading upto 256 collections in parallel, 1000 documents at a time.
+I20260714 04:51:52.902552  5392 collection_manager.cpp:308] Found 0 collection(s) on disk.
+I20260714 04:51:52.911123  5393 batched_indexer.cpp:188] BatchedIndexer skip_index: -9999
+I20260714 04:51:52.913378  5392 collection_manager.cpp:425] Loaded 0 collection(s).
+I20260714 04:51:52.917078  5392 raft_server.cpp:623] Finished loading collections from disk.
+I20260714 04:51:52.917100  5392 raft_server.cpp:630] Initializing batched indexer from snapshot state...
+I20260714 04:51:52.917585  5392 log.cpp:690] Use murmurhash32 as the checksum type of appending entries
+W20260714 04:51:52.917620  5392 protobuf_file.cpp:91] open file failed, path: /tmp/ts-verify-data/state/log/log_meta: FILE_ERROR_NOT_FOUND
+W20260714 04:51:52.917631  5392 log.cpp:698] /tmp/ts-verify-data/state/log is empty
+I20260714 04:51:52.917954  5392 log.cpp:1150] log save_meta /tmp/ts-verify-data/state/log/log_meta first_log_index: 1 time: 299
+W20260714 04:51:52.918104  5392 protobuf_file.cpp:91] open file failed, path: /tmp/ts-verify-data/state/meta/raft_meta: FILE_ERROR_NOT_FOUND
+I20260714 04:51:52.918129  5392 raft_meta.cpp:521] Loaded single stable meta, path /tmp/ts-verify-data/state/meta term 1 votedfor 0.0.0.0:0:0 time: 22
+I20260714 04:51:52.918143  5392 node.cpp:608] node default_group:172.20.0.13:8107:8108 init, term: 1 last_log_id: (index=0,term=0) conf: 172.20.0.13:8107:8108 old_conf: 
+I20260714 04:51:52.918176  5392 node.cpp:1645] node default_group:172.20.0.13:8107:8108 term 1 start vote and grant vote self
+I20260714 04:51:52.918422  5392 raft_meta.cpp:546] Saved single stable meta, path /tmp/ts-verify-data/state/meta term 2 votedfor 172.20.0.13:8107:8108 time: 230
+I20260714 04:51:52.918444  5392 node.cpp:1899] node default_group:172.20.0.13:8107:8108 term 2 become leader of group 172.20.0.13:8107:8108 
+I20260714 04:51:52.918834  5392 raft_server.cpp:134] Node last_index: 0
+I20260714 04:51:52.918848  5392 typesense_server_utils.cpp:291] Typesense peering service is running on 172.20.0.13:8107
+I20260714 04:51:52.918859  5392 typesense_server_utils.cpp:292] Snapshot interval configured as: 3600s
+I20260714 04:51:52.918866  5392 typesense_server_utils.cpp:293] Snapshot max byte count configured as: 4194304
+W20260714 04:51:52.918877  5392 controller.cpp:1550] SIGINT was installed with 1
+I20260714 04:51:52.918895  5392 raft_server.cpp:693] Term: 2, pending_queue: 1, last_index: 0, committed: 0, known_applied: 0, applying: 0, pending_writes: 0, queued_writes: 0, local_sequence: 0
+W20260714 04:51:52.918906  5392 node.cpp:843] [default_group:172.20.0.13:8107:8108 ] Refusing concurrent configuration changing
+E20260714 04:51:52.918924  5392 raft_server.cpp:749] Node not ready yet (known_applied_index is 0).
+I20260714 04:51:52.918992  5435 log.cpp:114] Created new segment `/tmp/ts-verify-data/state/log/log_inprogress_00000000000000000001' with fd=23
+E20260714 04:51:52.919032  5421 raft_server.h:62] Peer refresh failed, error: Doing another configuration change
+I20260714 04:51:52.919335  5435 raft_server.h:293] Configuration of this group is 172.20.0.13:8107:8108
+I20260714 04:51:52.919358  5435 node.cpp:3298] node default_group:172.20.0.13:8107:8108 reset ConfigurationCtx, new_peers: 172.20.0.13:8107:8108, old_peers: 172.20.0.13:8107:8108
+I20260714 04:51:52.919373  5435 raft_server.h:276] Node becomes leader, term: 2
+
+===== [STARTED] typesense_server log end =====
+index_data.py stdout:
+ No existing 'products' collection to delete.
+Created 'products' collection.
+Imported 12 product(s).
+Indexing complete.
+
+index_data.py stderr:
+ 
+--------------------------- Captured stdout teardown ---------------------------
+===== [TEARDOWN] typesense_server log begin =====
+
+===== [TEARDOWN] typesense_server log end =====
+=========================== short test summary info ============================
+PASSED ../tests/test_final_state.py::test_baseline_no_filters
+PASSED ../tests/test_final_state.py::test_single_filter_disjunctive
+PASSED ../tests/test_final_state.py::test_multi_field_multi_select
+PASSED ../tests/test_final_state.py::test_facet_query_prefix
+PASSED ../tests/test_final_state.py::test_max_facet_values_cap
+PASSED ../tests/test_final_state.py::test_price_range_filter
+PASSED ../tests/test_final_state.py::test_keyword_query
+============================== 7 passed in 4.72s ===============================

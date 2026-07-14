@@ -1,0 +1,200 @@
+{
+    "reportFormat": "CTRF",
+    "specVersion": "0.0.0",
+    "timestamp": "2026-07-14T04:39:20.302774+00:00",
+    "generatedBy": "pytest",
+    "results": {
+        "tool": {
+            "name": "pytest",
+            "version": "7.4.4"
+        },
+        "summary": {
+            "tests": 12,
+            "passed": 1,
+            "failed": 11,
+            "skipped": 0,
+            "pending": 0,
+            "other": 0,
+            "start": 1784003941086,
+            "stop": 1784003960302
+        },
+        "environment": {
+            "buildName": "Pytest JSON CTRF Report",
+            "buildNumber": "000",
+            "buildUrl": "https://ctrf.io"
+        },
+        "tests": [
+            {
+                "name": "test_final_state.py::test_search_script_exists",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 15,
+                "start": 1784003941130,
+                "stop": 1784003941145,
+                "retries": 0,
+                "file_path": "test_final_state.py",
+                "trace": "def test_search_script_exists():\n        path = os.path.join(PROJECT_DIR, \"search.py\")\n>       assert os.path.isfile(path), f\"Expected search tool at {path}.\"\nE       AssertionError: Expected search tool at /home/user/typo-tuning/search.py.\nE       assert False\nE        +  where False = <function isfile at 0x798f53e18220>('/home/user/typo-tuning/search.py')\nE        +    where <function isfile at 0x798f53e18220> = <module 'posixpath' (frozen)>.isfile\nE        +      where <module 'posixpath' (frozen)> = os.path\n\n/tests/test_final_state.py:128: AssertionError",
+                "message": "The test failed in the call phase due to an assertion error"
+            },
+            {
+                "name": "test_final_state.py::test_catalog_collection_populated",
+                "status": "passed",
+                "duration": 4012,
+                "start": 1784003941145,
+                "stop": 1784003945157,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            },
+            {
+                "name": "test_final_state.py::test_typo_tolerance_behavior",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 14,
+                "start": 1784003945157,
+                "stop": 1784003945171,
+                "retries": 0,
+                "file_path": "test_final_state.py",
+                "tags": [
+                    "parametrize::case_name,query,expected::[('brand_exact', 'Keychron', {'2'}), ('brand_no_typo', 'keichron', set()), ('name_two_typo_six_letters', 'carema', {'3'}), ('four_letter_token_corrected', 'wiff', {'9'}), ('three_letter_token_not_corrected', 'usq', set()), ('drop_tokens_partial', 'Anker Speaker', {'5', '6'}), ('drop_tokens_not_overreaching', 'Camera Bag', {'3'}), ('split_join_join', 'basket ball', {'7'}), ('split_join_split', 'waterbottle', {'8'}), ('no_excess_typo_search', 'charger', {'6'})]::ids_['brand_exact', 'brand_no_typo', 'name_two_typo_six_letters', 'four_letter_token_corrected', 'three_letter_token_not_corrected', 'drop_tokens_partial', 'drop_tokens_not_overreaching', 'split_join_join', 'split_join_split', 'no_excess_typo_search']"
+                ],
+                "trace": "typesense_server = None, case_name = 'brand_exact', query = 'Keychron'\nexpected = {'2'}\n\n    @pytest.mark.parametrize(\n        \"case_name,query,expected\",\n        QUERY_CASES,\n        ids=[c[0] for c in QUERY_CASES],\n    )\n    def test_typo_tolerance_behavior(typesense_server, case_name, query, expected):\n>       actual = _run_search(query)\n\n/tests/test_final_state.py:160: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nquery = 'Keychron'\n\n    def _run_search(query):\n        result = subprocess.run(\n            [\"python3\", \"search.py\", \"--q\", query],\n            capture_output=True,\n            text=True,\n            cwd=PROJECT_DIR,\n            timeout=60,\n        )\n>       assert result.returncode == 0, (\n            f\"`python3 search.py --q {query!r}` exited with code \"\n            f\"{result.returncode}. stderr:\\n{result.stderr}\"\n        )\nE       AssertionError: `python3 search.py --q 'Keychron'` exited with code 2. stderr:\nE         python3: can't open file '/home/user/typo-tuning/search.py': [Errno 2] No such file or directory\nE         \nE       assert 2 == 0\nE        +  where 2 = CompletedProcess(args=['python3', 'search.py', '--q', 'Keychron'], returncode=2, stdout='', stderr=\"python3: can't open file '/home/user/typo-tuning/search.py': [Errno 2] No such file or directory\\n\").returncode\n\n/tests/test_final_state.py:103: AssertionError",
+                "message": "The test failed in the call phase due to an assertion error"
+            },
+            {
+                "name": "test_final_state.py::test_typo_tolerance_behavior",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 13,
+                "start": 1784003945171,
+                "stop": 1784003945184,
+                "retries": 0,
+                "file_path": "test_final_state.py",
+                "tags": [
+                    "parametrize::case_name,query,expected::[('brand_exact', 'Keychron', {'2'}), ('brand_no_typo', 'keichron', set()), ('name_two_typo_six_letters', 'carema', {'3'}), ('four_letter_token_corrected', 'wiff', {'9'}), ('three_letter_token_not_corrected', 'usq', set()), ('drop_tokens_partial', 'Anker Speaker', {'5', '6'}), ('drop_tokens_not_overreaching', 'Camera Bag', {'3'}), ('split_join_join', 'basket ball', {'7'}), ('split_join_split', 'waterbottle', {'8'}), ('no_excess_typo_search', 'charger', {'6'})]::ids_['brand_exact', 'brand_no_typo', 'name_two_typo_six_letters', 'four_letter_token_corrected', 'three_letter_token_not_corrected', 'drop_tokens_partial', 'drop_tokens_not_overreaching', 'split_join_join', 'split_join_split', 'no_excess_typo_search']"
+                ],
+                "trace": "typesense_server = None, case_name = 'brand_no_typo', query = 'keichron'\nexpected = set()\n\n    @pytest.mark.parametrize(\n        \"case_name,query,expected\",\n        QUERY_CASES,\n        ids=[c[0] for c in QUERY_CASES],\n    )\n    def test_typo_tolerance_behavior(typesense_server, case_name, query, expected):\n>       actual = _run_search(query)\n\n/tests/test_final_state.py:160: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nquery = 'keichron'\n\n    def _run_search(query):\n        result = subprocess.run(\n            [\"python3\", \"search.py\", \"--q\", query],\n            capture_output=True,\n            text=True,\n            cwd=PROJECT_DIR,\n            timeout=60,\n        )\n>       assert result.returncode == 0, (\n            f\"`python3 search.py --q {query!r}` exited with code \"\n            f\"{result.returncode}. stderr:\\n{result.stderr}\"\n        )\nE       AssertionError: `python3 search.py --q 'keichron'` exited with code 2. stderr:\nE         python3: can't open file '/home/user/typo-tuning/search.py': [Errno 2] No such file or directory\nE         \nE       assert 2 == 0\nE        +  where 2 = CompletedProcess(args=['python3', 'search.py', '--q', 'keichron'], returncode=2, stdout='', stderr=\"python3: can't open file '/home/user/typo-tuning/search.py': [Errno 2] No such file or directory\\n\").returncode\n\n/tests/test_final_state.py:103: AssertionError",
+                "message": "The test failed in the call phase due to an assertion error"
+            },
+            {
+                "name": "test_final_state.py::test_typo_tolerance_behavior",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 13,
+                "start": 1784003945184,
+                "stop": 1784003945197,
+                "retries": 0,
+                "file_path": "test_final_state.py",
+                "tags": [
+                    "parametrize::case_name,query,expected::[('brand_exact', 'Keychron', {'2'}), ('brand_no_typo', 'keichron', set()), ('name_two_typo_six_letters', 'carema', {'3'}), ('four_letter_token_corrected', 'wiff', {'9'}), ('three_letter_token_not_corrected', 'usq', set()), ('drop_tokens_partial', 'Anker Speaker', {'5', '6'}), ('drop_tokens_not_overreaching', 'Camera Bag', {'3'}), ('split_join_join', 'basket ball', {'7'}), ('split_join_split', 'waterbottle', {'8'}), ('no_excess_typo_search', 'charger', {'6'})]::ids_['brand_exact', 'brand_no_typo', 'name_two_typo_six_letters', 'four_letter_token_corrected', 'three_letter_token_not_corrected', 'drop_tokens_partial', 'drop_tokens_not_overreaching', 'split_join_join', 'split_join_split', 'no_excess_typo_search']"
+                ],
+                "trace": "typesense_server = None, case_name = 'name_two_typo_six_letters'\nquery = 'carema', expected = {'3'}\n\n    @pytest.mark.parametrize(\n        \"case_name,query,expected\",\n        QUERY_CASES,\n        ids=[c[0] for c in QUERY_CASES],\n    )\n    def test_typo_tolerance_behavior(typesense_server, case_name, query, expected):\n>       actual = _run_search(query)\n\n/tests/test_final_state.py:160: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nquery = 'carema'\n\n    def _run_search(query):\n        result = subprocess.run(\n            [\"python3\", \"search.py\", \"--q\", query],\n            capture_output=True,\n            text=True,\n            cwd=PROJECT_DIR,\n            timeout=60,\n        )\n>       assert result.returncode == 0, (\n            f\"`python3 search.py --q {query!r}` exited with code \"\n            f\"{result.returncode}. stderr:\\n{result.stderr}\"\n        )\nE       AssertionError: `python3 search.py --q 'carema'` exited with code 2. stderr:\nE         python3: can't open file '/home/user/typo-tuning/search.py': [Errno 2] No such file or directory\nE         \nE       assert 2 == 0\nE        +  where 2 = CompletedProcess(args=['python3', 'search.py', '--q', 'carema'], returncode=2, stdout='', stderr=\"python3: can't open file '/home/user/typo-tuning/search.py': [Errno 2] No such file or directory\\n\").returncode\n\n/tests/test_final_state.py:103: AssertionError",
+                "message": "The test failed in the call phase due to an assertion error"
+            },
+            {
+                "name": "test_final_state.py::test_typo_tolerance_behavior",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 14,
+                "start": 1784003945197,
+                "stop": 1784003945211,
+                "retries": 0,
+                "file_path": "test_final_state.py",
+                "tags": [
+                    "parametrize::case_name,query,expected::[('brand_exact', 'Keychron', {'2'}), ('brand_no_typo', 'keichron', set()), ('name_two_typo_six_letters', 'carema', {'3'}), ('four_letter_token_corrected', 'wiff', {'9'}), ('three_letter_token_not_corrected', 'usq', set()), ('drop_tokens_partial', 'Anker Speaker', {'5', '6'}), ('drop_tokens_not_overreaching', 'Camera Bag', {'3'}), ('split_join_join', 'basket ball', {'7'}), ('split_join_split', 'waterbottle', {'8'}), ('no_excess_typo_search', 'charger', {'6'})]::ids_['brand_exact', 'brand_no_typo', 'name_two_typo_six_letters', 'four_letter_token_corrected', 'three_letter_token_not_corrected', 'drop_tokens_partial', 'drop_tokens_not_overreaching', 'split_join_join', 'split_join_split', 'no_excess_typo_search']"
+                ],
+                "trace": "typesense_server = None, case_name = 'four_letter_token_corrected'\nquery = 'wiff', expected = {'9'}\n\n    @pytest.mark.parametrize(\n        \"case_name,query,expected\",\n        QUERY_CASES,\n        ids=[c[0] for c in QUERY_CASES],\n    )\n    def test_typo_tolerance_behavior(typesense_server, case_name, query, expected):\n>       actual = _run_search(query)\n\n/tests/test_final_state.py:160: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nquery = 'wiff'\n\n    def _run_search(query):\n        result = subprocess.run(\n            [\"python3\", \"search.py\", \"--q\", query],\n            capture_output=True,\n            text=True,\n            cwd=PROJECT_DIR,\n            timeout=60,\n        )\n>       assert result.returncode == 0, (\n            f\"`python3 search.py --q {query!r}` exited with code \"\n            f\"{result.returncode}. stderr:\\n{result.stderr}\"\n        )\nE       AssertionError: `python3 search.py --q 'wiff'` exited with code 2. stderr:\nE         python3: can't open file '/home/user/typo-tuning/search.py': [Errno 2] No such file or directory\nE         \nE       assert 2 == 0\nE        +  where 2 = CompletedProcess(args=['python3', 'search.py', '--q', 'wiff'], returncode=2, stdout='', stderr=\"python3: can't open file '/home/user/typo-tuning/search.py': [Errno 2] No such file or directory\\n\").returncode\n\n/tests/test_final_state.py:103: AssertionError",
+                "message": "The test failed in the call phase due to an assertion error"
+            },
+            {
+                "name": "test_final_state.py::test_typo_tolerance_behavior",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 13,
+                "start": 1784003945211,
+                "stop": 1784003945224,
+                "retries": 0,
+                "file_path": "test_final_state.py",
+                "tags": [
+                    "parametrize::case_name,query,expected::[('brand_exact', 'Keychron', {'2'}), ('brand_no_typo', 'keichron', set()), ('name_two_typo_six_letters', 'carema', {'3'}), ('four_letter_token_corrected', 'wiff', {'9'}), ('three_letter_token_not_corrected', 'usq', set()), ('drop_tokens_partial', 'Anker Speaker', {'5', '6'}), ('drop_tokens_not_overreaching', 'Camera Bag', {'3'}), ('split_join_join', 'basket ball', {'7'}), ('split_join_split', 'waterbottle', {'8'}), ('no_excess_typo_search', 'charger', {'6'})]::ids_['brand_exact', 'brand_no_typo', 'name_two_typo_six_letters', 'four_letter_token_corrected', 'three_letter_token_not_corrected', 'drop_tokens_partial', 'drop_tokens_not_overreaching', 'split_join_join', 'split_join_split', 'no_excess_typo_search']"
+                ],
+                "trace": "typesense_server = None, case_name = 'three_letter_token_not_corrected'\nquery = 'usq', expected = set()\n\n    @pytest.mark.parametrize(\n        \"case_name,query,expected\",\n        QUERY_CASES,\n        ids=[c[0] for c in QUERY_CASES],\n    )\n    def test_typo_tolerance_behavior(typesense_server, case_name, query, expected):\n>       actual = _run_search(query)\n\n/tests/test_final_state.py:160: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nquery = 'usq'\n\n    def _run_search(query):\n        result = subprocess.run(\n            [\"python3\", \"search.py\", \"--q\", query],\n            capture_output=True,\n            text=True,\n            cwd=PROJECT_DIR,\n            timeout=60,\n        )\n>       assert result.returncode == 0, (\n            f\"`python3 search.py --q {query!r}` exited with code \"\n            f\"{result.returncode}. stderr:\\n{result.stderr}\"\n        )\nE       AssertionError: `python3 search.py --q 'usq'` exited with code 2. stderr:\nE         python3: can't open file '/home/user/typo-tuning/search.py': [Errno 2] No such file or directory\nE         \nE       assert 2 == 0\nE        +  where 2 = CompletedProcess(args=['python3', 'search.py', '--q', 'usq'], returncode=2, stdout='', stderr=\"python3: can't open file '/home/user/typo-tuning/search.py': [Errno 2] No such file or directory\\n\").returncode\n\n/tests/test_final_state.py:103: AssertionError",
+                "message": "The test failed in the call phase due to an assertion error"
+            },
+            {
+                "name": "test_final_state.py::test_typo_tolerance_behavior",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 13,
+                "start": 1784003945224,
+                "stop": 1784003945237,
+                "retries": 0,
+                "file_path": "test_final_state.py",
+                "tags": [
+                    "parametrize::case_name,query,expected::[('brand_exact', 'Keychron', {'2'}), ('brand_no_typo', 'keichron', set()), ('name_two_typo_six_letters', 'carema', {'3'}), ('four_letter_token_corrected', 'wiff', {'9'}), ('three_letter_token_not_corrected', 'usq', set()), ('drop_tokens_partial', 'Anker Speaker', {'5', '6'}), ('drop_tokens_not_overreaching', 'Camera Bag', {'3'}), ('split_join_join', 'basket ball', {'7'}), ('split_join_split', 'waterbottle', {'8'}), ('no_excess_typo_search', 'charger', {'6'})]::ids_['brand_exact', 'brand_no_typo', 'name_two_typo_six_letters', 'four_letter_token_corrected', 'three_letter_token_not_corrected', 'drop_tokens_partial', 'drop_tokens_not_overreaching', 'split_join_join', 'split_join_split', 'no_excess_typo_search']"
+                ],
+                "trace": "typesense_server = None, case_name = 'drop_tokens_partial'\nquery = 'Anker Speaker', expected = {'5', '6'}\n\n    @pytest.mark.parametrize(\n        \"case_name,query,expected\",\n        QUERY_CASES,\n        ids=[c[0] for c in QUERY_CASES],\n    )\n    def test_typo_tolerance_behavior(typesense_server, case_name, query, expected):\n>       actual = _run_search(query)\n\n/tests/test_final_state.py:160: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nquery = 'Anker Speaker'\n\n    def _run_search(query):\n        result = subprocess.run(\n            [\"python3\", \"search.py\", \"--q\", query],\n            capture_output=True,\n            text=True,\n            cwd=PROJECT_DIR,\n            timeout=60,\n        )\n>       assert result.returncode == 0, (\n            f\"`python3 search.py --q {query!r}` exited with code \"\n            f\"{result.returncode}. stderr:\\n{result.stderr}\"\n        )\nE       AssertionError: `python3 search.py --q 'Anker Speaker'` exited with code 2. stderr:\nE         python3: can't open file '/home/user/typo-tuning/search.py': [Errno 2] No such file or directory\nE         \nE       assert 2 == 0\nE        +  where 2 = CompletedProcess(args=['python3', 'search.py', '--q', 'Anker Speaker'], returncode=2, stdout='', stderr=\"python3: can't open file '/home/user/typo-tuning/search.py': [Errno 2] No such file or directory\\n\").returncode\n\n/tests/test_final_state.py:103: AssertionError",
+                "message": "The test failed in the call phase due to an assertion error"
+            },
+            {
+                "name": "test_final_state.py::test_typo_tolerance_behavior",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 13,
+                "start": 1784003945237,
+                "stop": 1784003945250,
+                "retries": 0,
+                "file_path": "test_final_state.py",
+                "tags": [
+                    "parametrize::case_name,query,expected::[('brand_exact', 'Keychron', {'2'}), ('brand_no_typo', 'keichron', set()), ('name_two_typo_six_letters', 'carema', {'3'}), ('four_letter_token_corrected', 'wiff', {'9'}), ('three_letter_token_not_corrected', 'usq', set()), ('drop_tokens_partial', 'Anker Speaker', {'5', '6'}), ('drop_tokens_not_overreaching', 'Camera Bag', {'3'}), ('split_join_join', 'basket ball', {'7'}), ('split_join_split', 'waterbottle', {'8'}), ('no_excess_typo_search', 'charger', {'6'})]::ids_['brand_exact', 'brand_no_typo', 'name_two_typo_six_letters', 'four_letter_token_corrected', 'three_letter_token_not_corrected', 'drop_tokens_partial', 'drop_tokens_not_overreaching', 'split_join_join', 'split_join_split', 'no_excess_typo_search']"
+                ],
+                "trace": "typesense_server = None, case_name = 'drop_tokens_not_overreaching'\nquery = 'Camera Bag', expected = {'3'}\n\n    @pytest.mark.parametrize(\n        \"case_name,query,expected\",\n        QUERY_CASES,\n        ids=[c[0] for c in QUERY_CASES],\n    )\n    def test_typo_tolerance_behavior(typesense_server, case_name, query, expected):\n>       actual = _run_search(query)\n\n/tests/test_final_state.py:160: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nquery = 'Camera Bag'\n\n    def _run_search(query):\n        result = subprocess.run(\n            [\"python3\", \"search.py\", \"--q\", query],\n            capture_output=True,\n            text=True,\n            cwd=PROJECT_DIR,\n            timeout=60,\n        )\n>       assert result.returncode == 0, (\n            f\"`python3 search.py --q {query!r}` exited with code \"\n            f\"{result.returncode}. stderr:\\n{result.stderr}\"\n        )\nE       AssertionError: `python3 search.py --q 'Camera Bag'` exited with code 2. stderr:\nE         python3: can't open file '/home/user/typo-tuning/search.py': [Errno 2] No such file or directory\nE         \nE       assert 2 == 0\nE        +  where 2 = CompletedProcess(args=['python3', 'search.py', '--q', 'Camera Bag'], returncode=2, stdout='', stderr=\"python3: can't open file '/home/user/typo-tuning/search.py': [Errno 2] No such file or directory\\n\").returncode\n\n/tests/test_final_state.py:103: AssertionError",
+                "message": "The test failed in the call phase due to an assertion error"
+            },
+            {
+                "name": "test_final_state.py::test_typo_tolerance_behavior",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 14,
+                "start": 1784003945250,
+                "stop": 1784003945264,
+                "retries": 0,
+                "file_path": "test_final_state.py",
+                "tags": [
+                    "parametrize::case_name,query,expected::[('brand_exact', 'Keychron', {'2'}), ('brand_no_typo', 'keichron', set()), ('name_two_typo_six_letters', 'carema', {'3'}), ('four_letter_token_corrected', 'wiff', {'9'}), ('three_letter_token_not_corrected', 'usq', set()), ('drop_tokens_partial', 'Anker Speaker', {'5', '6'}), ('drop_tokens_not_overreaching', 'Camera Bag', {'3'}), ('split_join_join', 'basket ball', {'7'}), ('split_join_split', 'waterbottle', {'8'}), ('no_excess_typo_search', 'charger', {'6'})]::ids_['brand_exact', 'brand_no_typo', 'name_two_typo_six_letters', 'four_letter_token_corrected', 'three_letter_token_not_corrected', 'drop_tokens_partial', 'drop_tokens_not_overreaching', 'split_join_join', 'split_join_split', 'no_excess_typo_search']"
+                ],
+                "trace": "typesense_server = None, case_name = 'split_join_join', query = 'basket ball'\nexpected = {'7'}\n\n    @pytest.mark.parametrize(\n        \"case_name,query,expected\",\n        QUERY_CASES,\n        ids=[c[0] for c in QUERY_CASES],\n    )\n    def test_typo_tolerance_behavior(typesense_server, case_name, query, expected):\n>       actual = _run_search(query)\n\n/tests/test_final_state.py:160: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nquery = 'basket ball'\n\n    def _run_search(query):\n        result = subprocess.run(\n            [\"python3\", \"search.py\", \"--q\", query],\n            capture_output=True,\n            text=True,\n            cwd=PROJECT_DIR,\n            timeout=60,\n        )\n>       assert result.returncode == 0, (\n            f\"`python3 search.py --q {query!r}` exited with code \"\n            f\"{result.returncode}. stderr:\\n{result.stderr}\"\n        )\nE       AssertionError: `python3 search.py --q 'basket ball'` exited with code 2. stderr:\nE         python3: can't open file '/home/user/typo-tuning/search.py': [Errno 2] No such file or directory\nE         \nE       assert 2 == 0\nE        +  where 2 = CompletedProcess(args=['python3', 'search.py', '--q', 'basket ball'], returncode=2, stdout='', stderr=\"python3: can't open file '/home/user/typo-tuning/search.py': [Errno 2] No such file or directory\\n\").returncode\n\n/tests/test_final_state.py:103: AssertionError",
+                "message": "The test failed in the call phase due to an assertion error"
+            },
+            {
+                "name": "test_final_state.py::test_typo_tolerance_behavior",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 22,
+                "start": 1784003945264,
+                "stop": 1784003945286,
+                "retries": 0,
+                "file_path": "test_final_state.py",
+                "tags": [
+                    "parametrize::case_name,query,expected::[('brand_exact', 'Keychron', {'2'}), ('brand_no_typo', 'keichron', set()), ('name_two_typo_six_letters', 'carema', {'3'}), ('four_letter_token_corrected', 'wiff', {'9'}), ('three_letter_token_not_corrected', 'usq', set()), ('drop_tokens_partial', 'Anker Speaker', {'5', '6'}), ('drop_tokens_not_overreaching', 'Camera Bag', {'3'}), ('split_join_join', 'basket ball', {'7'}), ('split_join_split', 'waterbottle', {'8'}), ('no_excess_typo_search', 'charger', {'6'})]::ids_['brand_exact', 'brand_no_typo', 'name_two_typo_six_letters', 'four_letter_token_corrected', 'three_letter_token_not_corrected', 'drop_tokens_partial', 'drop_tokens_not_overreaching', 'split_join_join', 'split_join_split', 'no_excess_typo_search']"
+                ],
+                "trace": "typesense_server = None, case_name = 'split_join_split', query = 'waterbottle'\nexpected = {'8'}\n\n    @pytest.mark.parametrize(\n        \"case_name,query,expected\",\n        QUERY_CASES,\n        ids=[c[0] for c in QUERY_CASES],\n    )\n    def test_typo_tolerance_behavior(typesense_server, case_name, query, expected):\n>       actual = _run_search(query)\n\n/tests/test_final_state.py:160: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nquery = 'waterbottle'\n\n    def _run_search(query):\n        result = subprocess.run(\n            [\"python3\", \"search.py\", \"--q\", query],\n            capture_output=True,\n            text=True,\n            cwd=PROJECT_DIR,\n            timeout=60,\n        )\n>       assert result.returncode == 0, (\n            f\"`python3 search.py --q {query!r}` exited with code \"\n            f\"{result.returncode}. stderr:\\n{result.stderr}\"\n        )\nE       AssertionError: `python3 search.py --q 'waterbottle'` exited with code 2. stderr:\nE         python3: can't open file '/home/user/typo-tuning/search.py': [Errno 2] No such file or directory\nE         \nE       assert 2 == 0\nE        +  where 2 = CompletedProcess(args=['python3', 'search.py', '--q', 'waterbottle'], returncode=2, stdout='', stderr=\"python3: can't open file '/home/user/typo-tuning/search.py': [Errno 2] No such file or directory\\n\").returncode\n\n/tests/test_final_state.py:103: AssertionError",
+                "message": "The test failed in the call phase due to an assertion error"
+            },
+            {
+                "name": "test_final_state.py::test_typo_tolerance_behavior",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 15016,
+                "start": 1784003945286,
+                "stop": 1784003960302,
+                "retries": 0,
+                "file_path": "test_final_state.py",
+                "tags": [
+                    "parametrize::case_name,query,expected::[('brand_exact', 'Keychron', {'2'}), ('brand_no_typo', 'keichron', set()), ('name_two_typo_six_letters', 'carema', {'3'}), ('four_letter_token_corrected', 'wiff', {'9'}), ('three_letter_token_not_corrected', 'usq', set()), ('drop_tokens_partial', 'Anker Speaker', {'5', '6'}), ('drop_tokens_not_overreaching', 'Camera Bag', {'3'}), ('split_join_join', 'basket ball', {'7'}), ('split_join_split', 'waterbottle', {'8'}), ('no_excess_typo_search', 'charger', {'6'})]::ids_['brand_exact', 'brand_no_typo', 'name_two_typo_six_letters', 'four_letter_token_corrected', 'three_letter_token_not_corrected', 'drop_tokens_partial', 'drop_tokens_not_overreaching', 'split_join_join', 'split_join_split', 'no_excess_typo_search']"
+                ],
+                "trace": "typesense_server = None, case_name = 'no_excess_typo_search', query = 'charger'\nexpected = {'6'}\n\n    @pytest.mark.parametrize(\n        \"case_name,query,expected\",\n        QUERY_CASES,\n        ids=[c[0] for c in QUERY_CASES],\n    )\n    def test_typo_tolerance_behavior(typesense_server, case_name, query, expected):\n>       actual = _run_search(query)\n\n/tests/test_final_state.py:160: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nquery = 'charger'\n\n    def _run_search(query):\n        result = subprocess.run(\n            [\"python3\", \"search.py\", \"--q\", query],\n            capture_output=True,\n            text=True,\n            cwd=PROJECT_DIR,\n            timeout=60,\n        )\n>       assert result.returncode == 0, (\n            f\"`python3 search.py --q {query!r}` exited with code \"\n            f\"{result.returncode}. stderr:\\n{result.stderr}\"\n        )\nE       AssertionError: `python3 search.py --q 'charger'` exited with code 2. stderr:\nE         python3: can't open file '/home/user/typo-tuning/search.py': [Errno 2] No such file or directory\nE         \nE       assert 2 == 0\nE        +  where 2 = CompletedProcess(args=['python3', 'search.py', '--q', 'charger'], returncode=2, stdout='', stderr=\"python3: can't open file '/home/user/typo-tuning/search.py': [Errno 2] No such file or directory\\n\").returncode\n\n/tests/test_final_state.py:103: AssertionError",
+                "message": "The test failed in the call phase due to an assertion error"
+            }
+        ]
+    }
+}

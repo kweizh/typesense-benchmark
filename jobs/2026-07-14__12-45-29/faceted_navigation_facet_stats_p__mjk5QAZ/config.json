@@ -1,0 +1,30 @@
+{
+    "task": {
+        "path": "/home/kw/code/zealt/typesense-benchmark/scratchpad/pending-tasks/faceted_navigation_facet_stats_py",
+        "source": "pending-tasks"
+    },
+    "trial_name": "faceted_navigation_facet_stats_p__mjk5QAZ",
+    "trials_dir": "jobs/2026-07-14__12-45-29",
+    "agent": {
+        "import_path": "agents.pochi:Pochi",
+        "model_name": "minimax/MiniMax-M3",
+        "env": {
+            "POCHI_API_KEY": "${POCHI_API_KEY}",
+            "MINIMAX_API_KEY": "${MINIMAX_API_KEY}"
+        }
+    },
+    "environment": {
+        "type": "daytona",
+        "mounts": [
+            {
+                "type": "bind",
+                "source": "test_initial_state.py",
+                "target": "/bootstrap/test_initial_state.py"
+            }
+        ]
+    },
+    "artifacts": [
+        "/home/user"
+    ],
+    "job_id": "290f08cf-66f8-4af2-9b50-ab7bcface3aa"
+}

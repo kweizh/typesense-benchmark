@@ -1,0 +1,40 @@
+# Resilient JSONL Bulk-Import Pipeline with Selective Retry
+
+## Background
+You are building a data-ingestion pipeline for a product catalog powered by [Typesense](https://typesense.org). Typesense exposes a bulk `import` endpoint that accepts newline-delimited JSON (JSONL). Real-world source data is messy: some records have field values that Typesense can automatically coerce, some are broken in ways that can be repaired with well-defined business rules, and some are simply unusable. Your job is to import a large dataset robustly, recover the documents that can be salvaged, and produce an accurate ingestion report.
+
+A key subtlety of the Typesense import endpoint is that it always returns `HTTP 200` even when individual documents fail. The response body is JSONL with **one result line per input document, in the same order** as the request. A successful line looks like `{"success": true}` and a failed line looks like `{"success": false, "error": "...", "document": "..."}`. A correct pipeline must therefore inspect the per-document results rather than relying on the HTTP status code.
+
+## Requirements
+- Ensure a Typesense server is running and create a collection named `catalog` with a strict, explicitly-typed schema (all fields required):
+  - `sku` (`string`)
+  - `name` (`string`)
+  - `price` (`float`)
+  - `quantity` (`int32`)
+  - `category` (`string`)
+  - The document identifier is the special `id` field.
+- Bulk-import the provided JSONL dataset using the import API. Enable dirty-value handling that **coerces** compatible type mismatches (e.g. a numeric value provided as a JSON string) but **rejects** (never silently drops) values it cannot coerce, so that genuinely invalid documents surface as per-document failures.
+- Parse the per-document import response, detect every failed document, and collect the corresponding source records.
+- Apply repair transformations to the fixable failures and re-import **only** the repaired documents. Documents whose failures are not addressed by the repair rules must stay failed and must **not** end up indexed in the collection.
+- Write an accurate success/failure report.
+
+## Implementation Hints
+- Use any language/SDK you like (a Python or Node.js SDK, or plain HTTP calls to the REST API are all fine). Interact with the real Typesense server — do not fake the import results.
+- The import endpoint's response order matches the input order; map each result line back to its source document to identify failures. The failed line also echoes the offending document under the `document` key.
+- Treat the two repair rules below as the *only* fixes your pipeline is allowed to apply. Any failed document not fully repaired by these rules must be reported as failed:
+  1. **Currency-formatted price** — when `price` is a string that is not directly numeric because it contains a currency symbol and/or thousands separators (e.g. `"$1,299.00"`), normalize it by removing the currency symbol and thousands separators so it becomes a valid number.
+  2. **Missing category** — when the required `category` field is absent from a document, set it to the literal string `"uncategorized"`.
+- Make the pipeline idempotent: running it repeatedly must always yield the same correct report and the same final collection contents (for example, recreate the collection at the start and/or use upsert semantics).
+- A Typesense standalone server binary is installed at `/usr/local/bin/typesense-server`. Ensure a server is reachable at `http://localhost:8108` with API key `xyz` (start it against a writable data directory if it is not already running).
+- Project path: `/home/user/import-pipeline`
+- Command: `python3 pipeline.py` (or provide an equivalent entrypoint; the grader will invoke `python3 pipeline.py`).
+- Input dataset: `/home/user/import-pipeline/data/raw_products.jsonl` (JSONL, one document per line).
+- Report file: `/home/user/import-pipeline/report.json`. Write a single JSON object with exactly these keys:
+  - `total` (integer): total number of documents in the input dataset.
+  - `imported_first_pass` (integer): documents successfully indexed on the initial import (before any repair).
+  - `recovered` (integer): documents that failed the initial import but were successfully indexed after repair.
+  - `failed` (integer): documents that were never successfully indexed.
+  - `recovered_ids` (array of strings): the `id`s of the recovered documents, sorted in ascending order.
+  - `failed_ids` (array of strings): the `id`s of the documents that remained failed, sorted in ascending order.
+- The counts must be internally consistent: `imported_first_pass + recovered + failed == total`, and the final number of documents in the `catalog` collection must equal `imported_first_pass + recovered`.
+

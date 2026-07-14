@@ -1,0 +1,164 @@
+{
+    "reportFormat": "CTRF",
+    "specVersion": "0.0.0",
+    "timestamp": "2026-07-14T04:36:23.043472+00:00",
+    "generatedBy": "pytest",
+    "results": {
+        "tool": {
+            "name": "pytest",
+            "version": "7.4.4"
+        },
+        "summary": {
+            "tests": 15,
+            "passed": 15,
+            "failed": 0,
+            "skipped": 0,
+            "pending": 0,
+            "other": 0,
+            "start": 1784003777676,
+            "stop": 1784003783043
+        },
+        "environment": {
+            "buildName": "Pytest JSON CTRF Report",
+            "buildNumber": "000",
+            "buildUrl": "https://ctrf.io"
+        },
+        "tests": [
+            {
+                "name": "test_final_state.py::test_keys_json_shape",
+                "status": "passed",
+                "duration": 4013,
+                "start": 1784003777745,
+                "stop": 1784003781758,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            },
+            {
+                "name": "test_final_state.py::test_collections_exist_with_title_field",
+                "status": "passed",
+                "duration": 6,
+                "start": 1784003781758,
+                "stop": 1784003781764,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            },
+            {
+                "name": "test_final_state.py::test_search_only_allowed_search_products",
+                "status": "passed",
+                "duration": 4,
+                "start": 1784003781764,
+                "stop": 1784003781768,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            },
+            {
+                "name": "test_final_state.py::test_search_only_allowed_search_orders",
+                "status": "passed",
+                "duration": 3,
+                "start": 1784003781768,
+                "stop": 1784003781771,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            },
+            {
+                "name": "test_final_state.py::test_search_only_denied_write_document",
+                "status": "passed",
+                "duration": 2,
+                "start": 1784003781772,
+                "stop": 1784003781774,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            },
+            {
+                "name": "test_final_state.py::test_search_only_denied_create_collection",
+                "status": "passed",
+                "duration": 3,
+                "start": 1784003781774,
+                "stop": 1784003781777,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            },
+            {
+                "name": "test_final_state.py::test_search_only_denied_list_keys",
+                "status": "passed",
+                "duration": 3,
+                "start": 1784003781777,
+                "stop": 1784003781780,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            },
+            {
+                "name": "test_final_state.py::test_products_writer_allowed_upsert_and_effect",
+                "status": "passed",
+                "duration": 7,
+                "start": 1784003781780,
+                "stop": 1784003781787,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            },
+            {
+                "name": "test_final_state.py::test_products_writer_denied_write_other_collection",
+                "status": "passed",
+                "duration": 3,
+                "start": 1784003781787,
+                "stop": 1784003781790,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            },
+            {
+                "name": "test_final_state.py::test_products_writer_denied_search",
+                "status": "passed",
+                "duration": 3,
+                "start": 1784003781790,
+                "stop": 1784003781793,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            },
+            {
+                "name": "test_final_state.py::test_products_writer_denied_create_collection",
+                "status": "passed",
+                "duration": 2,
+                "start": 1784003781793,
+                "stop": 1784003781795,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            },
+            {
+                "name": "test_final_state.py::test_admin_allowed_search",
+                "status": "passed",
+                "duration": 3,
+                "start": 1784003781796,
+                "stop": 1784003781799,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            },
+            {
+                "name": "test_final_state.py::test_admin_allowed_list_keys",
+                "status": "passed",
+                "duration": 3,
+                "start": 1784003781799,
+                "stop": 1784003781802,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            },
+            {
+                "name": "test_final_state.py::test_admin_allowed_create_collection",
+                "status": "passed",
+                "duration": 7,
+                "start": 1784003781802,
+                "stop": 1784003781809,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            },
+            {
+                "name": "test_final_state.py::test_admin_allowed_write_orders",
+                "status": "passed",
+                "duration": 1233,
+                "start": 1784003781809,
+                "stop": 1784003783042,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            }
+        ]
+    }
+}

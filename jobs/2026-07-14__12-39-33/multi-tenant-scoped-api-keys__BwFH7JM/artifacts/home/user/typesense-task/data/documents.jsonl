@@ -1,0 +1,9 @@
+{"id":"a1","tenant_id":"acme","title":"Quarterly Revenue Report","category":"finance","secret_notes":"acme internal margin 42%"}
+{"id":"a2","tenant_id":"acme","title":"Product Launch Plan","category":"marketing","secret_notes":"acme launch budget 1.2M"}
+{"id":"a3","tenant_id":"acme","title":"Engineering Roadmap","category":"engineering","secret_notes":"acme hiring 5 engineers"}
+{"id":"g1","tenant_id":"globex","title":"Supply Chain Overview","category":"operations","secret_notes":"globex vendor list confidential"}
+{"id":"g2","tenant_id":"globex","title":"Annual Budget Draft","category":"finance","secret_notes":"globex cost cuts 8%"}
+{"id":"i1","tenant_id":"initech","title":"TPS Report Guidelines","category":"operations","secret_notes":"initech tps cover sheet required"}
+{"id":"i2","tenant_id":"initech","title":"Office Relocation Memo","category":"hr","secret_notes":"initech new floor plan"}
+{"id":"i3","tenant_id":"initech","title":"Software License Audit","category":"engineering","secret_notes":"initech unlicensed seats 12"}
+{"id":"i4","tenant_id":"initech","title":"Customer Support Metrics","category":"support","secret_notes":"initech csat 91"}

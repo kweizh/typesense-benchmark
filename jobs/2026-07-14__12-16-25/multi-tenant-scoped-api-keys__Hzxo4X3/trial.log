@@ -1,0 +1,101 @@
+Selected strategy: _DaytonaDirect
+Building environment from /home/kw/code/zealt/typesense-benchmark/scratchpad/pending-tasks/multi-tenant-scoped-api-keys/environment/Dockerfile
+Running command: set -euo pipefail; mkdir -p /logs/agent/pochi && pochi --version
+Command outputs captured
+Running command: mkdir -p ~/.pochi && cat << 'EOF' | sed -e "s/OPENAI_API_KEY/${OPENAI_API_KEY}/g" -e "s/DEEPINFRA_API_KEY/${DEEPINFRA_API_KEY}/g" -e "s/MINIMAX_API_KEY/${MINIMAX_API_KEY}/g" > ~/.pochi/config.jsonc
+{
+  "providers": {
+    "deepinfra": {
+      "kind": "openai",
+      "baseURL": "https://api.deepinfra.com/v1/openai",
+      "apiKey": "DEEPINFRA_API_KEY",
+      "models": {
+        "zai-org/GLM-4.7-Flash": {
+          "name": "glm-4.7-flash"
+        },
+        "moonshotai/Kimi-K2.6": {
+          "name": "kimi-K2.6"
+        },
+        "deepseek-ai/DeepSeek-V4-Pro": {
+          "name": "DeepSeek-V4-Pro"
+        }
+      }
+    },
+    "openai": {
+      "kind": "openai",
+      "baseURL": "https://api.openai.com/v1",
+      "apiKey": "OPENAI_API_KEY",
+      "models": {
+        "gpt-5.4": {
+          "name": "gpt-5.4"
+        }
+      }
+    },
+    "minimax": {
+      "kind": "openai",
+      "baseURL": "https://api.minimax.io/v1",
+      "apiKey": "MINIMAX_API_KEY",
+      "models": {
+        "MiniMax-M3": {
+          "name": "m3"
+        }
+      }
+    }
+  }
+}
+EOF
+Command outputs captured
+Running command: if [ -f /bootstrap/test_initial_state.py ]; then pytest -s --log-cli-level=DEBUG /bootstrap/test_initial_state.py > >(tee /logs/agent/pochi/initial-test-stdout.txt) 2> >(tee /logs/agent/pochi/initial-test-stderr.txt >&2); fi
+Command outputs captured
+Running command: cat > /tmp/pochi_cmd.sh << 'CMD_EOF'
+set -o pipefail
+pochi --model google/gemini-3.5-flash --max-steps 200 --max-retries 10 --blobs-dir /logs/agent/pochi/blobs --experimental-stream-trajectory /logs/agent/pochi/trajectory.jsonl --experimental-stream-trajectory-strip-duplicates > >(tee /logs/agent/pochi/stdout.txt) 2> >(tee /logs/agent/pochi/stderr.txt >&2) <<'EOF'
+# Multi-Tenant Search Isolation with Typesense Scoped Search API Keys
+
+## Background
+You are building the search backend for a SaaS product where many customers (tenants) share a single Typesense collection. Every document carries a `tenant_id` field. You must guarantee **hard multi-tenant isolation**: when a tenant searches, they may only ever see their own documents, and they must never be able to widen their access — even if they tamper with the search request client-side.
+
+Typesense solves this with **Scoped Search API Keys**: starting from a search-only parent key, you cryptographically embed a `filter_by` (and other search parameters) into a derived key. Typesense automatically enforces the embedded parameters on every search made with that key, and the caller cannot override them.
+
+A standalone Typesense v26.0 server binary is pre-installed at `/usr/local/bin/typesense-server`. A multi-tenant dataset is provided at `/home/user/typesense-task/data/documents.jsonl` (JSONLines, one document per line). Each document has these fields: `id` (string), `tenant_id` (string), `title` (string), `category` (string), and `secret_notes` (string, sensitive internal data that tenants must never receive in search responses).
+
+## Requirements
+- Start the Typesense server on port `8108` with the bootstrap API key `xyz`, persisting data under the data directory `/home/user/typesense-task/typesense-data`.
+- Create a collection named `records` whose schema makes `tenant_id` filterable/faceted and indexes `title` for full-text search.
+- Index every document from the provided dataset into the `records` collection.
+- Create a **parent search-only API key** whose `actions` are limited to `documents:search` and whose `collections` scope is limited to the `records` collection.
+- For **each distinct tenant** present in the dataset, generate a **Scoped Search API Key** derived from that parent key that:
+  - embeds a `filter_by` clause restricting results to that tenant's `tenant_id`, and
+  - embeds an `exclude_fields` clause that hides the `secret_notes` field from all search responses.
+- Verify (in your own script) that each scoped key can retrieve only its own tenant's documents and cannot be tricked into returning another tenant's data.
+
+## Implementation Hints
+- Use any interface you like (the official Python `typesense` SDK and `requests` are available), but the scoped-key derivation must be a correct HMAC-SHA256 signature over the embedded parameters using the parent key — prefer the SDK's built-in scoped-key generation so the signature is correct.
+- The parent key used to derive scoped keys must have **no permissions other than** `documents:search`; scoped keys derived from a broader key will be rejected by Typesense at search time.
+- Discover the set of tenants from the dataset itself; do not hard-code them.
+- Remember that embedded `filter_by` clauses are logically AND-ed with any `filter_by` the caller supplies at search time — this is what makes cross-tenant access impossible.
+- Project path: `/home/user/typesense-task`
+- Data directory (must persist collection + keys on disk): `/home/user/typesense-task/typesense-data`
+- Ensure the server is actually running and the collection, parent key, and scoped keys have really been created (this is a one-off job whose effects are checked afterward).
+- Write your results to the artifact file `/home/user/typesense-task/scoped_keys.json` as a single JSON object with exactly these keys:
+  - `collection`: the collection name (string).
+  - `parent_search_key`: the full value of the parent search-only API key (string).
+  - `scoped_keys`: an object mapping each `tenant_id` (string) to its generated scoped search API key value (string).
+
+
+EOF
+CMD_EOF
+setsid --wait bash /tmp/pochi_cmd.sh &
+SETSID_PID=$!
+echo $SETSID_PID > /tmp/setsid_bash_pochi_cmd.pid
+wait $SETSID_PID 2>/dev/null
+Command outputs captured
+Running command: if [ -f /tmp/setsid_bash_pochi_cmd.pid ]; then
+SETSID_PID=$(cat /tmp/setsid_bash_pochi_cmd.pid)
+kill -TERM -- -$SETSID_PID 2>/dev/null || true
+sleep 2
+kill -9 -- -$SETSID_PID 2>/dev/null || true
+fi
+rm -f ~/.pochi/config.jsonc /tmp/pochi_cmd.sh /tmp/setsid_bash_pochi_cmd.pid
+Command outputs captured
+Collecting main service artifacts

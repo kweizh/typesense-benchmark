@@ -1,0 +1,101 @@
+{
+    "reportFormat": "CTRF",
+    "specVersion": "0.0.0",
+    "timestamp": "2026-07-14T04:22:01.064569+00:00",
+    "generatedBy": "pytest",
+    "results": {
+        "tool": {
+            "name": "pytest",
+            "version": "7.4.4"
+        },
+        "summary": {
+            "tests": 8,
+            "passed": 8,
+            "failed": 0,
+            "skipped": 0,
+            "pending": 0,
+            "other": 0,
+            "start": 1784002914858,
+            "stop": 1784002921064
+        },
+        "environment": {
+            "buildName": "Pytest JSON CTRF Report",
+            "buildNumber": "000",
+            "buildUrl": "https://ctrf.io"
+        },
+        "tests": [
+            {
+                "name": "test_final_state.py::test_collections_exist",
+                "status": "passed",
+                "duration": 4014,
+                "start": 1784002914902,
+                "stop": 1784002918916,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            },
+            {
+                "name": "test_final_state.py::test_likes_reference_fields_are_async",
+                "status": "passed",
+                "duration": 3,
+                "start": 1784002918916,
+                "stop": 1784002918919,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            },
+            {
+                "name": "test_final_state.py::test_like_indexed_before_referenced_docs",
+                "status": "passed",
+                "duration": 14,
+                "start": 1784002918919,
+                "stop": 1784002918933,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            },
+            {
+                "name": "test_final_state.py::test_async_references_resolved",
+                "status": "passed",
+                "duration": 0,
+                "start": 1784002918934,
+                "stop": 1784002918934,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            },
+            {
+                "name": "test_final_state.py::test_query_cli_product",
+                "status": "passed",
+                "duration": 146,
+                "start": 1784002918935,
+                "stop": 1784002919081,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            },
+            {
+                "name": "test_final_state.py::test_query_cli_user",
+                "status": "passed",
+                "duration": 153,
+                "start": 1784002919081,
+                "stop": 1784002919234,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            },
+            {
+                "name": "test_final_state.py::test_query_cli_empty_result",
+                "status": "passed",
+                "duration": 157,
+                "start": 1784002919235,
+                "stop": 1784002919392,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            },
+            {
+                "name": "test_final_state.py::test_server_side_join_resolves",
+                "status": "passed",
+                "duration": 1672,
+                "start": 1784002919392,
+                "stop": 1784002921064,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            }
+        ]
+    }
+}

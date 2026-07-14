@@ -1,0 +1,1126 @@
+- Initializing MCP connections...
+You
+# Typesense Typo-Tolerance Tuning ## Background You are tuning the relevance behavior of a https://typesense.org search index for a small product catalog. Typesense is a fast, typo-tolerant, in-memory search engine. Out of the box its typo tolerance is fairly aggressive (up to 2 typos on every field, token dropping enabled, space split/join as a fallback). The product team needs a **single, fixed** search configuration whose behavior matches a precise set of rules so that borderline queries behave predictably. Typesense must be run as a **standalone native Linux binary** (Docker-in-Docker is not available). The `typesense-server` binary is already installed at `/usr/local/bin/typesense-server`. A dataset file is provided at `/home/user/typo-tuning/products.jsonl` (JSONLines, one product per line, each with `id`, `name`, and `brand`). ## Requirements 1. Start a Typesense server on port `8108`, using API key `xyz` and the data directory `/home/user/typo-tuning/ts-data`. Leave the server running after you finish so the search tool can query it. 2. Create a collection named `catalog` whose documents have a `string` field `name` and a `string` field `brand`, and index every document from `/home/user/typo-tuning/products.jsonl` into it (keep the provided `id` values). 3. Implement a command-line search tool that queries the `catalog` collection over the `name` and `brand` fields (in that order) and applies **one fixed typo-tolerance configuration to every query**. The configuration must implement all of the following behavioral rules: * **Two typos on product names, exact brands.** Product names may be matched with up to 2 character errors, and this must work even for six-letter names (e.g. the name `camera`). Brand names, in contrast, must be matched with **zero** typo tolerance. * **Short-token guard.** A query token of length 3 must never be typo-corrected, while a query token of length 4 is allowed to be corrected with 1 typo. * **Precise token dropping.** When a multi-word query has no single document containing all of its words, extra words should be dropped so partial matches are still returned. But when at least one document already contains all of the query words, no words may be dropped (unrelated documents that share only some words must not be pulled in). * **Do not over-search typos.** As soon as a query token has an exact match in the index, the engine must not additionally pull in typo variants of that same token. * **Space split/join.** A query like `basket ball` must find a document whose name is `Basketball`, and a single-token query like `waterbottle` must find a document named `Water Bottle`. ## Implementation Hints * Read the Typesense Search API typo-tolerance parameters (`num_typos` and its per-field comma syntax, `min_len_1typo`, `min_len_2typo`, `typo_tokens_threshold`, `drop_tokens_threshold`, `split_join_tokens`) and pick values that satisfy every rule above at the same time. All rules must hold under the same configuration. * Disable prefix matching for the search so results reflect typo behavior only. * Use the official Python `typesense` SDK or plain HTTP calls; do not mock Typesense — the tool must talk to the real running server. * Project path: /home/user/typo-tuning * Data directory (pass to `--data-dir`): /home/user/typo-tuning/ts-data * Command: `python3 search.py --q "<query text>"` * The command must print to stdout a single JSON array containing the `id` values (as strings) of every matching document, e.g. `["3"]` or `[]`. Result ordering is not checked. Print nothing else on stdout. * The same fixed configuration must be used for all queries; do not branch on the query text.   
+
+Pochi
+💭 Thinking for 75 characters   
+<think> Let me analyze this task carefully. I need to: 1. Start a Typesense server   
+💭 Thinking for 214 characters   
+💭 Thinking for 50 characters   
+💭 Thinking for 29 characters   
+💭 Thinking for 116 characters   
+💫 Executing ls -la /home/user/typo-tuning/ ✔ 
+💭 Thinking for 42 characters   
+<think> Let me read the products.jsonl file first. </think> </think>   
+📖 Reading /home/user/typo-tuning/products.jsonl ✔ 
+💭 Thinking for 27 characters   
+<think> Let me see the full content   
+💭 Thinking for 12 characters   
+💭 Thinking for 41 characters   
+💫 Executing cat /home/user/typo-tuning/products.jsonl ✔ 
+💭 Thinking for 26 characters   
+<think> Now let me check the types   
+💭 Thinking for 12 characters   
+💭 Thinking for 61 characters   
+💫 Executing ls -la /usr/local/bin/typesense-server && /usr/local/bin/typesense-server --version ✖ "Command exited with code 1"
+💭 Thinking for 89 characters   
+<think> Good, the binary works. Now let me check Python and the typesense SDK installation status   
+💭 Thinking for 1 characters   
+💫 Executing python3 -c "import typesense; print(typesense.__version__)" 2>&1; pip3 show typesense 2>&1 | head -5 ✔ 
+💭 Thinking for 30 characters   
+<think> The typesense SDK is installed   
+💭 Thinking for 28 characters   
+💭 Thinking for 61 characters   
+💭 Thinking for 19 characters   
+💭 Thinking for 264 characters   
+💭 Thinking for 48 characters   
+💭 Thinking for 49 characters   
+💭 Thinking for 43 characters   
+💭 Thinking for 70 characters   
+💭 Thinking for 59 characters   
+💭 Thinking for 67 characters   
+💭 Thinking for 57 characters   
+💭 Thinking for 60 characters   
+💭 Thinking for 46 characters   
+💭 Thinking for 51 characters   
+💭 Thinking for 65 characters   
+💭 Thinking for 43 characters   
+💭 Thinking for 54 characters   
+💭 Thinking for 52 characters   
+💭 Thinking for 48 characters   
+💭 Thinking for 116 characters   
+💭 Thinking for 74 characters   
+💭 Thinking for 35 characters   
+💭 Thinking for 51 characters   
+💭 Thinking for 16 characters   
+💭 Thinking for 87 characters   
+💭 Thinking for 27 characters   
+💭 Thinking for 48 characters   
+💭 Thinking for 96 characters   
+💭 Thinking for 30 characters   
+💭 Thinking for 40 characters   
+💭 Thinking for 22 characters   
+💭 Thinking for 32 characters   
+💭 Thinking for 26 characters   
+💭 Thinking for 40 characters   
+💭 Thinking for 19 characters   
+💭 Thinking for 24 characters   
+💭 Thinking for 15 characters   
+💭 Thinking for 77 characters   
+💭 Thinking for 31 characters   
+💭 Thinking for 60 characters   
+💭 Thinking for 94 characters   
+💭 Thinking for 26 characters   
+💭 Thinking for 42 characters   
+💭 Thinking for 44 characters   
+💭 Thinking for 89 characters   
+💭 Thinking for 121 characters   
+💭 Thinking for 60 characters   
+💭 Thinking for 56 characters   
+💭 Thinking for 28 characters   
+💭 Thinking for 31 characters   
+💭 Thinking for 60 characters   
+💭 Thinking for 28 characters   
+💭 Thinking for 61 characters   
+💭 Thinking for 37 characters   
+💭 Thinking for 50 characters   
+💭 Thinking for 62 characters   
+💭 Thinking for 26 characters   
+💭 Thinking for 33 characters   
+💭 Thinking for 60 characters   
+💭 Thinking for 62 characters   
+💭 Thinking for 32 characters   
+💭 Thinking for 15 characters   
+💭 Thinking for 67 characters   
+💭 Thinking for 113 characters   
+💭 Thinking for 58 characters   
+💭 Thinking for 80 characters   
+💭 Thinking for 58 characters   
+💭 Thinking for 50 characters   
+💭 Thinking for 225 characters   
+💭 Thinking for 32 characters   
+💭 Thinking for 20 characters   
+💭 Thinking for 30 characters   
+💭 Thinking for 73 characters   
+💭 Thinking for 130 characters   
+💭 Thinking for 67 characters   
+💭 Thinking for 57 characters   
+💭 Thinking for 48 characters   
+💭 Thinking for 15 characters   
+💭 Thinking for 81 characters   
+💭 Thinking for 156 characters   
+💭 Thinking for 65 characters   
+💭 Thinking for 34 characters   
+💭 Thinking for 48 characters   
+💭 Thinking for 31 characters   
+💭 Thinking for 118 characters   
+💭 Thinking for 31 characters   
+💭 Thinking for 41 characters   
+💭 Thinking for 26 characters   
+💭 Thinking for 49 characters   
+💭 Thinking for 41 characters   
+💭 Thinking for 34 characters   
+💭 Thinking for 28 characters   
+💭 Thinking for 64 characters   
+💭 Thinking for 27 characters   
+💭 Thinking for 80 characters   
+💭 Thinking for 117 characters   
+💭 Thinking for 22 characters   
+💭 Thinking for 23 characters   
+💭 Thinking for 26 characters   
+💭 Thinking for 40 characters   
+💭 Thinking for 135 characters   
+💭 Thinking for 19 characters   
+💭 Thinking for 48 characters   
+💭 Thinking for 105 characters   
+💭 Thinking for 56 characters   
+💭 Thinking for 25 characters   
+💭 Thinking for 47 characters   
+💭 Thinking for 19 characters   
+💭 Thinking for 148 characters   
+💭 Thinking for 181 characters   
+💭 Thinking for 17 characters   
+💭 Thinking for 35 characters   
+💭 Thinking for 147 characters   
+💭 Thinking for 81 characters   
+💭 Thinking for 32 characters   
+💭 Thinking for 31 characters   
+💭 Thinking for 37 characters   
+💭 Thinking for 34 characters   
+💭 Thinking for 158 characters   
+💭 Thinking for 24 characters   
+💭 Thinking for 33 characters   
+💭 Thinking for 27 characters   
+💭 Thinking for 33 characters   
+💭 Thinking for 8 characters   
+💭 Thinking for 31 characters   
+💭 Thinking for 89 characters   
+💭 Thinking for 30 characters   
+💭 Thinking for 167 characters   
+💭 Thinking for 19 characters   
+💭 Thinking for 23 characters   
+💭 Thinking for 81 characters   
+💭 Thinking for 30 characters   
+💭 Thinking for 75 characters   
+💭 Thinking for 96 characters   
+💭 Thinking for 30 characters   
+💭 Thinking for 20 characters   
+💭 Thinking for 47 characters   
+💭 Thinking for 40 characters   
+💭 Thinking for 48 characters   
+💭 Thinking for 35 characters   
+💭 Thinking for 48 characters   
+💭 Thinking for 34 characters   
+💭 Thinking for 26 characters   
+💭 Thinking for 43 characters   
+💭 Thinking for 22 characters   
+💭 Thinking for 44 characters   
+💭 Thinking for 16 characters   
+💭 Thinking for 25 characters   
+💭 Thinking for 23 characters   
+💭 Thinking for 91 characters   
+💭 Thinking for 55 characters   
+💭 Thinking for 56 characters   
+💭 Thinking for 52 characters   
+💭 Thinking for 23 characters   
+💭 Thinking for 20 characters   
+💭 Thinking for 25 characters   
+💭 Thinking for 19 characters   
+💭 Thinking for 30 characters   
+💭 Thinking for 52 characters   
+💭 Thinking for 96 characters   
+💭 Thinking for 24 characters   
+💭 Thinking for 24 characters   
+💭 Thinking for 98 characters   
+💭 Thinking for 15 characters   
+💭 Thinking for 60 characters   
+💭 Thinking for 132 characters   
+💭 Thinking for 106 characters   
+💭 Thinking for 16 characters   
+💭 Thinking for 148 characters   
+💭 Thinking for 44 characters   
+💭 Thinking for 34 characters   
+💭 Thinking for 69 characters   
+💭 Thinking for 52 characters   
+💭 Thinking for 52 characters   
+💭 Thinking for 68 characters   
+💭 Thinking for 113 characters   
+💭 Thinking for 19 characters   
+💭 Thinking for 25 characters   
+💭 Thinking for 107 characters   
+💭 Thinking for 32 characters   
+💭 Thinking for 39 characters   
+💭 Thinking for 42 characters   
+💭 Thinking for 29 characters   
+💭 Thinking for 29 characters   
+💭 Thinking for 34 characters   
+💭 Thinking for 22 characters   
+💭 Thinking for 19 characters   
+💭 Thinking for 68 characters   
+💭 Thinking for 40 characters   
+💭 Thinking for 40 characters   
+💭 Thinking for 37 characters   
+💭 Thinking for 44 characters   
+💭 Thinking for 194 characters   
+💭 Thinking for 124 characters   
+💭 Thinking for 184 characters   
+💭 Thinking for 25 characters   
+💭 Thinking for 29 characters   
+💭 Thinking for 103 characters   
+💭 Thinking for 49 characters   
+💭 Thinking for 35 characters   
+💭 Thinking for 20 characters   
+💭 Thinking for 149 characters   
+💭 Thinking for 34 characters   
+💭 Thinking for 29 characters   
+💭 Thinking for 30 characters   
+💭 Thinking for 82 characters   
+💭 Thinking for 17 characters   
+💭 Thinking for 244 characters   
+💭 Thinking for 39 characters   
+💭 Thinking for 48 characters   
+💭 Thinking for 30 characters   
+💭 Thinking for 12 characters   
+💭 Thinking for 77 characters   
+💭 Thinking for 36 characters   
+💭 Thinking for 63 characters   
+💭 Thinking for 21 characters   
+💭 Thinking for 108 characters   
+💭 Thinking for 73 characters   
+💭 Thinking for 30 characters   
+💭 Thinking for 18 characters   
+💭 Thinking for 33 characters   
+💭 Thinking for 42 characters   
+💭 Thinking for 55 characters   
+💭 Thinking for 31 characters   
+💭 Thinking for 76 characters   
+💭 Thinking for 35 characters   
+💭 Thinking for 56 characters   
+💭 Thinking for 126 characters   
+💭 Thinking for 57 characters   
+💭 Thinking for 68 characters   
+💭 Thinking for 61 characters   
+💭 Thinking for 63 characters   
+💭 Thinking for 64 characters   
+💭 Thinking for 39 characters   
+💭 Thinking for 84 characters   
+💭 Thinking for 80 characters   
+💭 Thinking for 19 characters   
+💭 Thinking for 54 characters   
+💭 Thinking for 53 characters   
+💭 Thinking for 51 characters   
+💭 Thinking for 74 characters   
+💭 Thinking for 28 characters   
+💭 Thinking for 47 characters   
+💭 Thinking for 76 characters   
+💭 Thinking for 26 characters   
+💭 Thinking for 47 characters   
+💭 Thinking for 149 characters   
+💭 Thinking for 67 characters   
+💭 Thinking for 30 characters   
+💭 Thinking for 28 characters   
+💭 Thinking for 51 characters   
+💭 Thinking for 56 characters   
+💭 Thinking for 23 characters   
+💭 Thinking for 126 characters   
+💭 Thinking for 44 characters   
+💭 Thinking for 54 characters   
+💭 Thinking for 24 characters   
+💭 Thinking for 21 characters   
+💭 Thinking for 13 characters   
+💭 Thinking for 26 characters   
+💭 Thinking for 19 characters   
+💭 Thinking for 12 characters   
+💭 Thinking for 27 characters   
+💭 Thinking for 31 characters   
+💭 Thinking for 10 characters   
+💭 Thinking for 38 characters   
+💭 Thinking for 99 characters   
+💭 Thinking for 35 characters   
+💭 Thinking for 19 characters   
+💭 Thinking for 15 characters   
+💭 Thinking for 35 characters   
+💭 Thinking for 53 characters   
+💭 Thinking for 23 characters   
+💭 Thinking for 23 characters   
+💭 Thinking for 22 characters   
+💭 Thinking for 14 characters   
+💭 Thinking for 28 characters   
+💭 Thinking for 54 characters   
+💭 Thinking for 10 characters   
+💭 Thinking for 139 characters   
+💭 Thinking for 40 characters   
+💭 Thinking for 28 characters   
+💭 Thinking for 48 characters   
+💭 Thinking for 97 characters   
+💭 Thinking for 24 characters   
+💭 Thinking for 73 characters   
+💭 Thinking for 10 characters   
+💭 Thinking for 66 characters   
+<think> Let me create a todo list and proceed with the task systematically   
+💭 Thinking for 1 characters   
+📋 Updating todo list (5 items) ✔ 
+💫 Executing mkdir -p /home/user/typo-tuning/ts-data && /usr/local/bin/typesense-server --data-dir=/home/user/typo-tuning/ts-data --api-key=xyz --api-port=8108 > /tmp/typesense.log 2>&1 &
+echo "PID=$!"
+sleep 3
+curl -s http://localhost:8108/health ✔ 
+💫 Executing sleep 2 && curl -s http://localhost:8108/health ✔ 
+💭 Thinking for 59 characters   
+<think> The server is up. Now let me create the catalog collection.   
+💭 Thinking for 79 characters   
+💭 Thinking for 38 characters   
+💫 Executing curl -s -X DELETE "http://localhost:8108/collections/catalog" -H "X-TYPESENSE-API-KEY: xyz"
+echo
+curl -s -X POST "http://localhost:8108/collections" \
+  -H "X-TYPESENSE-API-KEY: xyz" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "catalog",
+    "fields": [
+      {"name": "id", "type": "string"},
+      {"name": "name", "type": "string"},
+      {"name": "brand", "type": "string"}
+    ],
+    "default_sorting_field": "id"
+  }'
+echo ✔ 
+💭 Thinking for 25 characters   
+<think> The id field can't be the   
+💭 Thinking for 105 characters   
+💭 Thinking for 18 characters   
+💭 Thinking for 52 characters   
+💭 Thinking for 60 characters   
+💭 Thinking for 16 characters   
+💭 Thinking for 55 characters   
+💭 Thinking for 64 characters   
+💫 Executing curl -s -X POST "http://localhost:8108/collections" \
+  -H "X-TYPESENSE-API-KEY: xyz" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "catalog",
+    "fields": [
+      {"name": "name", "type": "string"},
+      {"name": "brand", "type": "string"}
+    ]
+  }'
+echo ✔ 
+📋 Updating todo list (5 items) ✔ 
+💫 Executing python3 - <<'PY'
+import json, typesense, time
+
+c = typesense.Client({
+    "nodes": [{"host": "localhost", "port": "8108", "protocol": "http"}],
+    "api_key": "xyz",
+    "connection_timeout_seconds": 10,
+})
+
+with open("/home/user/typo-tuning/products.jsonl") as f:
+    docs = [json.loads(line) for line in f if line.strip()]
+
+try:
+    resp = c.collections["catalog"].documents.import_(docs, {"action": "upsert"})
+    print(resp)
+except Exception as e:
+    print("error:", e)
+PY ✔ 
+💫 Executing curl -s "http://localhost:8108/collections/catalog" -H "X-TYPESENSE-API-KEY: xyz" ✔ 
+💭 Thinking for 131 characters   
+<think> All 11 documents indexed. Now let me think more carefully about the typo-tolerance configuration and run some tests. Configuration   
+💭 Thinking for 40 characters   
+💭 Thinking for 29 characters   
+💭 Thinking for 31 characters   
+💭 Thinking for 136 characters   
+💭 Thinking for 129 characters   
+💭 Thinking for 157 characters   
+💫 Executing python3 - <<'PY'
+import json, typesense
+
+c = typesense.Client({
+    "nodes": [{"host": "localhost", "port": "8108", "protocol": "http"}],
+    "api_key": "xyz",
+    "connection_timeout_seconds": 10,
+})
+
+PARAMS = {
+    "q": "camera",
+    "query_by": "name,brand",
+    "prefix": False,
+    "num_typos": "2,0",
+    "min_len_1typo": 4,
+    "min_len_2typo": 6,
+    "typo_tokens_threshold": 1,
+    "drop_tokens_threshold": 1,
+    "split_join_tokens": "fallback",
+}
+
+# Test 1: Exact match for "camera" -> Camera Bag
+r = c.collections["catalog"].documents.search(PARAMS)
+print("Test 1 'camera':", [h["document"]["id"] for h in r["hits"]])
+
+# Test 2: 2 typos for "camera" -> Camera Bag
+r = c.collections["catalog"].documents.search({**PARAMS, "q": "camrea"})
+print("Test 2 'camrea' (2 typos):", [h["document"]["id"] for h in r["hits"]])
+
+# Test 3: Exact brand "logitech" -> id=1
+r = c.collections["catalog"].documents.search({**PARAMS, "q": "logitech"})
+print("Test 3 'logitech' (exact brand):", [h["document"]["id"] for h in r["hits"]])
+
+# Test 4: 1 typo on brand "logiteck" -> should NOT match brand
+r = c.collections["catalog"].documents.search({**PARAMS, "q": "logiteck"})
+print("Test 4 'logiteck' (1 typo brand, should be []):", [h["document"]["id"] for h in r["hits"]])
+
+# Test 5: 3-letter token "USB" -> exact match only
+r = c.collections["catalog"].documents.search({**PARAMS, "q": "USB"})
+print("Test 5 'USB' (3 letters, exact):", [h["document"]["id"] for h in r["hits"]])
+
+# Test 6: 1 typo on 3-letter token "USZ" -> should NOT match
+r = c.collections["catalog"].documents.search({**PARAMS, "q": "USZ"})
+print("Test 6 'USZ' (3 letters, 1 typo, should be []):", [h["document"]["id"] for h in r["hits"]])
+
+# Test 7: 4-letter token "wifi" -> exact match
+r = c.collections["catalog"].documents.search({**PARAMS, "q": "wifi"})
+print("Test 7 'wifi' (4 letters, exact):", [h["document"]["id"] for h in r["hits"]])
+
+# Test 8: 1 typo on 4-letter token "wifiz" -> should match
+r = c.collections["catalog"].documents.search({**PARAMS, "q": "wifiz"})
+print("Test 8 'wifiz' (4 letters, 1 typo):", [h["document"]["id"] for h in r["hits"]])
+
+# Test 9: split_join for "basket ball" -> Basketball Shoes (id=7)
+r = c.collections["catalog"].documents.search({**PARAMS, "q": "basket ball"})
+print("Test 9 'basket ball' (split join):", [h["document"]["id"] for h in r["hits"]])
+
+# Test 10: split_join for "waterbottle" -> Water Bottle (id=8)
+r = c.collections["catalog"].documents.search({**PARAMS, "q": "waterbottle"})
+print("Test 10 'waterbottle' (split join):", [h["document"]["id"] for h in r["hits"]])
+
+# Test 11: drop tokens - multi-word query with no perfect match
+r = c.collections["catalog"].documents.search({**PARAMS, "q": "wireless nikon"})
+print("Test 11 'wireless nikon' (drop tokens):", [h["document"]["id"] for h in r["hits"]])
+
+# Test 12: no dropping when perfect match exists
+r = c.collections["catalog"].documents.search({**PARAMS, "q": "wireless mouse"})
+print("Test 12 'wireless mouse' (perfect match):", [h["document"]["id"] for h in r["hits"]])
+PY ✔ 
+💭 Thinking for 24 characters   
+<think> All test cases pass. Let   
+💭 Thinking for 31 characters   
+💭 Thinking for 45 characters   
+💭 Thinking for 92 characters   
+💭 Thinking for 124 characters   
+💭 Thinking for 21 characters   
+💭 Thinking for 28 characters   
+💭 Thinking for 31 characters   
+💭 Thinking for 21 characters   
+💭 Thinking for 33 characters   
+💭 Thinking for 45 characters   
+💭 Thinking for 98 characters   
+💭 Thinking for 59 characters   
+💭 Thinking for 83 characters   
+💭 Thinking for 62 characters   
+💭 Thinking for 40 characters   
+💭 Thinking for 53 characters   
+💭 Thinking for 212 characters   
+💭 Thinking for 58 characters   
+💭 Thinking for 27 characters   
+💭 Thinking for 59 characters   
+💭 Thinking for 19 characters   
+💭 Thinking for 27 characters   
+💭 Thinking for 62 characters   
+💭 Thinking for 30 characters   
+💭 Thinking for 39 characters   
+💭 Thinking for 86 characters   
+💭 Thinking for 25 characters   
+💭 Thinking for 48 characters   
+💭 Thinking for 27 characters   
+💭 Thinking for 46 characters   
+💭 Thinking for 65 characters   
+💭 Thinking for 20 characters   
+💭 Thinking for 20 characters   
+💭 Thinking for 13 characters   
+💭 Thinking for 101 characters   
+💭 Thinking for 61 characters   
+💭 Thinking for 41 characters   
+💭 Thinking for 15 characters   
+💭 Thinking for 99 characters   
+💭 Thinking for 26 characters   
+💭 Thinking for 52 characters   
+💭 Thinking for 66 characters   
+💭 Thinking for 182 characters   
+💭 Thinking for 44 characters   
+💭 Thinking for 38 characters   
+💭 Thinking for 26 characters   
+💭 Thinking for 29 characters   
+💭 Thinking for 262 characters   
+💭 Thinking for 33 characters   
+💭 Thinking for 36 characters   
+💭 Thinking for 38 characters   
+💭 Thinking for 44 characters   
+💭 Thinking for 65 characters   
+💭 Thinking for 50 characters   
+💭 Thinking for 35 characters   
+💭 Thinking for 57 characters   
+💭 Thinking for 164 characters   
+💭 Thinking for 54 characters   
+💭 Thinking for 47 characters   
+💭 Thinking for 106 characters   
+💭 Thinking for 20 characters   
+💭 Thinking for 25 characters   
+💭 Thinking for 37 characters   
+💭 Thinking for 29 characters   
+💭 Thinking for 55 characters   
+💭 Thinking for 67 characters   
+💭 Thinking for 48 characters   
+💭 Thinking for 110 characters   
+💭 Thinking for 22 characters   
+💭 Thinking for 19 characters   
+💭 Thinking for 70 characters   
+💭 Thinking for 109 characters   
+💭 Thinking for 13 characters   
+💭 Thinking for 50 characters   
+💭 Thinking for 58 characters   
+💭 Thinking for 23 characters   
+💭 Thinking for 28 characters   
+💭 Thinking for 24 characters   
+💭 Thinking for 83 characters   
+💭 Thinking for 26 characters   
+💭 Thinking for 44 characters   
+💭 Thinking for 56 characters   
+💭 Thinking for 41 characters   
+💭 Thinking for 43 characters   
+💭 Thinking for 24 characters   
+💭 Thinking for 72 characters   
+💭 Thinking for 84 characters   
+💭 Thinking for 38 characters   
+💭 Thinking for 28 characters   
+💭 Thinking for 74 characters   
+💭 Thinking for 38 characters   
+💭 Thinking for 28 characters   
+💭 Thinking for 30 characters   
+💭 Thinking for 36 characters   
+💭 Thinking for 33 characters   
+💭 Thinking for 52 characters   
+💭 Thinking for 42 characters   
+💭 Thinking for 137 characters   
+💭 Thinking for 46 characters   
+💭 Thinking for 47 characters   
+💭 Thinking for 26 characters   
+💭 Thinking for 20 characters   
+💭 Thinking for 19 characters   
+💭 Thinking for 56 characters   
+💭 Thinking for 126 characters   
+💫 Executing python3 - <<'PY'
+import json, typesense
+
+c = typesense.Client({
+    "nodes": [{"host": "localhost", "port": "8108", "protocol": "http"}],
+    "api_key": "xyz",
+    "connection_timeout_seconds": 10,
+})
+
+PARAMS = {
+    "q": "camera",
+    "query_by": "name,brand",
+    "prefix": False,
+    "num_typos": "2,0",
+    "min_len_1typo": 4,
+    "min_len_2typo": 6,
+    "typo_tokens_threshold": 1,
+    "drop_tokens_threshold": 1,
+    "split_join_tokens": "fallback",
+}
+
+# Edge cases
+for q in [
+    "wireles",        # 1 typo on wireless (8 letters)
+    "kamera",         # 1 typo on camera
+    "keychran",       # 1 typo on keychron (brand, should fail)
+    "keychron",       # exact brand
+    "anker",          # exact brand (matches 2 products)
+    "anker cable",    # multi-word with perfect match - only id=5 (USB Cable/Anker)
+    "anker mouse",    # no perfect match - should drop
+    "wifi",           # 4-letter exact
+    "wifirouter",     # single token, needs split
+    "Basketball",     # exact name
+    "BASKETBALL",     # exact name uppercase
+]:
+    r = c.collections["catalog"].documents.search({**PARAMS, "q": q})
+    hits = [(h["document"]["id"], h["document"]["name"], h["document"]["brand"]) for h in r["hits"]]
+    print(f"q={q!r:20s} -> {hits}")
+PY ✔ 
+💭 Thinking for 260 characters   
+<think> All edge cases work as expected: - "wireles" (1 typo on wireless) → id=1 ✓ - "kamera" (1 typo on camera) → id=3 ✓ - "keychran" (1 typo on brand keychron) → empty (brand has 0 typos) ✓ - "keychron" (exact brand) → id=2 ✓ - "anker" → matches both id=5 and id=6 (   
+💭 Thinking for 80 characters   
+💭 Thinking for 12 characters   
+💭 Thinking for 93 characters   
+💭 Thinking for 31 characters   
+💭 Thinking for 40 characters   
+💭 Thinking for 39 characters   
+💭 Thinking for 12 characters   
+💭 Thinking for 67 characters   
+💭 Thinking for 141 characters   
+✏️  Writing /home/user/typo-tuning/search.py ✔ 
+💫 Executing cd /home/user/typo-tuning && python3 search.py --q "camera" && \
+python3 search.py --q "camrea" && \
+python3 search.py --q "logitech" && \
+python3 search.py --q "logiteck" && \
+python3 search.py --q "USB" && \
+python3 search.py --q "USZ" && \
+python3 search.py --q "wifi" && \
+python3 search.py --q "wifiz" && \
+python3 search.py --q "basket ball" && \
+python3 search.py --q "waterbottle" && \
+python3 search.py --q "wireless nikon" && \
+python3 search.py --q "wireless mouse" ✔ 
+💭 Thinking for 22 characters   
+<think> All tests pass. Let me   
+💭 Thinking for 38 characters   
+💭 Thinking for 51 characters   
+💭 Thinking for 17 characters   
+💭 Thinking for 166 characters   
+💭 Thinking for 1 characters   
+💫 Executing python3 search.py --q "camera" | xxd ✖ "Command exited with code 127"
+💫 Executing python3 search.py --q "camera" | od -c | head -3 ✔ 
+💫 Executing python3 search.py --q "camera" | od -c | head -3 ✔ 
+💭 Thinking for 29 characters   
+<think> The output is exactly what we   
+💭 Thinking for 54 characters   
+💭 Thinking for 64 characters   
+💭 Thinking for 92 characters   
+💭 Thinking for 90 characters   
+💭 Thinking for 29 characters   
+💭 Thinking for 137 characters   
+💭 Thinking for 196 characters   
+💭 Thinking for 60 characters   
+💭 Thinking for 56 characters   
+💭 Thinking for 38 characters   
+💭 Thinking for 56 characters   
+💭 Thinking for 130 characters   
+💭 Thinking for 59 characters   
+💭 Thinking for 31 characters   
+💭 Thinking for 35 characters   
+💫 Executing curl -s http://localhost:8108/health && echo
+echo "---"
+ps -ef | grep typesense | grep -v grep
+echo "---"
+curl -s "http://localhost:8108/collections/catalog" -H "X-TYPESENSE-API-KEY: xyz" | python3 -c "import sys,json; d=json.load(sys.stdin); print('num_documents:', d['num_documents'])"
+echo "---"
+ls -la /home/user/typo-tuning/ ✔ 
+💭 Thinking for 98 characters   
+<think> The server is running (PID 426), the collection has 11 documents, and the search.py is in place.   
+💭 Thinking for 24 characters   
+💭 Thinking for 70 characters   
+💭 Thinking for 33 characters   
+💭 Thinking for 48 characters   
+💭 Thinking for 20 characters   
+💭 Thinking for 67 characters   
+💭 Thinking for 52 characters   
+💭 Thinking for 17 characters   
+💭 Thinking for 111 characters   
+💭 Thinking for 376 characters   
+💭 Thinking for 39 characters   
+💭 Thinking for 40 characters   
+💭 Thinking for 36 characters   
+💭 Thinking for 186 characters   
+💭 Thinking for 39 characters   
+💭 Thinking for 80 characters   
+💭 Thinking for 41 characters   
+💭 Thinking for 45 characters   
+💭 Thinking for 46 characters   
+💭 Thinking for 112 characters   
+💭 Thinking for 44 characters   
+💭 Thinking for 24 characters   
+💭 Thinking for 20 characters   
+💭 Thinking for 47 characters   
+💭 Thinking for 158 characters   
+💭 Thinking for 202 characters   
+💭 Thinking for 52 characters   
+💭 Thinking for 34 characters   
+💭 Thinking for 41 characters   
+💭 Thinking for 53 characters   
+💭 Thinking for 47 characters   
+💭 Thinking for 39 characters   
+💭 Thinking for 45 characters   
+💭 Thinking for 54 characters   
+💫 Executing cd /home/user/typo-tuning
+
+run() {
+  echo "Q: $1"
+  python3 search.py --q "$1"
+  echo
+}
+
+echo "=== Rule 1: Two typos on names, exact brands ==="
+run "camera"        # exact name -> ['3']
+run "camrea"        # 2 typos on 'camera' (6 letters) -> ['3']
+run "logitech"      # exact brand -> ['1']
+run "logiteck"      # 1 typo on brand -> [] (brand has 0 typos)
+
+echo "=== Rule 2: Short-token guard ==="
+run "USB"           # 3-letter exact -> ['5']
+run "USZ"           # 3-letter, 1 typo -> []
+run "wifi"          # 4-letter exact -> ['9']
+run "wifiz"         # 4-letter, 1 typo -> ['9']
+
+echo "=== Rule 3: Precise token dropping ==="
+run "wireless mouse"  # perfect match -> ['1'] only
+run "anker mouse"     # no perfect match -> drop mouse, find anker docs ['5','6']
+run "anker cable"     # perfect match -> ['5'] only
+
+echo "=== Rule 4: Do not over-search typos ==="
+run "mouse"            # exact exists -> no typo variants
+run "house"            # not in data, would need typo
+run "keychran"         # 1 typo on brand -> []
+
+echo "=== Rule 5: Space split/join ==="
+run "basket ball"      # -> ['7'] Basketball Shoes
+run "waterbottle"      # -> ['8'] Water Bottle
+run "wifirouter"       # -> ['9'] Wifi Router ✔ 
+💭 Thinking for 163 characters   
+<think> All tests pass! Let me verify: **Rule 1: Two typos on names, exact brands** ✓ - `camera` → ['3'] (Camera Bag) - `camrea` (2 typos on camera) → ['3'] (Camera Bag)   
+💭 Thinking for 207 characters   
+💭 Thinking for 50 characters   
+💭 Thinking for 28 characters   
+💭 Thinking for 68 characters   
+💭 Thinking for 84 characters   
+💭 Thinking for 37 characters   
+💭 Thinking for 39 characters   
+💭 Thinking for 33 characters   
+💭 Thinking for 39 characters   
+💭 Thinking for 76 characters   
+💭 Thinking for 30 characters   
+💭 Thinking for 55 characters   
+💭 Thinking for 195 characters   
+💭 Thinking for 62 characters   
+💭 Thinking for 65 characters   
+💭 Thinking for 49 characters   
+💭 Thinking for 61 characters   
+💭 Thinking for 58 characters   
+💭 Thinking for 63 characters   
+💭 Thinking for 48 characters   
+💭 Thinking for 203 characters   
+💭 Thinking for 68 characters   
+💭 Thinking for 32 characters   
+💭 Thinking for 51 characters   
+💭 Thinking for 29 characters   
+💭 Thinking for 79 characters   
+💭 Thinking for 29 characters   
+💭 Thinking for 35 characters   
+💭 Thinking for 52 characters   
+💭 Thinking for 59 characters   
+💭 Thinking for 186 characters   
+💭 Thinking for 118 characters   
+💭 Thinking for 51 characters   
+💭 Thinking for 63 characters   
+💭 Thinking for 26 characters   
+💭 Thinking for 25 characters   
+💭 Thinking for 29 characters   
+💭 Thinking for 52 characters   
+💭 Thinking for 24 characters   
+💭 Thinking for 26 characters   
+💭 Thinking for 166 characters   
+💭 Thinking for 30 characters   
+💭 Thinking for 63 characters   
+💭 Thinking for 55 characters   
+💭 Thinking for 98 characters   
+💭 Thinking for 62 characters   
+💭 Thinking for 18 characters   
+💭 Thinking for 164 characters   
+💭 Thinking for 53 characters   
+💭 Thinking for 50 characters   
+💭 Thinking for 44 characters   
+💭 Thinking for 44 characters   
+💭 Thinking for 14 characters   
+💭 Thinking for 46 characters   
+💭 Thinking for 54 characters   
+💭 Thinking for 49 characters   
+💭 Thinking for 33 characters   
+💭 Thinking for 30 characters   
+💭 Thinking for 71 characters   
+💭 Thinking for 42 characters   
+💭 Thinking for 95 characters   
+💭 Thinking for 124 characters   
+💭 Thinking for 25 characters   
+💭 Thinking for 47 characters   
+💭 Thinking for 105 characters   
+💭 Thinking for 50 characters   
+💭 Thinking for 32 characters   
+💭 Thinking for 31 characters   
+💭 Thinking for 88 characters   
+💭 Thinking for 25 characters   
+💭 Thinking for 71 characters   
+💭 Thinking for 45 characters   
+💭 Thinking for 61 characters   
+💭 Thinking for 88 characters   
+💭 Thinking for 26 characters   
+💭 Thinking for 27 characters   
+💫 Executing cd /home/user/typo-tuning
+
+run() {
+  echo "Q: $1"
+  python3 search.py --q "$1"
+  echo
+}
+
+echo "=== Edge cases ==="
+run "ankor mouse"     # 1 typo on anker, exact mouse
+run "anker mousE"     # case insensitivity
+run "BASKETBALL"      # exact case insensitive
+run "KAMERA BAG"      # 1 typo on name, exact match other word
+run "nikon camera"    # brand + name, no perfect match
+run "logitech camera" # both exist separately, no perfect match
+run "wireless anker"  # no doc has both
+run "anker charger"   # both in id=6 (Portable Charger, Anker)
+run "headfone"        # 1 typo on headset (7 letters) -> should match id=4
+run "headphons"       # 1 typo on headset -> should match id=4
+run "keyboarrd"       # 1 typo on keyboard -> should match id=2 ✔ 
+💭 Thinking for 38 characters   
+<think> Some edge cases: - "ankor mouse" → ['   
+💭 Thinking for 139 characters   
+💭 Thinking for 32 characters   
+💭 Thinking for 15 characters   
+💭 Thinking for 19 characters   
+💭 Thinking for 61 characters   
+💭 Thinking for 20 characters   
+💭 Thinking for 67 characters   
+💭 Thinking for 107 characters   
+💭 Thinking for 17 characters   
+💭 Thinking for 55 characters   
+💭 Thinking for 19 characters   
+💭 Thinking for 44 characters   
+💭 Thinking for 61 characters   
+💭 Thinking for 27 characters   
+💭 Thinking for 23 characters   
+💭 Thinking for 54 characters   
+💭 Thinking for 80 characters   
+💭 Thinking for 33 characters   
+💭 Thinking for 60 characters   
+💭 Thinking for 61 characters   
+💭 Thinking for 27 characters   
+💭 Thinking for 65 characters   
+💭 Thinking for 55 characters   
+💭 Thinking for 30 characters   
+💭 Thinking for 91 characters   
+💭 Thinking for 86 characters   
+💭 Thinking for 124 characters   
+💭 Thinking for 69 characters   
+💭 Thinking for 41 characters   
+💭 Thinking for 123 characters   
+💭 Thinking for 18 characters   
+💭 Thinking for 19 characters   
+💭 Thinking for 18 characters   
+💭 Thinking for 21 characters   
+💭 Thinking for 24 characters   
+💭 Thinking for 22 characters   
+💭 Thinking for 38 characters   
+💭 Thinking for 39 characters   
+💭 Thinking for 43 characters   
+💭 Thinking for 19 characters   
+💭 Thinking for 51 characters   
+💭 Thinking for 19 characters   
+💭 Thinking for 43 characters   
+💭 Thinking for 38 characters   
+💭 Thinking for 191 characters   
+💭 Thinking for 52 characters   
+💫 Executing cd /home/user/typo-tuning
+
+run() {
+  echo "Q: $1"
+  python3 search.py --q "$1"
+  echo
+}
+
+echo "=== Investigate 'ankor mouse' ==="
+run "ankor"        # 1 typo on anker -> should find Anker products
+run "mouse"        # exact
+run "mouse ankor"  # different order
+run "anker mouse"  # without typo
+run "headset" ✔ 
+💭 Thinking for 102 characters   
+<think> Interesting findings: - `ankor` alone → [] (no result). So with 1 typo on a 5-letter word "anker", we   
+💭 Thinking for 45 characters   
+💭 Thinking for 15 characters   
+💭 Thinking for 118 characters   
+💭 Thinking for 18 characters   
+💭 Thinking for 14 characters   
+💭 Thinking for 39 characters   
+💭 Thinking for 165 characters   
+💭 Thinking for 18 characters   
+💭 Thinking for 17 characters   
+💭 Thinking for 45 characters   
+💭 Thinking for 29 characters   
+💭 Thinking for 45 characters   
+💭 Thinking for 52 characters   
+💭 Thinking for 43 characters   
+💭 Thinking for 15 characters   
+💭 Thinking for 17 characters   
+💭 Thinking for 72 characters   
+💭 Thinking for 35 characters   
+💭 Thinking for 66 characters   
+💭 Thinking for 31 characters   
+💭 Thinking for 35 characters   
+💭 Thinking for 47 characters   
+💭 Thinking for 157 characters   
+💭 Thinking for 24 characters   
+💭 Thinking for 41 characters   
+💭 Thinking for 54 characters   
+💭 Thinking for 24 characters   
+💭 Thinking for 23 characters   
+💭 Thinking for 36 characters   
+💭 Thinking for 28 characters   
+💭 Thinking for 58 characters   
+💭 Thinking for 127 characters   
+💭 Thinking for 18 characters   
+💭 Thinking for 22 characters   
+💭 Thinking for 20 characters   
+💭 Thinking for 35 characters   
+💭 Thinking for 19 characters   
+💭 Thinking for 47 characters   
+💭 Thinking for 40 characters   
+💭 Thinking for 20 characters   
+💭 Thinking for 20 characters   
+💭 Thinking for 13 characters   
+💭 Thinking for 31 characters   
+💭 Thinking for 49 characters   
+💭 Thinking for 5 characters   
+💭 Thinking for 16 characters   
+💭 Thinking for 20 characters   
+💭 Thinking for 12 characters   
+💭 Thinking for 24 characters   
+💭 Thinking for 31 characters   
+💭 Thinking for 54 characters   
+💭 Thinking for 27 characters   
+💭 Thinking for 153 characters   
+💭 Thinking for 80 characters   
+💭 Thinking for 65 characters   
+💭 Thinking for 58 characters   
+💭 Thinking for 46 characters   
+💭 Thinking for 12 characters   
+💭 Thinking for 11 characters   
+💭 Thinking for 135 characters   
+💭 Thinking for 27 characters   
+💭 Thinking for 49 characters   
+💭 Thinking for 16 characters   
+💭 Thinking for 17 characters   
+💭 Thinking for 66 characters   
+💭 Thinking for 17 characters   
+💭 Thinking for 27 characters   
+💭 Thinking for 19 characters   
+💭 Thinking for 41 characters   
+💭 Thinking for 191 characters   
+💭 Thinking for 54 characters   
+💭 Thinking for 216 characters   
+💭 Thinking for 85 characters   
+💭 Thinking for 59 characters   
+💭 Thinking for 30 characters   
+💭 Thinking for 122 characters   
+💭 Thinking for 134 characters   
+💭 Thinking for 57 characters   
+💭 Thinking for 28 characters   
+💭 Thinking for 60 characters   
+💭 Thinking for 135 characters   
+💭 Thinking for 33 characters   
+💭 Thinking for 27 characters   
+💭 Thinking for 206 characters   
+💭 Thinking for 32 characters   
+💭 Thinking for 45 characters   
+💭 Thinking for 26 characters   
+💭 Thinking for 38 characters   
+💭 Thinking for 35 characters   
+💭 Thinking for 61 characters   
+💭 Thinking for 30 characters   
+💭 Thinking for 35 characters   
+💭 Thinking for 26 characters   
+💭 Thinking for 28 characters   
+💭 Thinking for 31 characters   
+💭 Thinking for 36 characters   
+💭 Thinking for 596 characters   
+💭 Thinking for 41 characters   
+💭 Thinking for 33 characters   
+💭 Thinking for 30 characters   
+💭 Thinking for 33 characters   
+💭 Thinking for 220 characters   
+💭 Thinking for 43 characters   
+💭 Thinking for 40 characters   
+💭 Thinking for 16 characters   
+💭 Thinking for 38 characters   
+💭 Thinking for 32 characters   
+💭 Thinking for 35 characters   
+💭 Thinking for 45 characters   
+💭 Thinking for 25 characters   
+💭 Thinking for 39 characters   
+💭 Thinking for 41 characters   
+💭 Thinking for 439 characters   
+💭 Thinking for 38 characters   
+💭 Thinking for 31 characters   
+💭 Thinking for 31 characters   
+💭 Thinking for 41 characters   
+💭 Thinking for 41 characters   
+💭 Thinking for 427 characters   
+💭 Thinking for 33 characters   
+💭 Thinking for 28 characters   
+💭 Thinking for 41 characters   
+💭 Thinking for 40 characters   
+💭 Thinking for 66 characters   
+💭 Thinking for 66 characters   
+💭 Thinking for 41 characters   
+💭 Thinking for 46 characters   
+💭 Thinking for 48 characters   
+💭 Thinking for 968 characters   
+💭 Thinking for 52 characters   
+💭 Thinking for 21 characters   
+💭 Thinking for 66 characters   
+💭 Thinking for 54 characters   
+💭 Thinking for 49 characters   
+💭 Thinking for 55 characters   
+💭 Thinking for 46 characters   
+💭 Thinking for 143 characters   
+💭 Thinking for 19 characters   
+💭 Thinking for 63 characters   
+💭 Thinking for 110 characters   
+💭 Thinking for 16 characters   
+💭 Thinking for 44 characters   
+💭 Thinking for 58 characters   
+💭 Thinking for 37 characters   
+💭 Thinking for 7 characters   
+💫 Executing curl -s http://localhost:8108/health
+echo
+echo "---"
+ps -ef | grep -E "typesense-server$" | grep -v grep
+echo "---"
+echo "Final smoke test:"
+cd /home/user/typo-tuning
+for q in "camera" "Basketball" "Wireless" "anker" "waterbottle" "basket ball" "kamera" "wifirouter"; do
+  printf "  %-20s -> " "$q"
+  python3 search.py --q "$q"
+done ✔ 
+💭 Thinking for 34 characters   
+<think> The typesense process doesn't show   
+💭 Thinking for 27 characters   
+💭 Thinking for 88 characters   
+💭 Thinking for 38 characters   
+💭 Thinking for 22 characters   
+💭 Thinking for 66 characters   
+💫 Executing ps auxf | grep typesense | grep -v grep
+echo "---"
+ss -tlnp 2>/dev/null | grep 8108 || netstat -tlnp 2>/dev/null | grep 8108 || echo "no netstat"
+echo "---"
+curl -sv http://localhost:8108/health 2>&1 | tail -10 ✔ 
+💭 Thinking for 48 characters   
+<think> The Typesense server (PID 426) is running health   
+💭 Thinking for 28 characters   
+💭 Thinking for 31 characters   
+💭 Thinking for 21 characters   
+💭 Thinking for 19 characters   
+💭 Thinking for 22 characters   
+💭 Thinking for 45 characters   
+💭 Thinking for 37 characters   
+💭 Thinking for 52 characters   
+💭 Thinking for 56 characters   
+💭 Thinking for 82 characters   
+💭 Thinking for 47 characters   
+💭 Thinking for 42 characters   
+💭 Thinking for 42 characters   
+💭 Thinking for 187 characters   
+💭 Thinking for 47 characters   
+📋 Updating todo list (5 items) ✔ 
+🎉 Task Completed
+## Summary
+
+I implemented the Typesense typo-tolerance tuning task end-to-end. Here's what was set up:
+
+### 1. Typesense Server (running, PID 426)
+Started with:
+```
+/usr/local/bin/typesense-server \
+    --data-dir=/home/user/typo-tuning/ts-data \
+    --api-key=xyz \
+    --api-port=8108
+```
+The server is left running and healthy (`{"ok":true}` on `/health`).
+
+### 2. `catalog` Collection
+Created with two `string` fields: `name` and `brand`. All 11 documents from `/home/user/typo-tuning/products.jsonl` were indexed, preserving the provided `id` values.
+
+### 3. `search.py` — Fixed typo-tolerance configuration
+Located at `/home/user/typo-tuning/search.py`. Uses the official `typesense` Python SDK. The same fixed configuration is applied to every query — no branching on query text. The settings that satisfy **all five rules simultaneously** are:
+
+| Parameter | Value | Purpose |
+|---|---|---|
+| `query_by` | `name,brand` | Required field order |
+| `prefix` | `False` | Disable prefix matching |
+| `num_typos` | `"2,0"` | **Rule 1** — 2 typos on `name`, 0 on `brand` |
+| `min_len_1typo` | `4` | **Rule 2** — length-3 tokens never typo-corrected; length-4 may have 1 typo |
+| `min_len_2typo` | `6` | **Rule 1** — 2 typos allowed on six-letter names like `camera` |
+| `typo_tokens_threshold` | `1` | **Rule 4** — once a token has ≥1 exact match, no typo variants pulled in |
+| `drop_tokens_threshold` | `1` | **Rule 3** — drop tokens only when no document has all words |
+| `split_join_tokens` | `"fallback"` | **Rule 5** — split/join only when exact match returns nothing |
+
+### Verified behavior
+- `camera` → `["3"]` (exact), `camrea` → `["3"]` (2 typos), `logitech` → `["1"]` (exact brand), `logiteck` → `[]` (brand has 0 typos)
+- `USB` → `["5"]` (3 letters, exact), `USZ` → `[]` (3 letters, no typo), `wifi` → `["9"]`, `wifiz` → `["9"]` (4 letters, 1 typo)
+- `wireless mouse` → `["1"]` (perfect match, no dropping), `anker mouse` → `["6","5"]` (no perfect match, drops `mouse`), `anker cable` → `["5"]` only (perfect match)
+- `basket ball` → `["7"]` (join), `waterbottle` → `["8"]` (split), `wifirouter` → `["9"]` (split)
+
+### Output format
+`python3 search.py --q "<query>"` prints a single JSON array of matching `id` strings to stdout (e.g. `["3"]` or `[]`), with no other output.   
+  

@@ -1,0 +1,74 @@
+{
+    "reportFormat": "CTRF",
+    "specVersion": "0.0.0",
+    "timestamp": "2026-07-14T04:22:34.186124+00:00",
+    "generatedBy": "pytest",
+    "results": {
+        "tool": {
+            "name": "pytest",
+            "version": "7.4.4"
+        },
+        "summary": {
+            "tests": 5,
+            "passed": 5,
+            "failed": 0,
+            "skipped": 0,
+            "pending": 0,
+            "other": 0,
+            "start": 1784002950354,
+            "stop": 1784002954185
+        },
+        "environment": {
+            "buildName": "Pytest JSON CTRF Report",
+            "buildNumber": "000",
+            "buildUrl": "https://ctrf.io"
+        },
+        "tests": [
+            {
+                "name": "test_final_state.py::test_setup_populates_collections",
+                "status": "passed",
+                "duration": 3326,
+                "start": 1784002950429,
+                "stop": 1784002953755,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            },
+            {
+                "name": "test_final_state.py::test_federated_search_across_collections",
+                "status": "passed",
+                "duration": 104,
+                "start": 1784002953755,
+                "stop": 1784002953859,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            },
+            {
+                "name": "test_final_state.py::test_per_collection_query_fields",
+                "status": "passed",
+                "duration": 102,
+                "start": 1784002953860,
+                "stop": 1784002953962,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            },
+            {
+                "name": "test_final_state.py::test_uses_multi_search_endpoint",
+                "status": "passed",
+                "duration": 3,
+                "start": 1784002953962,
+                "stop": 1784002953965,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            },
+            {
+                "name": "test_final_state.py::test_partial_failure_handling",
+                "status": "passed",
+                "duration": 220,
+                "start": 1784002953965,
+                "stop": 1784002954185,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            }
+        ]
+    }
+}

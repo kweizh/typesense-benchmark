@@ -1,0 +1,123 @@
+{
+    "id": "097f83e4-0ab6-48a7-964e-7f1eeb80b365",
+    "task_name": "auto_embedding_model_migration",
+    "trial_name": "auto_embedding_model_migration__qAVRPTB",
+    "trial_uri": "file:///home/kw/code/zealt/pochi-harbor/jobs/2026-07-14__12-45-29/auto_embedding_model_migration__qAVRPTB",
+    "task_id": {
+        "path": "/home/kw/code/zealt/typesense-benchmark/scratchpad/pending-tasks/auto_embedding_model_migration"
+    },
+    "source": "pending-tasks",
+    "task_checksum": "fa00583dc01788cb56ab23860d014cab3a55df9691faea078114c186aa79aa41",
+    "config": {
+        "task": {
+            "path": "/home/kw/code/zealt/typesense-benchmark/scratchpad/pending-tasks/auto_embedding_model_migration",
+            "git_url": null,
+            "git_commit_id": null,
+            "name": null,
+            "ref": null,
+            "overwrite": false,
+            "download_dir": null,
+            "source": "pending-tasks"
+        },
+        "trial_name": "auto_embedding_model_migration__qAVRPTB",
+        "trials_dir": "jobs/2026-07-14__12-45-29",
+        "install_only": false,
+        "timeout_multiplier": 1.0,
+        "agent_timeout_multiplier": null,
+        "verifier_timeout_multiplier": null,
+        "agent_setup_timeout_multiplier": null,
+        "environment_build_timeout_multiplier": null,
+        "agent": {
+            "name": null,
+            "import_path": "agents.pochi:Pochi",
+            "model_name": "minimax/MiniMax-M3",
+            "n_concurrent": null,
+            "concurrency_group": null,
+            "skills": [],
+            "override_timeout_sec": null,
+            "override_setup_timeout_sec": null,
+            "max_timeout_sec": null,
+            "extra_allowed_hosts": [],
+            "kwargs": {},
+            "env": {
+                "POCHI_API_KEY": "${POCHI_API_KEY}",
+                "MINIMAX_API_KEY": "${MINIMAX_API_KEY}"
+            },
+            "mcp_servers": []
+        },
+        "environment": {
+            "type": "daytona",
+            "import_path": null,
+            "force_build": false,
+            "delete": true,
+            "cpu_enforcement_policy": "auto",
+            "memory_enforcement_policy": "auto",
+            "override_cpus": null,
+            "override_memory_mb": null,
+            "override_storage_mb": null,
+            "override_gpus": null,
+            "override_tpu": null,
+            "mounts": [
+                {
+                    "type": "bind",
+                    "source": "test_initial_state.py",
+                    "target": "/bootstrap/test_initial_state.py"
+                }
+            ],
+            "extra_docker_compose": [],
+            "kwargs": {},
+            "extra_allowed_hosts": []
+        },
+        "verifier": {
+            "override_timeout_sec": null,
+            "max_timeout_sec": null,
+            "disable": false
+        },
+        "artifacts": [
+            "/home/user"
+        ],
+        "extra_instruction_paths": [],
+        "job_id": "290f08cf-66f8-4af2-9b50-ab7bcface3aa"
+    },
+    "agent_info": {
+        "name": "pochi",
+        "version": "0.6.17",
+        "model_info": {
+            "name": "MiniMax-M3",
+            "provider": "minimax"
+        }
+    },
+    "agent_result": {
+        "n_input_tokens": 0,
+        "n_cache_tokens": 0,
+        "n_output_tokens": 2252393,
+        "cost_usd": null,
+        "rollout_details": null,
+        "metadata": null
+    },
+    "verifier_result": {
+        "rewards": {
+            "reward": 1.0
+        }
+    },
+    "exception_info": null,
+    "started_at": "2026-07-14T04:45:32.693703Z",
+    "finished_at": "2026-07-14T04:52:42.797435Z",
+    "environment_setup": {
+        "started_at": "2026-07-14T04:45:32.871627Z",
+        "finished_at": "2026-07-14T04:45:37.574957Z"
+    },
+    "agent_setup": {
+        "started_at": "2026-07-14T04:45:37.574998Z",
+        "finished_at": "2026-07-14T04:45:43.074840Z"
+    },
+    "agent_execution": {
+        "started_at": "2026-07-14T04:45:43.074894Z",
+        "finished_at": "2026-07-14T04:52:20.837652Z"
+    },
+    "verifier": {
+        "started_at": "2026-07-14T04:52:30.647246Z",
+        "finished_at": "2026-07-14T04:52:42.142990Z"
+    },
+    "step_results": null
+}

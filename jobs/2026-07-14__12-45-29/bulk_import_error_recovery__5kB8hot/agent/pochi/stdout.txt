@@ -1,0 +1,409 @@
+- Initializing MCP connections...
+You
+# Resilient JSONL Bulk-Import Pipeline with Selective Retry ## Background You are building a data-ingestion pipeline for a product catalog powered by https://typesense.org. Typesense exposes a bulk `import` endpoint that accepts newline-delimited JSON (JSONL). Real-world source data is messy: some records have field values that Typesense can automatically coerce, some are broken in ways that can be repaired with well-defined business rules, and some are simply unusable. Your job is to import a large dataset robustly, recover the documents that can be salvaged, and produce an accurate ingestion report. A key subtlety of the Typesense import endpoint is that it always returns `HTTP 200` even when individual documents fail. The response body is JSONL with **one result line per input document, in the same order** as the request. A successful line looks like `{"success": true}` and a failed line looks like `{"success": false, "error": "...", "document": "..."}`. A correct pipeline must therefore inspect the per-document results rather than relying on the HTTP status code. ## Requirements * Ensure a Typesense server is running and create a collection named `catalog` with a strict, explicitly-typed schema (all fields required): * `sku` (`string`) * `name` (`string`) * `price` (`float`) * `quantity` (`int32`) * `category` (`string`) * The document identifier is the special `id` field. * Bulk-import the provided JSONL dataset using the import API. Enable dirty-value handling that **coerces** compatible type mismatches (e.g. a numeric value provided as a JSON string) but **rejects** (never silently drops) values it cannot coerce, so that genuinely invalid documents surface as per-document failures. * Parse the per-document import response, detect every failed document, and collect the corresponding source records. * Apply repair transformations to the fixable failures and re-import **only** the repaired documents. Documents whose failures are not addressed by the repair rules must stay failed and must **not** end up indexed in the collection. * Write an accurate success/failure report. ## Implementation Hints * Use any language/SDK you like (a Python or Node.js SDK, or plain HTTP calls to the REST API are all fine). Interact with the real Typesense server — do not fake the import results. * The import endpoint's response order matches the input order; map each result line back to its source document to identify failures. The failed line also echoes the offending document under the `document` key. * Treat the two repair rules below as the *only* fixes your pipeline is allowed to apply. Any failed document not fully repaired by these rules must be reported as failed: 1. **Currency-formatted price** — when `price` is a string that is not directly numeric because it contains a currency symbol and/or thousands separators (e.g. `"$1,299.00"`), normalize it by removing the currency symbol and thousands separators so it becomes a valid number. 2. **Missing category** — when the required `category` field is absent from a document, set it to the literal string `"uncategorized"`. * Make the pipeline idempotent: running it repeatedly must always yield the same correct report and the same final collection contents (for example, recreate the collection at the start and/or use upsert semantics). * A Typesense standalone server binary is installed at `/usr/local/bin/typesense-server`. Ensure a server is reachable at `http://localhost:8108` with API key `xyz` (start it against a writable data directory if it is not already running). * Project path: `/home/user/import-pipeline` * Command: `python3 pipeline.py` (or provide an equivalent entrypoint; the grader will invoke `python3 pipeline.py`). * Input dataset: `/home/user/import-pipeline/data/raw_products.jsonl` (JSONL, one document per line). * Report file: `/home/user/import-pipeline/report.json`. Write a single JSON object with exactly these keys: * `total` (integer): total number of documents in the input dataset. * `imported_first_pass` (integer): documents successfully indexed on the initial import (before any repair). * `recovered` (integer): documents that failed the initial import but were successfully indexed after repair. * `failed` (integer): documents that were never successfully indexed. * `recovered_ids` (array of strings): the `id`s of the recovered documents, sorted in ascending order. * `failed_ids` (array of strings): the `id`s of the documents that remained failed, sorted in ascending order. * The counts must be internally consistent: `imported_first_pass + recovered + failed == total`, and the final number of documents in the `catalog` collection must equal `imported_first_pass + recovered`.   
+
+Pochi
+💭 Thinking for 78 characters   
+<think> Let me start by exploring the project structure and understanding the existing   
+💭 Thinking for 6 characters   
+💫 Executing ls -la /home/user/import-pipeline/ ✔ 
+💫 Executing ls -la /home/user/import-pipeline/data/ ✔ 
+💫 Executing head -5 /home/user/import-pipeline/data/raw_products.jsonl ✔ 
+💫 Executing wc -l /home/user/import-pipeline/data/raw_products.jsonl ✔ 
+💫 Executing ls /home/local/bin/ 2>/dev/null; which typesense-server; ls -la /usr/local/bin/typesense-server 2>/dev/null ✔ 
+💭 Thinking for 58 characters   
+<think> Let me explore the input data more to understand it fully,   
+💭 Thinking for 30 characters   
+💭 Thinking for 19 characters   
+💫 Executing curl -s http://localhost:8108/health 2>&1 | head -20 ✔ 
+💫 Executing cat /home/user/import-pipeline/data/raw_products.jsonl | python3 -c "
+import json
+import sys
+lines = sys.stdin.readlines()
+print('Total lines:', len(lines))
+# Show a few sample records
+for i, line in enumerate(lines[:3]):
+    print(line.strip())
+print('---')
+# Look at all the unique price patterns
+prices = []
+categories_present = []
+for line in lines:
+    obj = json.loads(line)
+    prices.append((obj.get('id'), obj.get('price'), type(obj.get('price')).__name__))
+    if 'category' not in obj:
+        categories_present.append((obj.get('id'), 'MISSING_CATEGORY'))
+for p in prices:
+    print('price:', p)
+" ✔ 
+💫 Executing cat /home/user/import-pipeline/data/raw_products.jsonl | python3 -c "
+import json
+import sys
+lines = sys.stdin.readlines()
+# Find all invalid docs
+for line in lines:
+    obj = json.loads(line)
+    pid = obj.get('id')
+    price = obj.get('price')
+    cat = obj.get('category', '<MISSING>')
+    ptype = type(price).__name__
+    if ptype != 'float' or cat == '<MISSING>':
+        print(f'id={pid} price={price!r}({ptype}) cat={cat!r}')
+" ✔ 
+💭 Thinking for 63 characters   
+<think> Let me check Typesense server status and explore the data more.   
+💭 Thinking for 40 characters   
+💭 Thinking for 26 characters   
+💫 Executing ps -ef | grep typesense | grep -v grep; echo "---"; curl -sS http://localhost:8108/health -H "X-TYPESENSE-API-KEY: xyz" ✖ "Command exited with code 7"
+💫 Executing cat /home/user/import-pipeline/data/raw_products.jsonl | python3 -c "
+import json
+import sys
+lines = sys.stdin.readlines()
+# Find all invalid docs
+for line in lines:
+    obj = json.loads(line)
+    pid = obj.get('id')
+    price = obj.get('price')
+    cat = obj.get('category', '<MISSING>')
+    ptype = type(price).__name__
+    if ptype != 'float' or cat == '<MISSING>':
+        print(f'id={pid} price={price!r}({ptype}) cat={cat!r} sku={obj.get(\"sku\")} name={obj.get(\"name\")} qty={obj.get(\"quantity\")}')
+" ✖ "Tool call was cancelled because a previous tool call failed."
+💫 Executing python3 --version; pip list 2>/dev/null | grep -i typesense ✖ "Tool call was cancelled because a previous tool call failed."
+💭 Thinking for 27 characters   
+<think> The Typesense server is not   
+💭 Thinking for 53 characters   
+💭 Thinking for 86 characters   
+💭 Thinking for 139 characters   
+💭 Thinking for 3 characters   
+💭 Thinking for 73 characters   
+💫 Executing mkdir -p /tmp/typesense-data && /usr/local/bin/typesense-server --data-dir /tmp/typesense-data --api-key=xyz --listen-port=8108 > /tmp/typesense.log 2>&1 &
+echo "Started typesense, pid $!"
+sleep 3
+curl -sS http://localhost:8108/health -H "X-TYPESENSE-API-KEY: xyz" ✔ 
+💫 Executing cat /home/user/import-pipeline/data/raw_products.jsonl | python3 -c "
+import json
+import sys
+lines = sys.stdin.readlines()
+# Find all invalid docs
+for line in lines:
+    obj = json.loads(line)
+    pid = obj.get('id')
+    price = obj.get('price')
+    cat = obj.get('category', '<MISSING>')
+    ptype = type(price).__name__
+    if ptype != 'float' or cat == '<MISSING>':
+        print(f'id={pid} price={price!r}({ptype}) cat={cat!r} sku={obj.get(\"sku\")} name={obj.get(\"name\")} qty={obj.get(\"quantity\")}')
+" ✔ 
+💭 Thinking for 32 characters   
+<think> The Typesense server is starting   
+💭 Thinking for 49 characters   
+💭 Thinking for 13 characters   
+💭 Thinking for 56 characters   
+💭 Thinking for 14 characters   
+💫 Executing sleep 3; curl -sS http://localhost:8108/health -H "X-TYPESENSE-API-KEY: xyz"; echo; cat /tmp/typesense.log | tail -20 ✔ 
+💭 Thinking for 185 characters   
+<think> Typesense is running. Now let me test the import endpoint behavior to make sure I understand the API correctly.Typesense is running. Now let me test the import endpoint behavior to make   
+💭 Thinking for 36 characters   
+💭 Thinking for 132 characters   
+💭 Thinking for 21 characters   
+💭 Thinking for 57 characters   
+💭 Thinking for 15 characters   
+💫 Executing curl -sS -X POST "http://localhost:8108/collections" -H "X-TYPESENSE-API-KEY: xyz" -H "Content-Type: application/json" -d '{
+  "name": "catalog",
+  "fields": [
+    {"name": "sku", "type": "string"},
+    {"name": "name", "type": "string"},
+    {"name": "price", "type": "float"},
+    {"name": "quantity", "type": "int32"},
+    {"name": "category", "type": "string"}
+  ]
+}'
+echo
+echo "---"
+# Test the dirty_values=coerce_or_reject behavior
+curl -sS -X POST "http://localhost:8108/collections/catalog/documents/import?action=create" \
+  -H "X-TYPESENSE-API-KEY: xyz" \
+  -H "Content-Type: application/json" \
+  --data-binary $'{"id":"t1","sku":"SKU-T1","name":"Coerce Test","price":"45.50","quantity":5,"category":"tech"}\n{"id":"t2","sku":"SKU-T2","name":"Currency Test","price":"$1,299.00","quantity":3,"category":"tech"}\n{"id":"t3","sku":"SKU-T3","name":"Missing Cat","price":10.0,"quantity":3}\n{"id":"t4","sku":"SKU-T4","name":"Bad Price","price":"abc","quantity":1,"category":"x"}'
+echo ✔ 
+💭 Thinking for 81 characters   
+<think> The default behavior rejects everything. I need to use `dirty_values=coerce_or_re   
+💭 Thinking for 165 characters   
+💭 Thinking for 124 characters   
+💫 Executing curl -sS -X DELETE "http://localhost:8108/collections/catalog" -H "X-TYPESENSE-API-KEY: xyz"; echo
+curl -sS -X POST "http://localhost:8108/collections" -H "X-TYPESENSE-API-KEY: xyz" -H "Content-Type: application/json" -d '{
+  "name": "catalog",
+  "fields": [
+    {"name": "sku", "type": "string"},
+    {"name": "name", "type": "string"},
+    {"name": "price", "type": "float"},
+    {"name": "quantity", "type": "int32"},
+    {"name": "category", "type": "string"}
+  ]
+}'
+echo
+echo "---"
+curl -sS -X POST "http://localhost:8108/collections/catalog/documents/import?action=create&dirty_values=coerce_or_reject" \
+  -H "X-TYPESENSE-API-KEY: xyz" \
+  -H "Content-Type: application/json" \
+  --data-binary $'{"id":"t1","sku":"SKU-T1","name":"Coerce Test","price":"45.50","quantity":5,"category":"tech"}\n{"id":"t2","sku":"SKU-T2","name":"Currency Test","price":"$1,299.00","quantity":3,"category":"tech"}\n{"id":"t3","sku":"SKU-T3","name":"Missing Cat","price":10.0,"quantity":3}\n{"id":"t4","sku":"SKU-T4","name":"Bad Price","price":"abc","quantity":1,"category":"x"}'
+echo ✔ 
+💭 Thinking for 76 characters   
+<think> The behavior is clear now: - `"45.50"` is coerced successfully to 45.5 - `"$   
+💭 Thinking for 168 characters   
+💭 Thinking for 46 characters   
+💭 Thinking for 68 characters   
+💭 Thinking for 80 characters   
+💭 Thinking for 45 characters   
+💭 Thinking for 111 characters   
+💭 Thinking for 18 characters   
+💫 Executing curl -sS -X DELETE "http://localhost:8108/collections/catalog" -H "X-TYPESENSE-API-KEY: xyz"; echo
+grep '"u00' /home/user/import-pipeline/data/raw_products.jsonl
+echo "---"
+# Check what makes u001 fail - look at the full doc
+grep '"id": "u00' /home/user/import-pipeline/data/raw_products.jsonl ✔ 
+💭 Thinking for 18 characters   
+<think> The u001-u003 docs   
+💭 Thinking for 47 characters   
+💭 Thinking for 61 characters   
+💭 Thinking for 25 characters   
+💭 Thinking for 51 characters   
+💭 Thinking for 33 characters   
+💭 Thinking for 48 characters   
+💭 Thinking for 25 characters   
+💭 Thinking for 59 characters   
+💭 Thinking for 71 characters   
+💭 Thinking for 27 characters   
+💭 Thinking for 75 characters   
+💭 Thinking for 47 characters   
+💭 Thinking for 53 characters   
+💭 Thinking for 34 characters   
+💭 Thinking for 15 characters   
+💭 Thinking for 58 characters   
+💭 Thinking for 117 characters   
+💭 Thinking for 49 characters   
+💭 Thinking for 68 characters   
+💭 Thinking for 69 characters   
+💭 Thinking for 58 characters   
+💭 Thinking for 138 characters   
+✏️  Writing /home/user/import-pipeline/pipeline.py ✔ 
+💭 Thinking for 27 characters   
+<think> Let me run the pipeline now   
+💭 Thinking for 43 characters   
+💭 Thinking for 13 characters   
+💭 Thinking for 131 characters   
+💫 Executing cd /home/user/import-pipeline && python3 pipeline.py ✔ 
+💭 Thinking for 122 characters   
+<think> The pipeline ran successfully and produced the expected output. Let me verify: - Total: 209 ✓ - Imported first pass: 202 ✓   
+💭 Thinking for 52 characters   
+💭 Thinking for 22 characters   
+💭 Thinking for 25 characters   
+💭 Thinking for 19 characters   
+💭 Thinking for 165 characters   
+💫 Executing cat /home/user/import-pipeline/report.json
+echo "---"
+curl -sS "http://localhost:8108/collections/catalog" -H "X-TYPESENSE-API-KEY: xyz" | python3 -c "import json,sys; d=json.load(sys.stdin); print('num_documents=', d['num_documents'])"
+echo "---"
+# Check that the repaired docs are actually in the collection
+curl -sS "http://localhost:8108/collections/catalog/documents/search?q=*&query_by=name&per_page=250" -H "X-TYPESENSE-API-KEY: xyz" | python3 -c "
+import json,sys
+d = json.load(sys.stdin)
+hits = [h['document']['id'] for h in d['hits']]
+print('found', len(hits), 'hits')
+for pid in ['c001','c002','f001','f002','f003','f004','u001','u002','u003']:
+    print(f'{pid}: {\"indexed\" if pid in hits else \"MISSING\"}')
+" ✔ 
+💭 Thinking for 92 characters   
+<think> All the checks pass: - Report is correctly structured - Collection has exactly 206 documents   
+💭 Thinking for 11 characters   
+💭 Thinking for 21 characters   
+💭 Thinking for 31 characters   
+💭 Thinking for 64 characters   
+💭 Thinking for 45 characters   
+💭 Thinking for 53 characters   
+💭 Thinking for 47 characters   
+💭 Thinking for 32 characters   
+💭 Thinking for 38 characters   
+💭 Thinking for 37 characters   
+💭 Thinking for 56 characters   
+💭 Thinking for 236 characters   
+💭 Thinking for 26 characters   
+💭 Thinking for 15 characters   
+💫 Executing python3 pipeline.py
+echo "---"
+echo "After second run:"
+cat /home/user/import-pipeline/report.json
+echo "---"
+curl -sS "http://localhost:8108/collections/catalog" -H "X-TYPESENSE-API-KEY: xyz" | python3 -c "import json,sys; d=json.load(sys.stdin); print('num_documents=', d['num_documents'])"
+echo "---"
+# Also confirm a repaired doc actually has the correct normalized values
+curl -sS "http://localhost:8108/collections/catalog/documents/f001" -H "X-TYPESENSE-API-KEY: xyz"
+echo
+curl -sS "http://localhost:8108/collections/catalog/documents/f003" -H "X-TYPESENSE-API-KEY: xyz"
+echo
+curl -sS "http://localhost:8108/collections/catalog/documents/f004" -H "X-TYPESENSE-API-KEY: xyz"
+echo ✔ 
+💭 Thinking for 89 characters   
+<think> I forgot the `cd` for the second run, but I can see the file was actually re-run (since I   
+💭 Thinking for 54 characters   
+💭 Thinking for 62 characters   
+💭 Thinking for 23 characters   
+💭 Thinking for 19 characters   
+💭 Thinking for 63 characters   
+💭 Thinking for 60 characters   
+💭 Thinking for 102 characters   
+💭 Thinking for 55 characters   
+💫 Executing python3 pipeline.py
+echo "==="
+diff <(python3 -c "import json; print(json.dumps(json.load(open('report.json')), sort_keys=True))") \
+     <(python3 -c "import json; print(json.dumps({'total':209,'imported_first_pass':202,'recovered':4,'failed':3,'recovered_ids':['f001','f002','f003','f004'],'failed_ids':['u001','u002','u003']}, sort_keys=True))") && echo "Report matches expected."
+echo "==="
+curl -sS "http://localhost:8108/collections/catalog" -H "X-TYPESENSE-API-KEY: xyz" | python3 -c "import json,sys; d=json.load(sys.stdin); print('num_documents=', d['num_documents'])" ✔ 
+💭 Thinking for 92 characters   
+<think> The first `python3 pipeline.py` was run from `/root`, not from `/home/user/import-pipeline`.   
+💭 Thinking for 35 characters   
+💭 Thinking for 120 characters   
+💭 Thinking for 44 characters   
+💭 Thinking for 46 characters   
+💭 Thinking for 53 characters   
+💭 Thinking for 95 characters   
+💭 Thinking for 20 characters   
+💫 Executing pwd && python3 pipeline.py
+echo "==="
+cat report.json
+echo "==="
+diff <(python3 -c "import json; print(json.dumps(json.load(open('report.json')), sort_keys=True))") \
+     <(python3 -c "import json; print(json.dumps({'total':209,'imported_first_pass':202,'recovered':4,'failed':3,'recovered_ids':['f001','f002','f003','f004'],'failed_ids':['u001','u002','u003']}, sort_keys=True))") && echo "REPORT MATCHES EXPECTED."
+echo "==="
+curl -sS "http://localhost:8108/collections/catalog" -H "X-TYPESENSE-API-KEY: xyz" | python3 -c "import json,sys; d=json.load(sys.stdin); print('num_documents=', d['num_documents'])" ✔ 
+💭 Thinking for 19 characters   
+<think> I'm still in /root,   
+💭 Thinking for 34 characters   
+💭 Thinking for 56 characters   
+💭 Thinking for 20 characters   
+💭 Thinking for 23 characters   
+💭 Thinking for 50 characters   
+💭 Thinking for 68 characters   
+💭 Thinking for 149 characters   
+💭 Thinking for 76 characters   
+💭 Thinking for 26 characters   
+💭 Thinking for 7 characters   
+💫 Executing python3 /home/user/import-pipeline/pipeline.py
+echo "==="
+cat /home/user/import-pipeline/report.json
+echo "==="
+diff <(python3 -c "import json; print(json.dumps(json.load(open('/home/user/import-pipeline/report.json')), sort_keys=True))") \
+     <(python3 -c "import json; print(json.dumps({'total':209,'imported_first_pass':202,'recovered':4,'failed':3,'recovered_ids':['f001','f002','f003','f004'],'failed_ids':['u001','u002','u003']}, sort_keys=True))") && echo "REPORT MATCHES EXPECTED."
+echo "==="
+curl -sS "http://localhost:8108/collections/catalog" -H "X-TYPESENSE-API-KEY: xyz" | python3 -c "import json,sys; d=json.load(sys.stdin); print('num_documents=', d['num_documents'])" ✔ 
+💭 Thinking for 57 characters   
+<think> All checks pass: 1. ✅ The pipeline runs successfully via   
+💭 Thinking for 45 characters   
+💭 Thinking for 16 characters   
+💭 Thinking for 60 characters   
+💭 Thinking for 28 characters   
+💭 Thinking for 44 characters   
+💭 Thinking for 15 characters   
+💭 Thinking for 145 characters   
+💭 Thinking for 11 characters   
+💭 Thinking for 90 characters   
+💭 Thinking for 25 characters   
+💭 Thinking for 44 characters   
+💭 Thinking for 99 characters   
+💭 Thinking for 481 characters   
+💭 Thinking for 24 characters   
+💭 Thinking for 35 characters   
+💭 Thinking for 43 characters   
+💭 Thinking for 27 characters   
+💭 Thinking for 38 characters   
+💭 Thinking for 39 characters   
+💭 Thinking for 27 characters   
+💭 Thinking for 26 characters   
+💭 Thinking for 74 characters   
+💭 Thinking for 22 characters   
+💭 Thinking for 1 characters   
+💫 Executing bash -c 'python3 pipeline.py' 
+echo "==="
+cat /home/user/import-pipeline/report.json
+echo "==="
+curl -sS "http://localhost:8108/collections/catalog" -H "X-TYPESENSE-API-KEY: xyz" | python3 -c "import json,sys; d=json.load(sys.stdin); print('num_documents=', d['num_documents'])" ✔ 
+💭 Thinking for 105 characters   
+<think> The grader will invoke `python3 pipeline.py` from `/home/user/import-pipeline`. Let me verify this works: </think> The grader will invoke `python3 pipeline.py` from `/home/user/import-pipeline`. Let me verify this exact invocation works:   
+💫 Executing python3 pipeline.py
+echo "==="
+cat report.json
+echo "==="
+curl -sS "http://localhost:8108/collections/catalog" -H "X-TYPESENSE-API-KEY: xyz" | python3 -c "import json,sys; d=json.load(sys.stdin); print('num_documents=', d['num_documents'])" ✔ 
+💭 Thinking for 26 characters   
+<think> I'm still in /root because   
+💭 Thinking for 103 characters   
+💭 Thinking for 23 characters   
+💭 Thinking for 20 characters   
+💭 Thinking for 79 characters   
+💭 Thinking for 50 characters   
+💭 Thinking for 21 characters   
+💫 Executing pwd
+python3 pipeline.py
+echo "==="
+cat report.json
+echo "==="
+curl -sS "http://localhost:8108/collections/catalog" -H "X-TYPESENSE-API-KEY: xyz" | python3 -c "import json,sys; d=json.load(sys.stdin); print('num_documents=', d['num_documents'])" ✔ 
+💭 Thinking for 33 characters   
+<think> Everything works as expected. Let   
+💭 Thinking for 30 characters   
+💭 Thinking for 38 characters   
+💭 Thinking for 45 characters   
+💭 Thinking for 39 characters   
+💭 Thinking for 190 characters   
+💭 Thinking for 94 characters   
+💭 Thinking for 128 characters   
+💭 Thinking for 35 characters   
+💭 Thinking for 108 characters   
+💭 Thinking for 18 characters   
+💭 Thinking for 26 characters   
+💭 Thinking for 91 characters   
+💭 Thinking for 28 characters   
+💭 Thinking for 20 characters   
+💫 Executing ls -la /home/user/import-pipeline/
+echo "==="
+cat /home/user/import-pipeline/report.json ✔ 
+💭 Thinking for 33 characters   
+<think> Let me write the final completion   
+💭 Thinking for 8 characters   
+🎉 Task Completed
+Implemented the resilient JSONL bulk-import pipeline at `/home/user/import-pipeline/pipeline.py`.
+
+## How it works
+
+1. **Server bootstrap** — `ensure_server()` checks `GET /health`; if Typesense isn't reachable it launches `/usr/local/bin/typesense-server` against `/tmp/typesense-data` with API key `xyz`, then waits for `/health` to return `{"ok":true}`.
+2. **Strict schema** — `recreate_collection()` drops and recreates `catalog` with all five required fields explicitly typed (`sku:string`, `name:string`, `price:float`, `quantity:int32`, `category:string`), ensuring idempotent runs.
+3. **First bulk import** — `bulk_import()` POSTs the JSONL to `/collections/catalog/documents/import?action=upsert&dirty_values=coerce_or_reject`, parses the JSONL response, and zips it with the source docs by index (response order matches input order). Coercible numeric strings succeed; bad values surface as per-document failures.
+4. **Repair + selective retry** — `repair()` only applies the two permitted rules:
+   - Currency-formatted `price` (e.g. `"$1,299.00"` → `1299.0` via a regex that strips anything other than digits, dot, or minus).
+   - Missing `category` → set to `"uncategorized"`.
+   Anything else (e.g. missing `sku`/`name`, `quantity: "many"`) is left untouched and stays failed.
+   Only the docs that were actually repaired are re-imported (also via `action=upsert` with `dirty_values=coerce_or_reject`); docs that still fail after repair are kept in the failed bucket and never re-sent.
+5. **Report** — `report.json` is written with exactly the required keys, all counts internally consistent, IDs sorted ascending.
+6. **Sanity check** — the script asserts `imported_first_pass + recovered + failed == total` and that `GET /collections/catalog`'s `num_documents` equals `imported_first_pass + recovered`.
+
+## Result (verified against the live Typesense server)
+
+```json
+{
+  "total": 209,
+  "imported_first_pass": 202,
+  "recovered": 4,
+  "failed": 3,
+  "recovered_ids": ["f001", "f002", "f003", "f004"],
+  "failed_ids": ["u001", "u002", "u003"]
+}
+```
+
+- The 4 repaired documents are indexed with their normalized values (e.g. `f001.price = 1299.0`, `f003.category = "uncategorized"`, `f004.price = 59.5` and `f004.category = "uncategorized"`).
+- The 3 unrepairable documents (`u001` missing `sku`, `u002` missing `name`, `u003` with `quantity: "many"`) remain absent from the collection, as required.
+- Final collection count is **206** = `imported_first_pass + recovered`.
+- Re-running the pipeline yields the identical report and the identical 206-document collection.
+
+The grader can invoke it with `cd /home/user/import-pipeline && python3 pipeline.py`.   
+  

@@ -1,0 +1,101 @@
+{
+    "reportFormat": "CTRF",
+    "specVersion": "0.0.0",
+    "timestamp": "2026-07-14T04:52:16.543302+00:00",
+    "generatedBy": "pytest",
+    "results": {
+        "tool": {
+            "name": "pytest",
+            "version": "7.4.4"
+        },
+        "summary": {
+            "tests": 8,
+            "passed": 8,
+            "failed": 0,
+            "skipped": 0,
+            "pending": 0,
+            "other": 0,
+            "start": 1784004722238,
+            "stop": 1784004736543
+        },
+        "environment": {
+            "buildName": "Pytest JSON CTRF Report",
+            "buildNumber": "000",
+            "buildUrl": "https://ctrf.io"
+        },
+        "tests": [
+            {
+                "name": "test_final_state.py::test_nested_fields_enabled",
+                "status": "passed",
+                "duration": 4011,
+                "start": 1784004722288,
+                "stop": 1784004726299,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            },
+            {
+                "name": "test_final_state.py::test_deep_attribute_color_field_typed_as_string_array",
+                "status": "passed",
+                "duration": 1,
+                "start": 1784004726299,
+                "stop": 1784004726300,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            },
+            {
+                "name": "test_final_state.py::test_deep_category_field_is_faceted_string_array",
+                "status": "passed",
+                "duration": 1,
+                "start": 1784004726300,
+                "stop": 1784004726301,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            },
+            {
+                "name": "test_final_state.py::test_all_documents_indexed",
+                "status": "passed",
+                "duration": 1,
+                "start": 1784004726302,
+                "stop": 1784004726303,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            },
+            {
+                "name": "test_final_state.py::test_live_nested_search_filter_and_facet",
+                "status": "passed",
+                "duration": 2,
+                "start": 1784004726303,
+                "stop": 1784004726305,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            },
+            {
+                "name": "test_final_state.py::test_cli_case_a_wireless_black",
+                "status": "passed",
+                "duration": 79,
+                "start": 1784004726305,
+                "stop": 1784004726384,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            },
+            {
+                "name": "test_final_state.py::test_cli_case_b_ceramic_blue",
+                "status": "passed",
+                "duration": 76,
+                "start": 1784004726384,
+                "stop": 1784004726460,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            },
+            {
+                "name": "test_final_state.py::test_cli_case_c_empty_result",
+                "status": "passed",
+                "duration": 10082,
+                "start": 1784004726460,
+                "stop": 1784004736542,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            }
+        ]
+    }
+}

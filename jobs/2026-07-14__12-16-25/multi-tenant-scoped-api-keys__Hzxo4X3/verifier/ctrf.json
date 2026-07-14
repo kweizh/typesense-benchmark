@@ -1,0 +1,128 @@
+{
+    "reportFormat": "CTRF",
+    "specVersion": "0.0.0",
+    "timestamp": "2026-07-14T04:19:45.755696+00:00",
+    "generatedBy": "pytest",
+    "results": {
+        "tool": {
+            "name": "pytest",
+            "version": "7.4.4"
+        },
+        "summary": {
+            "tests": 10,
+            "passed": 10,
+            "failed": 0,
+            "skipped": 0,
+            "pending": 0,
+            "other": 0,
+            "start": 1784002781347,
+            "stop": 1784002785755
+        },
+        "environment": {
+            "buildName": "Pytest JSON CTRF Report",
+            "buildNumber": "000",
+            "buildUrl": "https://ctrf.io"
+        },
+        "tests": [
+            {
+                "name": "test_final_state.py::test_artifact_shape",
+                "status": "passed",
+                "duration": 1,
+                "start": 1784002781413,
+                "stop": 1784002781414,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            },
+            {
+                "name": "test_final_state.py::test_collection_populated",
+                "status": "passed",
+                "duration": 4011,
+                "start": 1784002781414,
+                "stop": 1784002785425,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            },
+            {
+                "name": "test_final_state.py::test_parent_key_is_search_only",
+                "status": "passed",
+                "duration": 2,
+                "start": 1784002785425,
+                "stop": 1784002785427,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            },
+            {
+                "name": "test_final_state.py::test_parent_key_cannot_write",
+                "status": "passed",
+                "duration": 1,
+                "start": 1784002785427,
+                "stop": 1784002785428,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            },
+            {
+                "name": "test_final_state.py::test_scoped_key_returns_only_own_tenant",
+                "status": "passed",
+                "duration": 3,
+                "start": 1784002785428,
+                "stop": 1784002785431,
+                "retries": 0,
+                "file_path": "test_final_state.py",
+                "tags": [
+                    "parametrize::tenant,expected_count::[('acme', 3), ('globex', 2), ('initech', 4)]"
+                ]
+            },
+            {
+                "name": "test_final_state.py::test_scoped_key_returns_only_own_tenant",
+                "status": "passed",
+                "duration": 2,
+                "start": 1784002785431,
+                "stop": 1784002785433,
+                "retries": 0,
+                "file_path": "test_final_state.py",
+                "tags": [
+                    "parametrize::tenant,expected_count::[('acme', 3), ('globex', 2), ('initech', 4)]"
+                ]
+            },
+            {
+                "name": "test_final_state.py::test_scoped_key_returns_only_own_tenant",
+                "status": "passed",
+                "duration": 2,
+                "start": 1784002785433,
+                "stop": 1784002785435,
+                "retries": 0,
+                "file_path": "test_final_state.py",
+                "tags": [
+                    "parametrize::tenant,expected_count::[('acme', 3), ('globex', 2), ('initech', 4)]"
+                ]
+            },
+            {
+                "name": "test_final_state.py::test_secret_notes_field_is_hidden",
+                "status": "passed",
+                "duration": 2,
+                "start": 1784002785435,
+                "stop": 1784002785437,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            },
+            {
+                "name": "test_final_state.py::test_cross_tenant_override_is_blocked_acme",
+                "status": "passed",
+                "duration": 2,
+                "start": 1784002785437,
+                "stop": 1784002785439,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            },
+            {
+                "name": "test_final_state.py::test_cross_tenant_override_is_blocked_globex",
+                "status": "passed",
+                "duration": 316,
+                "start": 1784002785439,
+                "stop": 1784002785755,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            }
+        ]
+    }
+}

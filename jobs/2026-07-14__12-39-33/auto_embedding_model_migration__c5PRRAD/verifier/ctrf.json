@@ -1,0 +1,92 @@
+{
+    "reportFormat": "CTRF",
+    "specVersion": "0.0.0",
+    "timestamp": "2026-07-14T04:43:19.720172+00:00",
+    "generatedBy": "pytest",
+    "results": {
+        "tool": {
+            "name": "pytest",
+            "version": "7.4.4"
+        },
+        "summary": {
+            "tests": 7,
+            "passed": 7,
+            "failed": 0,
+            "skipped": 0,
+            "pending": 0,
+            "other": 0,
+            "start": 1784004195629,
+            "stop": 1784004199720
+        },
+        "environment": {
+            "buildName": "Pytest JSON CTRF Report",
+            "buildNumber": "000",
+            "buildUrl": "https://ctrf.io"
+        },
+        "tests": [
+            {
+                "name": "test_final_state.py::test_collection_still_exists_in_place",
+                "status": "passed",
+                "duration": 4011,
+                "start": 1784004195687,
+                "stop": 1784004199698,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            },
+            {
+                "name": "test_final_state.py::test_vector_field_migrated_to_8_dims",
+                "status": "passed",
+                "duration": 1,
+                "start": 1784004199699,
+                "stop": 1784004199700,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            },
+            {
+                "name": "test_final_state.py::test_non_vector_fields_intact",
+                "status": "passed",
+                "duration": 2,
+                "start": 1784004199700,
+                "stop": 1784004199702,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            },
+            {
+                "name": "test_final_state.py::test_document_count_unchanged",
+                "status": "passed",
+                "duration": 1,
+                "start": 1784004199702,
+                "stop": 1784004199703,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            },
+            {
+                "name": "test_final_state.py::test_documents_preserved",
+                "status": "passed",
+                "duration": 7,
+                "start": 1784004199704,
+                "stop": 1784004199711,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            },
+            {
+                "name": "test_final_state.py::test_embeddings_regenerated_to_8_dims",
+                "status": "passed",
+                "duration": 6,
+                "start": 1784004199712,
+                "stop": 1784004199718,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            },
+            {
+                "name": "test_final_state.py::test_vector_search_works",
+                "status": "passed",
+                "duration": 1,
+                "start": 1784004199718,
+                "stop": 1784004199719,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            }
+        ]
+    }
+}

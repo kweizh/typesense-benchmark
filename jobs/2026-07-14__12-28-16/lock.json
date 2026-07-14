@@ -1,0 +1,861 @@
+{
+    "schema_version": 2,
+    "created_at": "2026-07-14T04:28:18.997717Z",
+    "harbor": {
+        "version": "0.18.0",
+        "is_editable": false
+    },
+    "n_concurrent_trials": 20,
+    "retry": {
+        "max_retries": 0,
+        "exclude_exceptions": [
+            "ApiUsageLimitError",
+            "RewardFileNotFoundError",
+            "AgentTimeoutError",
+            "RewardFileEmptyError",
+            "VerifierOutputParseError",
+            "VerifierTimeoutError"
+        ],
+        "wait_multiplier": 1.0,
+        "min_wait_sec": 1.0,
+        "max_wait_sec": 60.0
+    },
+    "trials": [
+        {
+            "schema_version": 1,
+            "task": {
+                "name": "hybrid-search-relevance-tuning",
+                "type": "local",
+                "digest": "sha256:03066551d43a7c11bd041deceb4eb253f7883c65af9e672ca87f0ae93d90b7c5",
+                "source": "pending-tasks",
+                "path": "/home/kw/code/zealt/typesense-benchmark/scratchpad/pending-tasks/hybrid-search-relevance-tuning"
+            },
+            "install_only": false,
+            "timeout_multiplier": 1.0,
+            "agent": {
+                "import_path": "agents.pochi:Pochi",
+                "model_name": "zai/glm-5.2",
+                "skills": [],
+                "extra_allowed_hosts": [],
+                "kwargs": {},
+                "env": {
+                    "POCHI_API_KEY": "${POCHI_API_KEY}"
+                },
+                "mcp_servers": []
+            },
+            "skills": [],
+            "environment": {
+                "type": "daytona",
+                "force_build": false,
+                "delete": true,
+                "cpu_enforcement_policy": "auto",
+                "memory_enforcement_policy": "auto",
+                "mounts": [
+                    {
+                        "type": "bind",
+                        "source": "test_initial_state.py",
+                        "target": "/bootstrap/test_initial_state.py"
+                    }
+                ],
+                "extra_docker_compose": [],
+                "kwargs": {},
+                "extra_allowed_hosts": []
+            },
+            "verifier": {
+                "disable": false
+            }
+        },
+        {
+            "schema_version": 1,
+            "task": {
+                "name": "multi-tenant-scoped-api-keys",
+                "type": "local",
+                "digest": "sha256:6a4d0b42b60fe5bc940c9eaeaa122176dc70f02665cceb348ad5e4c041aa7a5c",
+                "source": "pending-tasks",
+                "path": "/home/kw/code/zealt/typesense-benchmark/scratchpad/pending-tasks/multi-tenant-scoped-api-keys"
+            },
+            "install_only": false,
+            "timeout_multiplier": 1.0,
+            "agent": {
+                "import_path": "agents.pochi:Pochi",
+                "model_name": "zai/glm-5.2",
+                "skills": [],
+                "extra_allowed_hosts": [],
+                "kwargs": {},
+                "env": {
+                    "POCHI_API_KEY": "${POCHI_API_KEY}"
+                },
+                "mcp_servers": []
+            },
+            "skills": [],
+            "environment": {
+                "type": "daytona",
+                "force_build": false,
+                "delete": true,
+                "cpu_enforcement_policy": "auto",
+                "memory_enforcement_policy": "auto",
+                "mounts": [
+                    {
+                        "type": "bind",
+                        "source": "test_initial_state.py",
+                        "target": "/bootstrap/test_initial_state.py"
+                    }
+                ],
+                "extra_docker_compose": [],
+                "kwargs": {},
+                "extra_allowed_hosts": []
+            },
+            "verifier": {
+                "disable": false
+            }
+        },
+        {
+            "schema_version": 1,
+            "task": {
+                "name": "zero-downtime-schema-migration",
+                "type": "local",
+                "digest": "sha256:f7122e13eea85a142773b65b62ad77df9cb3a152fcb09d437557a1ada2b27e62",
+                "source": "pending-tasks",
+                "path": "/home/kw/code/zealt/typesense-benchmark/scratchpad/pending-tasks/zero-downtime-schema-migration"
+            },
+            "install_only": false,
+            "timeout_multiplier": 1.0,
+            "agent": {
+                "import_path": "agents.pochi:Pochi",
+                "model_name": "zai/glm-5.2",
+                "skills": [],
+                "extra_allowed_hosts": [],
+                "kwargs": {},
+                "env": {
+                    "POCHI_API_KEY": "${POCHI_API_KEY}"
+                },
+                "mcp_servers": []
+            },
+            "skills": [],
+            "environment": {
+                "type": "daytona",
+                "force_build": false,
+                "delete": true,
+                "cpu_enforcement_policy": "auto",
+                "memory_enforcement_policy": "auto",
+                "mounts": [
+                    {
+                        "type": "bind",
+                        "source": "test_initial_state.py",
+                        "target": "/bootstrap/test_initial_state.py"
+                    }
+                ],
+                "extra_docker_compose": [],
+                "kwargs": {},
+                "extra_allowed_hosts": []
+            },
+            "verifier": {
+                "disable": false
+            }
+        },
+        {
+            "schema_version": 1,
+            "task": {
+                "name": "api_key_rbac_actions",
+                "type": "local",
+                "digest": "sha256:d474ac6d6e372ae69dc6797ada68dfff489bf0d70753cf47d39030e5a8187a7a",
+                "source": "pending-tasks",
+                "path": "/home/kw/code/zealt/typesense-benchmark/scratchpad/pending-tasks/api_key_rbac_actions"
+            },
+            "install_only": false,
+            "timeout_multiplier": 1.0,
+            "agent": {
+                "import_path": "agents.pochi:Pochi",
+                "model_name": "zai/glm-5.2",
+                "skills": [],
+                "extra_allowed_hosts": [],
+                "kwargs": {},
+                "env": {
+                    "POCHI_API_KEY": "${POCHI_API_KEY}"
+                },
+                "mcp_servers": []
+            },
+            "skills": [],
+            "environment": {
+                "type": "daytona",
+                "force_build": false,
+                "delete": true,
+                "cpu_enforcement_policy": "auto",
+                "memory_enforcement_policy": "auto",
+                "mounts": [
+                    {
+                        "type": "bind",
+                        "source": "test_initial_state.py",
+                        "target": "/bootstrap/test_initial_state.py"
+                    }
+                ],
+                "extra_docker_compose": [],
+                "kwargs": {},
+                "extra_allowed_hosts": []
+            },
+            "verifier": {
+                "disable": false
+            }
+        },
+        {
+            "schema_version": 1,
+            "task": {
+                "name": "auto_embedding_model_migration",
+                "type": "local",
+                "digest": "sha256:6432a1e539f439257f4f822346fa902ccc032efad2f46872db43a4f43f05247e",
+                "source": "pending-tasks",
+                "path": "/home/kw/code/zealt/typesense-benchmark/scratchpad/pending-tasks/auto_embedding_model_migration"
+            },
+            "install_only": false,
+            "timeout_multiplier": 1.0,
+            "agent": {
+                "import_path": "agents.pochi:Pochi",
+                "model_name": "zai/glm-5.2",
+                "skills": [],
+                "extra_allowed_hosts": [],
+                "kwargs": {},
+                "env": {
+                    "POCHI_API_KEY": "${POCHI_API_KEY}"
+                },
+                "mcp_servers": []
+            },
+            "skills": [],
+            "environment": {
+                "type": "daytona",
+                "force_build": false,
+                "delete": true,
+                "cpu_enforcement_policy": "auto",
+                "memory_enforcement_policy": "auto",
+                "mounts": [
+                    {
+                        "type": "bind",
+                        "source": "test_initial_state.py",
+                        "target": "/bootstrap/test_initial_state.py"
+                    }
+                ],
+                "extra_docker_compose": [],
+                "kwargs": {},
+                "extra_allowed_hosts": []
+            },
+            "verifier": {
+                "disable": false
+            }
+        },
+        {
+            "schema_version": 1,
+            "task": {
+                "name": "bulk_import_error_recovery",
+                "type": "local",
+                "digest": "sha256:6604ff1d2ef85b9695e21bc16fd30ccbb405be57ddff0db5a26e510c212beeb0",
+                "source": "pending-tasks",
+                "path": "/home/kw/code/zealt/typesense-benchmark/scratchpad/pending-tasks/bulk_import_error_recovery"
+            },
+            "install_only": false,
+            "timeout_multiplier": 1.0,
+            "agent": {
+                "import_path": "agents.pochi:Pochi",
+                "model_name": "zai/glm-5.2",
+                "skills": [],
+                "extra_allowed_hosts": [],
+                "kwargs": {},
+                "env": {
+                    "POCHI_API_KEY": "${POCHI_API_KEY}"
+                },
+                "mcp_servers": []
+            },
+            "skills": [],
+            "environment": {
+                "type": "daytona",
+                "force_build": false,
+                "delete": true,
+                "cpu_enforcement_policy": "auto",
+                "memory_enforcement_policy": "auto",
+                "mounts": [
+                    {
+                        "type": "bind",
+                        "source": "test_initial_state.py",
+                        "target": "/bootstrap/test_initial_state.py"
+                    }
+                ],
+                "extra_docker_compose": [],
+                "kwargs": {},
+                "extra_allowed_hosts": []
+            },
+            "verifier": {
+                "disable": false
+            }
+        },
+        {
+            "schema_version": 1,
+            "task": {
+                "name": "collection_clone_reindex",
+                "type": "local",
+                "digest": "sha256:c1c6eaf6c98d7f1311a8a5bb168b5dbb17e9483bafe7fd2ad8a38fb5f7b375b3",
+                "source": "pending-tasks",
+                "path": "/home/kw/code/zealt/typesense-benchmark/scratchpad/pending-tasks/collection_clone_reindex"
+            },
+            "install_only": false,
+            "timeout_multiplier": 1.0,
+            "agent": {
+                "import_path": "agents.pochi:Pochi",
+                "model_name": "zai/glm-5.2",
+                "skills": [],
+                "extra_allowed_hosts": [],
+                "kwargs": {},
+                "env": {
+                    "POCHI_API_KEY": "${POCHI_API_KEY}"
+                },
+                "mcp_servers": []
+            },
+            "skills": [],
+            "environment": {
+                "type": "daytona",
+                "force_build": false,
+                "delete": true,
+                "cpu_enforcement_policy": "auto",
+                "memory_enforcement_policy": "auto",
+                "mounts": [
+                    {
+                        "type": "bind",
+                        "source": "test_initial_state.py",
+                        "target": "/bootstrap/test_initial_state.py"
+                    }
+                ],
+                "extra_docker_compose": [],
+                "kwargs": {},
+                "extra_allowed_hosts": []
+            },
+            "verifier": {
+                "disable": false
+            }
+        },
+        {
+            "schema_version": 1,
+            "task": {
+                "name": "conditional_ranking_eval_expression",
+                "type": "local",
+                "digest": "sha256:230aed0dc02068a3f4de505dadf6da35a1fb32e63c7e85739b751ce9e6d0b4c0",
+                "source": "pending-tasks",
+                "path": "/home/kw/code/zealt/typesense-benchmark/scratchpad/pending-tasks/conditional_ranking_eval_expression"
+            },
+            "install_only": false,
+            "timeout_multiplier": 1.0,
+            "agent": {
+                "import_path": "agents.pochi:Pochi",
+                "model_name": "zai/glm-5.2",
+                "skills": [],
+                "extra_allowed_hosts": [],
+                "kwargs": {},
+                "env": {
+                    "POCHI_API_KEY": "${POCHI_API_KEY}"
+                },
+                "mcp_servers": []
+            },
+            "skills": [],
+            "environment": {
+                "type": "daytona",
+                "force_build": false,
+                "delete": true,
+                "cpu_enforcement_policy": "auto",
+                "memory_enforcement_policy": "auto",
+                "mounts": [
+                    {
+                        "type": "bind",
+                        "source": "test_initial_state.py",
+                        "target": "/bootstrap/test_initial_state.py"
+                    }
+                ],
+                "extra_docker_compose": [],
+                "kwargs": {},
+                "extra_allowed_hosts": []
+            },
+            "verifier": {
+                "disable": false
+            }
+        },
+        {
+            "schema_version": 1,
+            "task": {
+                "name": "cross_collection_joins_cli",
+                "type": "local",
+                "digest": "sha256:a2372a09a4ab3fc987a3276bc7655dbce076b6e7c9bf91b82698d6fa23549cae",
+                "source": "pending-tasks",
+                "path": "/home/kw/code/zealt/typesense-benchmark/scratchpad/pending-tasks/cross_collection_joins_cli"
+            },
+            "install_only": false,
+            "timeout_multiplier": 1.0,
+            "agent": {
+                "import_path": "agents.pochi:Pochi",
+                "model_name": "zai/glm-5.2",
+                "skills": [],
+                "extra_allowed_hosts": [],
+                "kwargs": {},
+                "env": {
+                    "POCHI_API_KEY": "${POCHI_API_KEY}"
+                },
+                "mcp_servers": []
+            },
+            "skills": [],
+            "environment": {
+                "type": "daytona",
+                "force_build": false,
+                "delete": true,
+                "cpu_enforcement_policy": "auto",
+                "memory_enforcement_policy": "auto",
+                "mounts": [
+                    {
+                        "type": "bind",
+                        "source": "test_initial_state.py",
+                        "target": "/bootstrap/test_initial_state.py"
+                    }
+                ],
+                "extra_docker_compose": [],
+                "kwargs": {},
+                "extra_allowed_hosts": []
+            },
+            "verifier": {
+                "disable": false
+            }
+        },
+        {
+            "schema_version": 1,
+            "task": {
+                "name": "curation_overrides_pinning",
+                "type": "local",
+                "digest": "sha256:f587e1094bc363db34f80b0d1e2e5c325ed1c532d9bb4d3b7a97d9839e31022e",
+                "source": "pending-tasks",
+                "path": "/home/kw/code/zealt/typesense-benchmark/scratchpad/pending-tasks/curation_overrides_pinning"
+            },
+            "install_only": false,
+            "timeout_multiplier": 1.0,
+            "agent": {
+                "import_path": "agents.pochi:Pochi",
+                "model_name": "zai/glm-5.2",
+                "skills": [],
+                "extra_allowed_hosts": [],
+                "kwargs": {},
+                "env": {
+                    "POCHI_API_KEY": "${POCHI_API_KEY}"
+                },
+                "mcp_servers": []
+            },
+            "skills": [],
+            "environment": {
+                "type": "daytona",
+                "force_build": false,
+                "delete": true,
+                "cpu_enforcement_policy": "auto",
+                "memory_enforcement_policy": "auto",
+                "mounts": [
+                    {
+                        "type": "bind",
+                        "source": "test_initial_state.py",
+                        "target": "/bootstrap/test_initial_state.py"
+                    }
+                ],
+                "extra_docker_compose": [],
+                "kwargs": {},
+                "extra_allowed_hosts": []
+            },
+            "verifier": {
+                "disable": false
+            }
+        },
+        {
+            "schema_version": 1,
+            "task": {
+                "name": "deep_nested_object_indexing",
+                "type": "local",
+                "digest": "sha256:ec9768f6efffb83963a26299c42f038d782277ff1040c27fe5a4373e9b4ff8b8",
+                "source": "pending-tasks",
+                "path": "/home/kw/code/zealt/typesense-benchmark/scratchpad/pending-tasks/deep_nested_object_indexing"
+            },
+            "install_only": false,
+            "timeout_multiplier": 1.0,
+            "agent": {
+                "import_path": "agents.pochi:Pochi",
+                "model_name": "zai/glm-5.2",
+                "skills": [],
+                "extra_allowed_hosts": [],
+                "kwargs": {},
+                "env": {
+                    "POCHI_API_KEY": "${POCHI_API_KEY}"
+                },
+                "mcp_servers": []
+            },
+            "skills": [],
+            "environment": {
+                "type": "daytona",
+                "force_build": false,
+                "delete": true,
+                "cpu_enforcement_policy": "auto",
+                "memory_enforcement_policy": "auto",
+                "mounts": [
+                    {
+                        "type": "bind",
+                        "source": "test_initial_state.py",
+                        "target": "/bootstrap/test_initial_state.py"
+                    }
+                ],
+                "extra_docker_compose": [],
+                "kwargs": {},
+                "extra_allowed_hosts": []
+            },
+            "verifier": {
+                "disable": false
+            }
+        },
+        {
+            "schema_version": 1,
+            "task": {
+                "name": "faceted_navigation_facet_stats_py",
+                "type": "local",
+                "digest": "sha256:f81e7e7fe5fa7ac4ee35e54a6420711887a4592f72a447e1d3fa1891b25bfc04",
+                "source": "pending-tasks",
+                "path": "/home/kw/code/zealt/typesense-benchmark/scratchpad/pending-tasks/faceted_navigation_facet_stats_py"
+            },
+            "install_only": false,
+            "timeout_multiplier": 1.0,
+            "agent": {
+                "import_path": "agents.pochi:Pochi",
+                "model_name": "zai/glm-5.2",
+                "skills": [],
+                "extra_allowed_hosts": [],
+                "kwargs": {},
+                "env": {
+                    "POCHI_API_KEY": "${POCHI_API_KEY}"
+                },
+                "mcp_servers": []
+            },
+            "skills": [],
+            "environment": {
+                "type": "daytona",
+                "force_build": false,
+                "delete": true,
+                "cpu_enforcement_policy": "auto",
+                "memory_enforcement_policy": "auto",
+                "mounts": [
+                    {
+                        "type": "bind",
+                        "source": "test_initial_state.py",
+                        "target": "/bootstrap/test_initial_state.py"
+                    }
+                ],
+                "extra_docker_compose": [],
+                "kwargs": {},
+                "extra_allowed_hosts": []
+            },
+            "verifier": {
+                "disable": false
+            }
+        },
+        {
+            "schema_version": 1,
+            "task": {
+                "name": "federated_multi_search",
+                "type": "local",
+                "digest": "sha256:188c586c2e11f3ead678cb060879fe206352245af6ff7bb637b62bc0a2aa1ea1",
+                "source": "pending-tasks",
+                "path": "/home/kw/code/zealt/typesense-benchmark/scratchpad/pending-tasks/federated_multi_search"
+            },
+            "install_only": false,
+            "timeout_multiplier": 1.0,
+            "agent": {
+                "import_path": "agents.pochi:Pochi",
+                "model_name": "zai/glm-5.2",
+                "skills": [],
+                "extra_allowed_hosts": [],
+                "kwargs": {},
+                "env": {
+                    "POCHI_API_KEY": "${POCHI_API_KEY}"
+                },
+                "mcp_servers": []
+            },
+            "skills": [],
+            "environment": {
+                "type": "daytona",
+                "force_build": false,
+                "delete": true,
+                "cpu_enforcement_policy": "auto",
+                "memory_enforcement_policy": "auto",
+                "mounts": [
+                    {
+                        "type": "bind",
+                        "source": "test_initial_state.py",
+                        "target": "/bootstrap/test_initial_state.py"
+                    }
+                ],
+                "extra_docker_compose": [],
+                "kwargs": {},
+                "extra_allowed_hosts": []
+            },
+            "verifier": {
+                "disable": false
+            }
+        },
+        {
+            "schema_version": 1,
+            "task": {
+                "name": "geo_polygon_filtering",
+                "type": "local",
+                "digest": "sha256:ac7d41e9f7f6dd136d0851de609c2f57303c208ae8d29a54058ffba80ef9a3c1",
+                "source": "pending-tasks",
+                "path": "/home/kw/code/zealt/typesense-benchmark/scratchpad/pending-tasks/geo_polygon_filtering"
+            },
+            "install_only": false,
+            "timeout_multiplier": 1.0,
+            "agent": {
+                "import_path": "agents.pochi:Pochi",
+                "model_name": "zai/glm-5.2",
+                "skills": [],
+                "extra_allowed_hosts": [],
+                "kwargs": {},
+                "env": {
+                    "POCHI_API_KEY": "${POCHI_API_KEY}"
+                },
+                "mcp_servers": []
+            },
+            "skills": [],
+            "environment": {
+                "type": "daytona",
+                "force_build": false,
+                "delete": true,
+                "cpu_enforcement_policy": "auto",
+                "memory_enforcement_policy": "auto",
+                "mounts": [
+                    {
+                        "type": "bind",
+                        "source": "test_initial_state.py",
+                        "target": "/bootstrap/test_initial_state.py"
+                    }
+                ],
+                "extra_docker_compose": [],
+                "kwargs": {},
+                "extra_allowed_hosts": []
+            },
+            "verifier": {
+                "disable": false
+            }
+        },
+        {
+            "schema_version": 1,
+            "task": {
+                "name": "geosearch_radius_sorting_py",
+                "type": "local",
+                "digest": "sha256:3acd1e08a22b8a9090fdf5265638dc866de13a1196a40954acd5adba54ed1097",
+                "source": "pending-tasks",
+                "path": "/home/kw/code/zealt/typesense-benchmark/scratchpad/pending-tasks/geosearch_radius_sorting_py"
+            },
+            "install_only": false,
+            "timeout_multiplier": 1.0,
+            "agent": {
+                "import_path": "agents.pochi:Pochi",
+                "model_name": "zai/glm-5.2",
+                "skills": [],
+                "extra_allowed_hosts": [],
+                "kwargs": {},
+                "env": {
+                    "POCHI_API_KEY": "${POCHI_API_KEY}"
+                },
+                "mcp_servers": []
+            },
+            "skills": [],
+            "environment": {
+                "type": "daytona",
+                "force_build": false,
+                "delete": true,
+                "cpu_enforcement_policy": "auto",
+                "memory_enforcement_policy": "auto",
+                "mounts": [
+                    {
+                        "type": "bind",
+                        "source": "test_initial_state.py",
+                        "target": "/bootstrap/test_initial_state.py"
+                    }
+                ],
+                "extra_docker_compose": [],
+                "kwargs": {},
+                "extra_allowed_hosts": []
+            },
+            "verifier": {
+                "disable": false
+            }
+        },
+        {
+            "schema_version": 1,
+            "task": {
+                "name": "presets_and_stopwords",
+                "type": "local",
+                "digest": "sha256:05f65cd13d2df586b206b1a55adf2421ef2a4abdfa802c4b5f36b1e8c83a00b6",
+                "source": "pending-tasks",
+                "path": "/home/kw/code/zealt/typesense-benchmark/scratchpad/pending-tasks/presets_and_stopwords"
+            },
+            "install_only": false,
+            "timeout_multiplier": 1.0,
+            "agent": {
+                "import_path": "agents.pochi:Pochi",
+                "model_name": "zai/glm-5.2",
+                "skills": [],
+                "extra_allowed_hosts": [],
+                "kwargs": {},
+                "env": {
+                    "POCHI_API_KEY": "${POCHI_API_KEY}"
+                },
+                "mcp_servers": []
+            },
+            "skills": [],
+            "environment": {
+                "type": "daytona",
+                "force_build": false,
+                "delete": true,
+                "cpu_enforcement_policy": "auto",
+                "memory_enforcement_policy": "auto",
+                "mounts": [
+                    {
+                        "type": "bind",
+                        "source": "test_initial_state.py",
+                        "target": "/bootstrap/test_initial_state.py"
+                    }
+                ],
+                "extra_docker_compose": [],
+                "kwargs": {},
+                "extra_allowed_hosts": []
+            },
+            "verifier": {
+                "disable": false
+            }
+        },
+        {
+            "schema_version": 1,
+            "task": {
+                "name": "reference_fields_async_join",
+                "type": "local",
+                "digest": "sha256:41fc005095d130b953a7fea61c6c19f1a4fecd7b7897448d1a71702db01ac8b3",
+                "source": "pending-tasks",
+                "path": "/home/kw/code/zealt/typesense-benchmark/scratchpad/pending-tasks/reference_fields_async_join"
+            },
+            "install_only": false,
+            "timeout_multiplier": 1.0,
+            "agent": {
+                "import_path": "agents.pochi:Pochi",
+                "model_name": "zai/glm-5.2",
+                "skills": [],
+                "extra_allowed_hosts": [],
+                "kwargs": {},
+                "env": {
+                    "POCHI_API_KEY": "${POCHI_API_KEY}"
+                },
+                "mcp_servers": []
+            },
+            "skills": [],
+            "environment": {
+                "type": "daytona",
+                "force_build": false,
+                "delete": true,
+                "cpu_enforcement_policy": "auto",
+                "memory_enforcement_policy": "auto",
+                "mounts": [
+                    {
+                        "type": "bind",
+                        "source": "test_initial_state.py",
+                        "target": "/bootstrap/test_initial_state.py"
+                    }
+                ],
+                "extra_docker_compose": [],
+                "kwargs": {},
+                "extra_allowed_hosts": []
+            },
+            "verifier": {
+                "disable": false
+            }
+        },
+        {
+            "schema_version": 1,
+            "task": {
+                "name": "synonyms_query_expansion",
+                "type": "local",
+                "digest": "sha256:b93272a733ec30bcbfe4d03f07b8bf54250919cc5ff6599b2c7fd582aff7bf85",
+                "source": "pending-tasks",
+                "path": "/home/kw/code/zealt/typesense-benchmark/scratchpad/pending-tasks/synonyms_query_expansion"
+            },
+            "install_only": false,
+            "timeout_multiplier": 1.0,
+            "agent": {
+                "import_path": "agents.pochi:Pochi",
+                "model_name": "zai/glm-5.2",
+                "skills": [],
+                "extra_allowed_hosts": [],
+                "kwargs": {},
+                "env": {
+                    "POCHI_API_KEY": "${POCHI_API_KEY}"
+                },
+                "mcp_servers": []
+            },
+            "skills": [],
+            "environment": {
+                "type": "daytona",
+                "force_build": false,
+                "delete": true,
+                "cpu_enforcement_policy": "auto",
+                "memory_enforcement_policy": "auto",
+                "mounts": [
+                    {
+                        "type": "bind",
+                        "source": "test_initial_state.py",
+                        "target": "/bootstrap/test_initial_state.py"
+                    }
+                ],
+                "extra_docker_compose": [],
+                "kwargs": {},
+                "extra_allowed_hosts": []
+            },
+            "verifier": {
+                "disable": false
+            }
+        },
+        {
+            "schema_version": 1,
+            "task": {
+                "name": "typo_tolerance_tuning",
+                "type": "local",
+                "digest": "sha256:3f20e917c4d2beaefe43260647598d2743a7813e11e1fda3cd2fd1743af3b2d7",
+                "source": "pending-tasks",
+                "path": "/home/kw/code/zealt/typesense-benchmark/scratchpad/pending-tasks/typo_tolerance_tuning"
+            },
+            "install_only": false,
+            "timeout_multiplier": 1.0,
+            "agent": {
+                "import_path": "agents.pochi:Pochi",
+                "model_name": "zai/glm-5.2",
+                "skills": [],
+                "extra_allowed_hosts": [],
+                "kwargs": {},
+                "env": {
+                    "POCHI_API_KEY": "${POCHI_API_KEY}"
+                },
+                "mcp_servers": []
+            },
+            "skills": [],
+            "environment": {
+                "type": "daytona",
+                "force_build": false,
+                "delete": true,
+                "cpu_enforcement_policy": "auto",
+                "memory_enforcement_policy": "auto",
+                "mounts": [
+                    {
+                        "type": "bind",
+                        "source": "test_initial_state.py",
+                        "target": "/bootstrap/test_initial_state.py"
+                    }
+                ],
+                "extra_docker_compose": [],
+                "kwargs": {},
+                "extra_allowed_hosts": []
+            },
+            "verifier": {
+                "disable": false
+            }
+        }
+    ]
+}

@@ -1,0 +1,45 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-7.4.4, pluggy-1.4.0
+rootdir: /tests
+plugins: json-ctrf-0.5.2
+collected 9 items
+
+../tests/test_final_state.py .........                                   [100%]
+
+==================================== PASSES ====================================
+___________________________ test_setup_is_idempotent ___________________________
+---------------------------- Captured stdout setup -----------------------------
+=== run.py --setup stdout ===
+
+=== run.py --setup stderr ===
+Typesense server is already running and healthy.
+Checking if collection 'library' exists...
+Collection 'library' already exists. Deleting it for a clean, idempotent setup...
+Creating collection 'library'...
+Indexing documents...
+Creating/updating stopwords set 'en_stopwords'...
+Creating/updating preset 'library_default'...
+Setup completed successfully.
+
+----------------------------- Captured stdout call -----------------------------
+
+Typesense server is already running and healthy.
+Checking if collection 'library' exists...
+Collection 'library' already exists. Deleting it for a clean, idempotent setup...
+Creating collection 'library'...
+Indexing documents...
+Creating/updating stopwords set 'en_stopwords'...
+Creating/updating preset 'library_default'...
+Setup completed successfully.
+
+=========================== short test summary info ============================
+PASSED ../tests/test_final_state.py::test_setup_is_idempotent
+PASSED ../tests/test_final_state.py::test_health_ok
+PASSED ../tests/test_final_state.py::test_collection_exists_and_populated
+PASSED ../tests/test_final_state.py::test_stopwords_set_created
+PASSED ../tests/test_final_state.py::test_preset_created_with_expected_parameters
+PASSED ../tests/test_final_state.py::test_preset_search_returns_points_sorted_results
+PASSED ../tests/test_final_state.py::test_stopwords_are_ignored_during_query
+PASSED ../tests/test_final_state.py::test_preset_matches_explicit_parameters
+PASSED ../tests/test_final_state.py::test_single_token_search
+============================== 9 passed in 1.22s ===============================

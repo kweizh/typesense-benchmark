@@ -1,0 +1,21 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-7.4.4, pluggy-1.4.0
+rootdir: /tests
+plugins: json-ctrf-0.5.2
+collected 10 items
+
+../tests/test_final_state.py ..........                                  [100%]
+
+==================================== PASSES ====================================
+=========================== short test summary info ============================
+PASSED ../tests/test_final_state.py::test_artifact_shape
+PASSED ../tests/test_final_state.py::test_collection_populated
+PASSED ../tests/test_final_state.py::test_parent_key_is_search_only
+PASSED ../tests/test_final_state.py::test_parent_key_cannot_write
+PASSED ../tests/test_final_state.py::test_scoped_key_returns_only_own_tenant[acme-3]
+PASSED ../tests/test_final_state.py::test_scoped_key_returns_only_own_tenant[globex-2]
+PASSED ../tests/test_final_state.py::test_scoped_key_returns_only_own_tenant[initech-4]
+PASSED ../tests/test_final_state.py::test_secret_notes_field_is_hidden
+PASSED ../tests/test_final_state.py::test_cross_tenant_override_is_blocked_acme
+PASSED ../tests/test_final_state.py::test_cross_tenant_override_is_blocked_globex
+============================== 10 passed in 5.49s ==============================

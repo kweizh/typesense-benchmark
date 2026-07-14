@@ -1,0 +1,61 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-7.4.4, pluggy-1.4.0
+rootdir: /tests
+plugins: json-ctrf-0.5.2, anyio-4.14.2
+collected 14 items
+
+../tests/test_final_state.py ..............                              [100%]
+
+==================================== PASSES ====================================
+____________________________ test_collection_schema ____________________________
+---------------------------- Captured stdout setup -----------------------------
+=== pipeline stdout ===
+Created 'catalog' collection with strict schema.
+Loaded 209 documents from /home/user/import-pipeline/data/raw_products.jsonl.
+First-pass import: 202 succeeded, 7 failed.
+Repaired price for doc ID f001: '$1,299.00' -> 1299.0
+Repaired price for doc ID f002: '$799.00' -> 799.0
+Repaired missing category for doc ID f003: set to 'uncategorized'
+Repaired price for doc ID f004: '$59.50' -> 59.5
+Repaired missing category for doc ID f004: set to 'uncategorized'
+
+Ingestion Report compiled successfully:
+{
+  "total": 209,
+  "imported_first_pass": 202,
+  "recovered": 4,
+  "failed": 3,
+  "recovered_ids": [
+    "f001",
+    "f002",
+    "f003",
+    "f004"
+  ],
+  "failed_ids": [
+    "u001",
+    "u002",
+    "u003"
+  ]
+}
+
+Final document count in Typesense collection 'catalog': 206
+Sanity check PASSED: Indexed count matches expectations.
+
+=== pipeline stderr ===
+
+=========================== short test summary info ============================
+PASSED ../tests/test_final_state.py::test_collection_schema
+PASSED ../tests/test_final_state.py::test_report_total
+PASSED ../tests/test_final_state.py::test_report_imported_first_pass
+PASSED ../tests/test_final_state.py::test_report_recovered_count
+PASSED ../tests/test_final_state.py::test_report_failed_count
+PASSED ../tests/test_final_state.py::test_report_counts_consistent
+PASSED ../tests/test_final_state.py::test_report_recovered_ids
+PASSED ../tests/test_final_state.py::test_report_failed_ids
+PASSED ../tests/test_final_state.py::test_final_collection_document_count
+PASSED ../tests/test_final_state.py::test_failed_documents_absent
+PASSED ../tests/test_final_state.py::test_recovered_currency_price_document
+PASSED ../tests/test_final_state.py::test_recovered_missing_category_document
+PASSED ../tests/test_final_state.py::test_recovered_combined_document
+PASSED ../tests/test_final_state.py::test_first_pass_coercion_documents
+============================== 14 passed in 6.26s ==============================

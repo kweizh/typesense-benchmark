@@ -1,0 +1,110 @@
+{
+    "reportFormat": "CTRF",
+    "specVersion": "0.0.0",
+    "timestamp": "2026-07-14T04:43:14.249656+00:00",
+    "generatedBy": "pytest",
+    "results": {
+        "tool": {
+            "name": "pytest",
+            "version": "7.4.4"
+        },
+        "summary": {
+            "tests": 9,
+            "passed": 9,
+            "failed": 0,
+            "skipped": 0,
+            "pending": 0,
+            "other": 0,
+            "start": 1784004188906,
+            "stop": 1784004194249
+        },
+        "environment": {
+            "buildName": "Pytest JSON CTRF Report",
+            "buildNumber": "000",
+            "buildUrl": "https://ctrf.io"
+        },
+        "tests": [
+            {
+                "name": "test_final_state.py::test_collection_exists_with_documents",
+                "status": "passed",
+                "duration": 4018,
+                "start": 1784004188989,
+                "stop": 1784004193007,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            },
+            {
+                "name": "test_final_state.py::test_three_overrides_registered",
+                "status": "passed",
+                "duration": 3,
+                "start": 1784004193007,
+                "stop": 1784004193010,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            },
+            {
+                "name": "test_final_state.py::test_exact_phone_override_definition",
+                "status": "passed",
+                "duration": 3,
+                "start": 1784004193010,
+                "stop": 1784004193013,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            },
+            {
+                "name": "test_final_state.py::test_contains_deal_override_definition",
+                "status": "passed",
+                "duration": 3,
+                "start": 1784004193013,
+                "stop": 1784004193016,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            },
+            {
+                "name": "test_final_state.py::test_dynamic_brand_filter_override_definition",
+                "status": "passed",
+                "duration": 3,
+                "start": 1784004193016,
+                "stop": 1784004193019,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            },
+            {
+                "name": "test_final_state.py::test_exact_match_pinning_and_hiding",
+                "status": "passed",
+                "duration": 4,
+                "start": 1784004193019,
+                "stop": 1784004193023,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            },
+            {
+                "name": "test_final_state.py::test_contains_match_pinning",
+                "status": "passed",
+                "duration": 3,
+                "start": 1784004193023,
+                "stop": 1784004193026,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            },
+            {
+                "name": "test_final_state.py::test_dynamic_brand_filtering",
+                "status": "passed",
+                "duration": 3,
+                "start": 1784004193026,
+                "stop": 1784004193029,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            },
+            {
+                "name": "test_final_state.py::test_setup_log_lists_override_ids",
+                "status": "passed",
+                "duration": 1220,
+                "start": 1784004193029,
+                "stop": 1784004194249,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            }
+        ]
+    }
+}

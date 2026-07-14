@@ -1,0 +1,19 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-7.4.4, pluggy-1.4.0
+rootdir: /tests
+plugins: json-ctrf-0.5.2
+collected 8 items
+
+../tests/test_final_state.py ........                                    [100%]
+
+==================================== PASSES ====================================
+=========================== short test summary info ============================
+PASSED ../tests/test_final_state.py::test_alias_swapped_to_new_collection
+PASSED ../tests/test_final_state.py::test_old_collection_dropped
+PASSED ../tests/test_final_state.py::test_new_collection_schema
+PASSED ../tests/test_final_state.py::test_no_data_loss_count
+PASSED ../tests/test_final_state.py::test_documents_preserved
+PASSED ../tests/test_final_state.py::test_float_filtering_functional
+PASSED ../tests/test_final_state.py::test_search_through_alias
+PASSED ../tests/test_final_state.py::test_migration_log
+============================== 8 passed in 4.11s ===============================

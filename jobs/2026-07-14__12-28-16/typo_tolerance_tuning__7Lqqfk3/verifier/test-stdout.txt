@@ -1,0 +1,406 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-7.4.4, pluggy-1.4.0
+rootdir: /tests
+plugins: json-ctrf-0.5.2, anyio-4.14.2
+collected 12 items
+
+../tests/test_final_state.py F.FFFFFFFFFF                                [100%]
+
+=================================== FAILURES ===================================
+__________________________ test_search_script_exists ___________________________
+
+    def test_search_script_exists():
+        path = os.path.join(PROJECT_DIR, "search.py")
+>       assert os.path.isfile(path), f"Expected search tool at {path}."
+E       AssertionError: Expected search tool at /home/user/typo-tuning/search.py.
+E       assert False
+E        +  where False = <function isfile at 0x798f53e18220>('/home/user/typo-tuning/search.py')
+E        +    where <function isfile at 0x798f53e18220> = <module 'posixpath' (frozen)>.isfile
+E        +      where <module 'posixpath' (frozen)> = os.path
+
+/tests/test_final_state.py:128: AssertionError
+__________________ test_typo_tolerance_behavior[brand_exact] ___________________
+
+typesense_server = None, case_name = 'brand_exact', query = 'Keychron'
+expected = {'2'}
+
+    @pytest.mark.parametrize(
+        "case_name,query,expected",
+        QUERY_CASES,
+        ids=[c[0] for c in QUERY_CASES],
+    )
+    def test_typo_tolerance_behavior(typesense_server, case_name, query, expected):
+>       actual = _run_search(query)
+
+/tests/test_final_state.py:160: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+query = 'Keychron'
+
+    def _run_search(query):
+        result = subprocess.run(
+            ["python3", "search.py", "--q", query],
+            capture_output=True,
+            text=True,
+            cwd=PROJECT_DIR,
+            timeout=60,
+        )
+>       assert result.returncode == 0, (
+            f"`python3 search.py --q {query!r}` exited with code "
+            f"{result.returncode}. stderr:\n{result.stderr}"
+        )
+E       AssertionError: `python3 search.py --q 'Keychron'` exited with code 2. stderr:
+E         python3: can't open file '/home/user/typo-tuning/search.py': [Errno 2] No such file or directory
+E         
+E       assert 2 == 0
+E        +  where 2 = CompletedProcess(args=['python3', 'search.py', '--q', 'Keychron'], returncode=2, stdout='', stderr="python3: can't open file '/home/user/typo-tuning/search.py': [Errno 2] No such file or directory\n").returncode
+
+/tests/test_final_state.py:103: AssertionError
+_________________ test_typo_tolerance_behavior[brand_no_typo] __________________
+
+typesense_server = None, case_name = 'brand_no_typo', query = 'keichron'
+expected = set()
+
+    @pytest.mark.parametrize(
+        "case_name,query,expected",
+        QUERY_CASES,
+        ids=[c[0] for c in QUERY_CASES],
+    )
+    def test_typo_tolerance_behavior(typesense_server, case_name, query, expected):
+>       actual = _run_search(query)
+
+/tests/test_final_state.py:160: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+query = 'keichron'
+
+    def _run_search(query):
+        result = subprocess.run(
+            ["python3", "search.py", "--q", query],
+            capture_output=True,
+            text=True,
+            cwd=PROJECT_DIR,
+            timeout=60,
+        )
+>       assert result.returncode == 0, (
+            f"`python3 search.py --q {query!r}` exited with code "
+            f"{result.returncode}. stderr:\n{result.stderr}"
+        )
+E       AssertionError: `python3 search.py --q 'keichron'` exited with code 2. stderr:
+E         python3: can't open file '/home/user/typo-tuning/search.py': [Errno 2] No such file or directory
+E         
+E       assert 2 == 0
+E        +  where 2 = CompletedProcess(args=['python3', 'search.py', '--q', 'keichron'], returncode=2, stdout='', stderr="python3: can't open file '/home/user/typo-tuning/search.py': [Errno 2] No such file or directory\n").returncode
+
+/tests/test_final_state.py:103: AssertionError
+___________ test_typo_tolerance_behavior[name_two_typo_six_letters] ____________
+
+typesense_server = None, case_name = 'name_two_typo_six_letters'
+query = 'carema', expected = {'3'}
+
+    @pytest.mark.parametrize(
+        "case_name,query,expected",
+        QUERY_CASES,
+        ids=[c[0] for c in QUERY_CASES],
+    )
+    def test_typo_tolerance_behavior(typesense_server, case_name, query, expected):
+>       actual = _run_search(query)
+
+/tests/test_final_state.py:160: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+query = 'carema'
+
+    def _run_search(query):
+        result = subprocess.run(
+            ["python3", "search.py", "--q", query],
+            capture_output=True,
+            text=True,
+            cwd=PROJECT_DIR,
+            timeout=60,
+        )
+>       assert result.returncode == 0, (
+            f"`python3 search.py --q {query!r}` exited with code "
+            f"{result.returncode}. stderr:\n{result.stderr}"
+        )
+E       AssertionError: `python3 search.py --q 'carema'` exited with code 2. stderr:
+E         python3: can't open file '/home/user/typo-tuning/search.py': [Errno 2] No such file or directory
+E         
+E       assert 2 == 0
+E        +  where 2 = CompletedProcess(args=['python3', 'search.py', '--q', 'carema'], returncode=2, stdout='', stderr="python3: can't open file '/home/user/typo-tuning/search.py': [Errno 2] No such file or directory\n").returncode
+
+/tests/test_final_state.py:103: AssertionError
+__________ test_typo_tolerance_behavior[four_letter_token_corrected] ___________
+
+typesense_server = None, case_name = 'four_letter_token_corrected'
+query = 'wiff', expected = {'9'}
+
+    @pytest.mark.parametrize(
+        "case_name,query,expected",
+        QUERY_CASES,
+        ids=[c[0] for c in QUERY_CASES],
+    )
+    def test_typo_tolerance_behavior(typesense_server, case_name, query, expected):
+>       actual = _run_search(query)
+
+/tests/test_final_state.py:160: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+query = 'wiff'
+
+    def _run_search(query):
+        result = subprocess.run(
+            ["python3", "search.py", "--q", query],
+            capture_output=True,
+            text=True,
+            cwd=PROJECT_DIR,
+            timeout=60,
+        )
+>       assert result.returncode == 0, (
+            f"`python3 search.py --q {query!r}` exited with code "
+            f"{result.returncode}. stderr:\n{result.stderr}"
+        )
+E       AssertionError: `python3 search.py --q 'wiff'` exited with code 2. stderr:
+E         python3: can't open file '/home/user/typo-tuning/search.py': [Errno 2] No such file or directory
+E         
+E       assert 2 == 0
+E        +  where 2 = CompletedProcess(args=['python3', 'search.py', '--q', 'wiff'], returncode=2, stdout='', stderr="python3: can't open file '/home/user/typo-tuning/search.py': [Errno 2] No such file or directory\n").returncode
+
+/tests/test_final_state.py:103: AssertionError
+________ test_typo_tolerance_behavior[three_letter_token_not_corrected] ________
+
+typesense_server = None, case_name = 'three_letter_token_not_corrected'
+query = 'usq', expected = set()
+
+    @pytest.mark.parametrize(
+        "case_name,query,expected",
+        QUERY_CASES,
+        ids=[c[0] for c in QUERY_CASES],
+    )
+    def test_typo_tolerance_behavior(typesense_server, case_name, query, expected):
+>       actual = _run_search(query)
+
+/tests/test_final_state.py:160: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+query = 'usq'
+
+    def _run_search(query):
+        result = subprocess.run(
+            ["python3", "search.py", "--q", query],
+            capture_output=True,
+            text=True,
+            cwd=PROJECT_DIR,
+            timeout=60,
+        )
+>       assert result.returncode == 0, (
+            f"`python3 search.py --q {query!r}` exited with code "
+            f"{result.returncode}. stderr:\n{result.stderr}"
+        )
+E       AssertionError: `python3 search.py --q 'usq'` exited with code 2. stderr:
+E         python3: can't open file '/home/user/typo-tuning/search.py': [Errno 2] No such file or directory
+E         
+E       assert 2 == 0
+E        +  where 2 = CompletedProcess(args=['python3', 'search.py', '--q', 'usq'], returncode=2, stdout='', stderr="python3: can't open file '/home/user/typo-tuning/search.py': [Errno 2] No such file or directory\n").returncode
+
+/tests/test_final_state.py:103: AssertionError
+______________ test_typo_tolerance_behavior[drop_tokens_partial] _______________
+
+typesense_server = None, case_name = 'drop_tokens_partial'
+query = 'Anker Speaker', expected = {'5', '6'}
+
+    @pytest.mark.parametrize(
+        "case_name,query,expected",
+        QUERY_CASES,
+        ids=[c[0] for c in QUERY_CASES],
+    )
+    def test_typo_tolerance_behavior(typesense_server, case_name, query, expected):
+>       actual = _run_search(query)
+
+/tests/test_final_state.py:160: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+query = 'Anker Speaker'
+
+    def _run_search(query):
+        result = subprocess.run(
+            ["python3", "search.py", "--q", query],
+            capture_output=True,
+            text=True,
+            cwd=PROJECT_DIR,
+            timeout=60,
+        )
+>       assert result.returncode == 0, (
+            f"`python3 search.py --q {query!r}` exited with code "
+            f"{result.returncode}. stderr:\n{result.stderr}"
+        )
+E       AssertionError: `python3 search.py --q 'Anker Speaker'` exited with code 2. stderr:
+E         python3: can't open file '/home/user/typo-tuning/search.py': [Errno 2] No such file or directory
+E         
+E       assert 2 == 0
+E        +  where 2 = CompletedProcess(args=['python3', 'search.py', '--q', 'Anker Speaker'], returncode=2, stdout='', stderr="python3: can't open file '/home/user/typo-tuning/search.py': [Errno 2] No such file or directory\n").returncode
+
+/tests/test_final_state.py:103: AssertionError
+__________ test_typo_tolerance_behavior[drop_tokens_not_overreaching] __________
+
+typesense_server = None, case_name = 'drop_tokens_not_overreaching'
+query = 'Camera Bag', expected = {'3'}
+
+    @pytest.mark.parametrize(
+        "case_name,query,expected",
+        QUERY_CASES,
+        ids=[c[0] for c in QUERY_CASES],
+    )
+    def test_typo_tolerance_behavior(typesense_server, case_name, query, expected):
+>       actual = _run_search(query)
+
+/tests/test_final_state.py:160: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+query = 'Camera Bag'
+
+    def _run_search(query):
+        result = subprocess.run(
+            ["python3", "search.py", "--q", query],
+            capture_output=True,
+            text=True,
+            cwd=PROJECT_DIR,
+            timeout=60,
+        )
+>       assert result.returncode == 0, (
+            f"`python3 search.py --q {query!r}` exited with code "
+            f"{result.returncode}. stderr:\n{result.stderr}"
+        )
+E       AssertionError: `python3 search.py --q 'Camera Bag'` exited with code 2. stderr:
+E         python3: can't open file '/home/user/typo-tuning/search.py': [Errno 2] No such file or directory
+E         
+E       assert 2 == 0
+E        +  where 2 = CompletedProcess(args=['python3', 'search.py', '--q', 'Camera Bag'], returncode=2, stdout='', stderr="python3: can't open file '/home/user/typo-tuning/search.py': [Errno 2] No such file or directory\n").returncode
+
+/tests/test_final_state.py:103: AssertionError
+________________ test_typo_tolerance_behavior[split_join_join] _________________
+
+typesense_server = None, case_name = 'split_join_join', query = 'basket ball'
+expected = {'7'}
+
+    @pytest.mark.parametrize(
+        "case_name,query,expected",
+        QUERY_CASES,
+        ids=[c[0] for c in QUERY_CASES],
+    )
+    def test_typo_tolerance_behavior(typesense_server, case_name, query, expected):
+>       actual = _run_search(query)
+
+/tests/test_final_state.py:160: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+query = 'basket ball'
+
+    def _run_search(query):
+        result = subprocess.run(
+            ["python3", "search.py", "--q", query],
+            capture_output=True,
+            text=True,
+            cwd=PROJECT_DIR,
+            timeout=60,
+        )
+>       assert result.returncode == 0, (
+            f"`python3 search.py --q {query!r}` exited with code "
+            f"{result.returncode}. stderr:\n{result.stderr}"
+        )
+E       AssertionError: `python3 search.py --q 'basket ball'` exited with code 2. stderr:
+E         python3: can't open file '/home/user/typo-tuning/search.py': [Errno 2] No such file or directory
+E         
+E       assert 2 == 0
+E        +  where 2 = CompletedProcess(args=['python3', 'search.py', '--q', 'basket ball'], returncode=2, stdout='', stderr="python3: can't open file '/home/user/typo-tuning/search.py': [Errno 2] No such file or directory\n").returncode
+
+/tests/test_final_state.py:103: AssertionError
+________________ test_typo_tolerance_behavior[split_join_split] ________________
+
+typesense_server = None, case_name = 'split_join_split', query = 'waterbottle'
+expected = {'8'}
+
+    @pytest.mark.parametrize(
+        "case_name,query,expected",
+        QUERY_CASES,
+        ids=[c[0] for c in QUERY_CASES],
+    )
+    def test_typo_tolerance_behavior(typesense_server, case_name, query, expected):
+>       actual = _run_search(query)
+
+/tests/test_final_state.py:160: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+query = 'waterbottle'
+
+    def _run_search(query):
+        result = subprocess.run(
+            ["python3", "search.py", "--q", query],
+            capture_output=True,
+            text=True,
+            cwd=PROJECT_DIR,
+            timeout=60,
+        )
+>       assert result.returncode == 0, (
+            f"`python3 search.py --q {query!r}` exited with code "
+            f"{result.returncode}. stderr:\n{result.stderr}"
+        )
+E       AssertionError: `python3 search.py --q 'waterbottle'` exited with code 2. stderr:
+E         python3: can't open file '/home/user/typo-tuning/search.py': [Errno 2] No such file or directory
+E         
+E       assert 2 == 0
+E        +  where 2 = CompletedProcess(args=['python3', 'search.py', '--q', 'waterbottle'], returncode=2, stdout='', stderr="python3: can't open file '/home/user/typo-tuning/search.py': [Errno 2] No such file or directory\n").returncode
+
+/tests/test_final_state.py:103: AssertionError
+_____________ test_typo_tolerance_behavior[no_excess_typo_search] ______________
+
+typesense_server = None, case_name = 'no_excess_typo_search', query = 'charger'
+expected = {'6'}
+
+    @pytest.mark.parametrize(
+        "case_name,query,expected",
+        QUERY_CASES,
+        ids=[c[0] for c in QUERY_CASES],
+    )
+    def test_typo_tolerance_behavior(typesense_server, case_name, query, expected):
+>       actual = _run_search(query)
+
+/tests/test_final_state.py:160: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+query = 'charger'
+
+    def _run_search(query):
+        result = subprocess.run(
+            ["python3", "search.py", "--q", query],
+            capture_output=True,
+            text=True,
+            cwd=PROJECT_DIR,
+            timeout=60,
+        )
+>       assert result.returncode == 0, (
+            f"`python3 search.py --q {query!r}` exited with code "
+            f"{result.returncode}. stderr:\n{result.stderr}"
+        )
+E       AssertionError: `python3 search.py --q 'charger'` exited with code 2. stderr:
+E         python3: can't open file '/home/user/typo-tuning/search.py': [Errno 2] No such file or directory
+E         
+E       assert 2 == 0
+E        +  where 2 = CompletedProcess(args=['python3', 'search.py', '--q', 'charger'], returncode=2, stdout='', stderr="python3: can't open file '/home/user/typo-tuning/search.py': [Errno 2] No such file or directory\n").returncode
+
+/tests/test_final_state.py:103: AssertionError
+==================================== PASSES ====================================
+=========================== short test summary info ============================
+PASSED ../tests/test_final_state.py::test_catalog_collection_populated
+FAILED ../tests/test_final_state.py::test_search_script_exists - AssertionErr...
+FAILED ../tests/test_final_state.py::test_typo_tolerance_behavior[brand_exact]
+FAILED ../tests/test_final_state.py::test_typo_tolerance_behavior[brand_no_typo]
+FAILED ../tests/test_final_state.py::test_typo_tolerance_behavior[name_two_typo_six_letters]
+FAILED ../tests/test_final_state.py::test_typo_tolerance_behavior[four_letter_token_corrected]
+FAILED ../tests/test_final_state.py::test_typo_tolerance_behavior[three_letter_token_not_corrected]
+FAILED ../tests/test_final_state.py::test_typo_tolerance_behavior[drop_tokens_partial]
+FAILED ../tests/test_final_state.py::test_typo_tolerance_behavior[drop_tokens_not_overreaching]
+FAILED ../tests/test_final_state.py::test_typo_tolerance_behavior[split_join_join]
+FAILED ../tests/test_final_state.py::test_typo_tolerance_behavior[split_join_split]
+FAILED ../tests/test_final_state.py::test_typo_tolerance_behavior[no_excess_typo_search]
+======================== 11 failed, 1 passed in 19.22s =========================

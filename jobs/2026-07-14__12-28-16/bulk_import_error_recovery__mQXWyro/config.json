@@ -1,0 +1,29 @@
+{
+    "task": {
+        "path": "/home/kw/code/zealt/typesense-benchmark/scratchpad/pending-tasks/bulk_import_error_recovery",
+        "source": "pending-tasks"
+    },
+    "trial_name": "bulk_import_error_recovery__mQXWyro",
+    "trials_dir": "jobs/2026-07-14__12-28-16",
+    "agent": {
+        "import_path": "agents.pochi:Pochi",
+        "model_name": "zai/glm-5.2",
+        "env": {
+            "POCHI_API_KEY": "${POCHI_API_KEY}"
+        }
+    },
+    "environment": {
+        "type": "daytona",
+        "mounts": [
+            {
+                "type": "bind",
+                "source": "test_initial_state.py",
+                "target": "/bootstrap/test_initial_state.py"
+            }
+        ]
+    },
+    "artifacts": [
+        "/home/user"
+    ],
+    "job_id": "ebd73c10-358f-4b24-8c77-4d3bbdc0ef44"
+}

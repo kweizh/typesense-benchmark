@@ -1,0 +1,27 @@
+# Typesense Typo-Tolerance Tuning
+
+## Background
+You are tuning the relevance behavior of a [Typesense](https://typesense.org) search index for a small product catalog. Typesense is a fast, typo-tolerant, in-memory search engine. Out of the box its typo tolerance is fairly aggressive (up to 2 typos on every field, token dropping enabled, space split/join as a fallback). The product team needs a **single, fixed** search configuration whose behavior matches a precise set of rules so that borderline queries behave predictably.
+
+Typesense must be run as a **standalone native Linux binary** (Docker-in-Docker is not available). The `typesense-server` binary is already installed at `/usr/local/bin/typesense-server`. A dataset file is provided at `/home/user/typo-tuning/products.jsonl` (JSONLines, one product per line, each with `id`, `name`, and `brand`).
+
+## Requirements
+1. Start a Typesense server on port `8108`, using API key `xyz` and the data directory `/home/user/typo-tuning/ts-data`. Leave the server running after you finish so the search tool can query it.
+2. Create a collection named `catalog` whose documents have a `string` field `name` and a `string` field `brand`, and index every document from `/home/user/typo-tuning/products.jsonl` into it (keep the provided `id` values).
+3. Implement a command-line search tool that queries the `catalog` collection over the `name` and `brand` fields (in that order) and applies **one fixed typo-tolerance configuration to every query**. The configuration must implement all of the following behavioral rules:
+   - **Two typos on product names, exact brands.** Product names may be matched with up to 2 character errors, and this must work even for six-letter names (e.g. the name `camera`). Brand names, in contrast, must be matched with **zero** typo tolerance.
+   - **Short-token guard.** A query token of length 3 must never be typo-corrected, while a query token of length 4 is allowed to be corrected with 1 typo.
+   - **Precise token dropping.** When a multi-word query has no single document containing all of its words, extra words should be dropped so partial matches are still returned. But when at least one document already contains all of the query words, no words may be dropped (unrelated documents that share only some words must not be pulled in).
+   - **Do not over-search typos.** As soon as a query token has an exact match in the index, the engine must not additionally pull in typo variants of that same token.
+   - **Space split/join.** A query like `basket ball` must find a document whose name is `Basketball`, and a single-token query like `waterbottle` must find a document named `Water Bottle`.
+
+## Implementation Hints
+- Read the Typesense Search API typo-tolerance parameters (`num_typos` and its per-field comma syntax, `min_len_1typo`, `min_len_2typo`, `typo_tokens_threshold`, `drop_tokens_threshold`, `split_join_tokens`) and pick values that satisfy every rule above at the same time. All rules must hold under the same configuration.
+- Disable prefix matching for the search so results reflect typo behavior only.
+- Use the official Python `typesense` SDK or plain HTTP calls; do not mock Typesense — the tool must talk to the real running server.
+- Project path: /home/user/typo-tuning
+- Data directory (pass to `--data-dir`): /home/user/typo-tuning/ts-data
+- Command: `python3 search.py --q "<query text>"`
+- The command must print to stdout a single JSON array containing the `id` values (as strings) of every matching document, e.g. `["3"]` or `[]`. Result ordering is not checked. Print nothing else on stdout.
+- The same fixed configuration must be used for all queries; do not branch on the query text.
+

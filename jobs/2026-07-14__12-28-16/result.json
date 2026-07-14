@@ -1,0 +1,72 @@
+{
+    "id": "ebd73c10-358f-4b24-8c77-4d3bbdc0ef44",
+    "started_at": "2026-07-14T12:28:18.916943",
+    "updated_at": "2026-07-14T12:39:30.322787",
+    "finished_at": "2026-07-14T12:39:30.322787",
+    "n_total_trials": 19,
+    "stats": {
+        "n_completed_trials": 19,
+        "n_errored_trials": 8,
+        "n_running_trials": 0,
+        "n_pending_trials": 0,
+        "n_cancelled_trials": 0,
+        "n_retries": 0,
+        "evals": {
+            "pochi__glm-5.2__pending-tasks": {
+                "n_trials": 19,
+                "n_errors": 8,
+                "metrics": [
+                    {
+                        "mean": 0.5789473684210527
+                    }
+                ],
+                "pass_at_k": {},
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "hybrid-search-relevance-tuning__LjgtdVh",
+                            "auto_embedding_model_migration__bEnZADh",
+                            "collection_clone_reindex__irxkRTP",
+                            "cross_collection_joins_cli__oSjcG3F",
+                            "faceted_navigation_facet_stats_p__qRVe2pa",
+                            "presets_and_stopwords__93JeDUX",
+                            "synonyms_query_expansion__tmVQBK9",
+                            "typo_tolerance_tuning__7Lqqfk3"
+                        ],
+                        "1.0": [
+                            "multi-tenant-scoped-api-keys__qSLKGFu",
+                            "zero-downtime-schema-migration__BXCfcsa",
+                            "api_key_rbac_actions__9EKmtft",
+                            "bulk_import_error_recovery__mQXWyro",
+                            "conditional_ranking_eval_express__HcAGof8",
+                            "curation_overrides_pinning__9dQcQw4",
+                            "deep_nested_object_indexing__G6pX79o",
+                            "federated_multi_search__w3HJXf6",
+                            "geo_polygon_filtering__NcXycbg",
+                            "geosearch_radius_sorting_py__txCY2d4",
+                            "reference_fields_async_join__mKNBCHZ"
+                        ]
+                    }
+                },
+                "exception_stats": {
+                    "AgentTimeoutError": [
+                        "auto_embedding_model_migration__bEnZADh",
+                        "collection_clone_reindex__irxkRTP",
+                        "conditional_ranking_eval_express__HcAGof8",
+                        "faceted_navigation_facet_stats_p__qRVe2pa",
+                        "presets_and_stopwords__93JeDUX",
+                        "synonyms_query_expansion__tmVQBK9",
+                        "typo_tolerance_tuning__7Lqqfk3"
+                    ],
+                    "NonZeroAgentExitCodeError": [
+                        "reference_fields_async_join__mKNBCHZ"
+                    ]
+                }
+            }
+        },
+        "n_input_tokens": 0,
+        "n_cache_tokens": 0,
+        "n_output_tokens": 11563735,
+        "cost_usd": null
+    }
+}

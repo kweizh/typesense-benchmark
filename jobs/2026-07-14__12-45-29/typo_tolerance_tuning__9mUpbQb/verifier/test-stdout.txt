@@ -1,0 +1,23 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-7.4.4, pluggy-1.4.0
+rootdir: /tests
+plugins: json-ctrf-0.5.2, anyio-4.14.2
+collected 12 items
+
+../tests/test_final_state.py ............                                [100%]
+
+==================================== PASSES ====================================
+=========================== short test summary info ============================
+PASSED ../tests/test_final_state.py::test_search_script_exists
+PASSED ../tests/test_final_state.py::test_catalog_collection_populated
+PASSED ../tests/test_final_state.py::test_typo_tolerance_behavior[brand_exact]
+PASSED ../tests/test_final_state.py::test_typo_tolerance_behavior[brand_no_typo]
+PASSED ../tests/test_final_state.py::test_typo_tolerance_behavior[name_two_typo_six_letters]
+PASSED ../tests/test_final_state.py::test_typo_tolerance_behavior[four_letter_token_corrected]
+PASSED ../tests/test_final_state.py::test_typo_tolerance_behavior[three_letter_token_not_corrected]
+PASSED ../tests/test_final_state.py::test_typo_tolerance_behavior[drop_tokens_partial]
+PASSED ../tests/test_final_state.py::test_typo_tolerance_behavior[drop_tokens_not_overreaching]
+PASSED ../tests/test_final_state.py::test_typo_tolerance_behavior[split_join_join]
+PASSED ../tests/test_final_state.py::test_typo_tolerance_behavior[split_join_split]
+PASSED ../tests/test_final_state.py::test_typo_tolerance_behavior[no_excess_typo_search]
+============================= 12 passed in 20.77s ==============================

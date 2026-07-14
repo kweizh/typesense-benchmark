@@ -1,0 +1,52 @@
+{
+    "job_name": "2026-07-14__12-28-16",
+    "n_concurrent_trials": 20,
+    "environment": {
+        "type": "daytona",
+        "mounts": [
+            {
+                "type": "bind",
+                "source": "test_initial_state.py",
+                "target": "/bootstrap/test_initial_state.py"
+            }
+        ]
+    },
+    "agents": [
+        {
+            "import_path": "agents.pochi:Pochi",
+            "model_name": "zai/glm-5.2",
+            "env": {
+                "POCHI_API_KEY": "${POCHI_API_KEY}"
+            }
+        }
+    ],
+    "datasets": [
+        {
+            "path": "/home/kw/code/zealt/typesense-benchmark/scratchpad/pending-tasks",
+            "task_names": [
+                "hybrid-search-relevance-tuning",
+                "multi-tenant-scoped-api-keys",
+                "zero-downtime-schema-migration",
+                "api_key_rbac_actions",
+                "auto_embedding_model_migration",
+                "bulk_import_error_recovery",
+                "collection_clone_reindex",
+                "conditional_ranking_eval_expression",
+                "cross_collection_joins_cli",
+                "curation_overrides_pinning",
+                "deep_nested_object_indexing",
+                "faceted_navigation_facet_stats_py",
+                "federated_multi_search",
+                "geo_polygon_filtering",
+                "geosearch_radius_sorting_py",
+                "presets_and_stopwords",
+                "reference_fields_async_join",
+                "synonyms_query_expansion",
+                "typo_tolerance_tuning"
+            ]
+        }
+    ],
+    "artifacts": [
+        "/home/user"
+    ]
+}

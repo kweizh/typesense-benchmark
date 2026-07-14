@@ -1,0 +1,7 @@
+{
+  "library_name": "typesense",
+  "task_name": "auto_embedding_model_migration",
+  "complexity_level": "much more complicated task that is not easy for LLM agents to solve and provides only a simple instruction.md",
+  "research_plan_path": "plan.md",
+  "output_dir": "scratchpad/pending-tasks/"
+}

@@ -1,0 +1,101 @@
+{
+    "reportFormat": "CTRF",
+    "specVersion": "0.0.0",
+    "timestamp": "2026-07-14T04:38:51.539880+00:00",
+    "generatedBy": "pytest",
+    "results": {
+        "tool": {
+            "name": "pytest",
+            "version": "7.4.4"
+        },
+        "summary": {
+            "tests": 7,
+            "passed": 4,
+            "failed": 3,
+            "skipped": 0,
+            "pending": 0,
+            "other": 0,
+            "start": 1784003927392,
+            "stop": 1784003931539
+        },
+        "environment": {
+            "buildName": "Pytest JSON CTRF Report",
+            "buildNumber": "000",
+            "buildUrl": "https://ctrf.io"
+        },
+        "tests": [
+            {
+                "name": "test_final_state.py::test_collection_still_exists_in_place",
+                "status": "passed",
+                "duration": 4015,
+                "start": 1784003927451,
+                "stop": 1784003931466,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            },
+            {
+                "name": "test_final_state.py::test_vector_field_migrated_to_8_dims",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 37,
+                "start": 1784003931466,
+                "stop": 1784003931503,
+                "retries": 0,
+                "file_path": "test_final_state.py",
+                "trace": "def test_vector_field_migrated_to_8_dims():\n        resp = _get_schema()\n        assert resp.status_code == 200, \"Collection 'notes' must be retrievable.\"\n        fields = {f[\"name\"]: f for f in resp.json().get(\"fields\", [])}\n        assert \"content_embedding\" in fields, (\n            \"The 'content_embedding' field must exist after migration.\"\n        )\n        ce = fields[\"content_embedding\"]\n        assert ce.get(\"type\") == \"float[]\", (\n            \"'content_embedding' must be of type 'float[]'.\"\n        )\n>       assert ce.get(\"num_dim\") == 8, (\n            f\"'content_embedding' must have num_dim == 8, got {ce.get('num_dim')}.\"\n        )\nE       AssertionError: 'content_embedding' must have num_dim == 8, got 4.\nE       assert 4 == 8\nE        +  where 4 = <built-in method get of dict object at 0x7d5cf056db00>('num_dim')\nE        +    where <built-in method get of dict object at 0x7d5cf056db00> = {'facet': False, 'hnsw_params': {'M': 16, 'ef_construction': 200}, 'index': True, 'infix': False, ...}.get\n\n/tests/test_final_state.py:94: AssertionError",
+                "message": "The test failed in the call phase due to an assertion error"
+            },
+            {
+                "name": "test_final_state.py::test_non_vector_fields_intact",
+                "status": "passed",
+                "duration": 2,
+                "start": 1784003931504,
+                "stop": 1784003931506,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            },
+            {
+                "name": "test_final_state.py::test_document_count_unchanged",
+                "status": "passed",
+                "duration": 3,
+                "start": 1784003931506,
+                "stop": 1784003931509,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            },
+            {
+                "name": "test_final_state.py::test_documents_preserved",
+                "status": "passed",
+                "duration": 11,
+                "start": 1784003931509,
+                "stop": 1784003931520,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            },
+            {
+                "name": "test_final_state.py::test_embeddings_regenerated_to_8_dims",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 10,
+                "start": 1784003931520,
+                "stop": 1784003931530,
+                "retries": 0,
+                "file_path": "test_final_state.py",
+                "trace": "def test_embeddings_regenerated_to_8_dims():\n        for doc_id, expected_vec in EXPECTED_VECTORS.items():\n            resp = requests.get(\n                f\"{TYPESENSE_URL}/collections/notes/documents/{doc_id}\",\n                headers=HEADERS,\n                timeout=10,\n            )\n            assert resp.status_code == 200, (\n                f\"Document id {doc_id} must be retrievable.\"\n            )\n            vec = resp.json().get(\"content_embedding\")\n            assert isinstance(vec, list), (\n                f\"Document {doc_id} 'content_embedding' must be a list.\"\n            )\n>           assert len(vec) == 8, (\n                f\"Document {doc_id} 'content_embedding' must have 8 dimensions, \"\n                f\"got {len(vec)}.\"\n            )\nE           AssertionError: Document 1 'content_embedding' must have 8 dimensions, got 4.\nE           assert 4 == 8\nE            +  where 4 = len([0.01, 0.02, 0.03, 0.04])\n\n/tests/test_final_state.py:157: AssertionError",
+                "message": "The test failed in the call phase due to an assertion error"
+            },
+            {
+                "name": "test_final_state.py::test_vector_search_works",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 9,
+                "start": 1784003931530,
+                "stop": 1784003931539,
+                "retries": 0,
+                "file_path": "test_final_state.py",
+                "trace": "def test_vector_search_works():\n        body = {\n            \"searches\": [\n                {\n                    \"collection\": \"notes\",\n                    \"q\": \"*\",\n                    \"vector_query\": (\n                        \"content_embedding:([0.11,0.12,0.13,0.14,0.15,0.16,0.17,0.18], k:5)\"\n                    ),\n                    \"exclude_fields\": \"content_embedding\",\n                }\n            ]\n        }\n        resp = requests.post(\n            f\"{TYPESENSE_URL}/multi_search\", headers=HEADERS, json=body, timeout=15\n        )\n        assert resp.status_code == 200, (\n            f\"multi_search must return 200, got {resp.status_code}: {resp.text}\"\n        )\n        results = resp.json().get(\"results\", [])\n        assert results, \"multi_search response must contain a 'results' array.\"\n        result = results[0]\n>       assert result.get(\"found\", 0) >= 1, (\n            \"Vector search must find at least one document.\"\n        )\nE       AssertionError: Vector search must find at least one document.\nE       assert 0 >= 1\nE        +  where 0 = <built-in method get of dict object at 0x7d5cf0554a80>('found', 0)\nE        +    where <built-in method get of dict object at 0x7d5cf0554a80> = {'code': 400, 'error': 'Query field `content_embedding` must have 4 dimensions.'}.get\n\n/tests/test_final_state.py:189: AssertionError",
+                "message": "The test failed in the call phase due to an assertion error"
+            }
+        ]
+    }
+}

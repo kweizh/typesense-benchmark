@@ -1,0 +1,19 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-7.4.4, pluggy-1.4.0
+rootdir: /tests
+plugins: json-ctrf-0.5.2, anyio-4.14.2
+collected 8 items
+
+../tests/test_final_state.py ........                                    [100%]
+
+==================================== PASSES ====================================
+=========================== short test summary info ============================
+PASSED ../tests/test_final_state.py::test_nested_fields_enabled
+PASSED ../tests/test_final_state.py::test_deep_attribute_color_field_typed_as_string_array
+PASSED ../tests/test_final_state.py::test_deep_category_field_is_faceted_string_array
+PASSED ../tests/test_final_state.py::test_all_documents_indexed
+PASSED ../tests/test_final_state.py::test_live_nested_search_filter_and_facet
+PASSED ../tests/test_final_state.py::test_cli_case_a_wireless_black
+PASSED ../tests/test_final_state.py::test_cli_case_b_ceramic_blue
+PASSED ../tests/test_final_state.py::test_cli_case_c_empty_result
+============================== 8 passed in 14.44s ==============================

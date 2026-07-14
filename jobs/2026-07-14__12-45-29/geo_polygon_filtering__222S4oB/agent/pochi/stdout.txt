@@ -1,0 +1,466 @@
+- Initializing MCP connections...
+You
+# Typesense Geo-Polygon Fencing for Delivery Hubs ## Background A logistics company runs a network of delivery hubs, each tagged with a GPS coordinate and an operational status. Operations staff need to select the hubs that fall inside an arbitrary service zone drawn as a polygon on a map, while ignoring hubs that are temporarily out of service. You will build this capability on top of a local Typesense search engine using a `geopoint` field and Typesense's polygon `filter_by` syntax. This is a point-in-polygon containment test against an arbitrary polygon, NOT a radius/circle search. ## Requirements * Run a local Typesense server (standalone native binary) on `localhost:8108`, secured with the API key from the `TYPESENSE_API_KEY` environment variable. * Create a collection named `hubs` that stores each hub's `name` (string), `status` (string, facetable), and `location` (`geopoint`). * Seed the collection with the exact hub dataset listed below. * Implement a search CLI that returns the ids of hubs contained within a caller-supplied polygon, optionally excluding hubs whose `status` matches a caller-supplied value. ## Hub Dataset (index all of these exactly) Each `location` is `[latitude, longitude]`. | id | name | status | latitude | longitude | | --- | ------- | ----------- | -------- | --------- | | h01 | Alpha | active | 37.78 | -122.42 | | h02 | Bravo | active | 37.79 | -122.42 | | h03 | Charlie | active | 37.81 | -122.42 | | h04 | Delta | active | 37.78 | -122.46 | | h05 | Echo | active | 37.78 | -122.38 | | h06 | Foxtrot | active | 37.73 | -122.42 | | h07 | Golf | active | 37.77 | -122.432 | | h08 | Hotel | active | 37.77 | -122.438 | | h09 | India | maintenance | 37.775 | -122.42 | | h10 | Juliet | maintenance | 37.785 | -122.415 | ## Implementation Hints * Use Typesense's polygon filter form `location:(lat1,lng1, lat2,lng2, ...)` to test point-in-polygon containment; do not approximate it with a radius search. Combine it with a status exclusion using the not-equal operator inside `filter_by`. * Remember that a `geopoint` value is ordered `[latitude, longitude]`; sending longitude first will silently place points in the wrong location. * The server data must survive between the seed step and the search step, so keep a single long-running server process. * Project path: /home/user/geo-search * Start command (must launch the Typesense server on port 8108, block until `http://localhost:8108/health` reports healthy, then return; it must be safe to call when the server is already running): `bash /home/user/geo-search/start.sh` * Seed command (idempotent: (re)creates and repopulates the `hubs` collection): `python3 /home/user/geo-search/seed.py` * Search command: `python3 /home/user/geo-search/search.py --polygon "<lat1,lng1,lat2,lng2,...>" [--exclude-status <status>]` * `--polygon` is a single comma-separated string of alternating latitude/longitude values naming the polygon vertices in order. * `--exclude-status` is optional; when provided, hubs whose `status` equals that value must be omitted from the results. * The command must print to stdout a single JSON object with exactly one key `hub_ids`, whose value is the list of matching hub ids sorted in ascending lexicographic order, e.g. `{"hub_ids": ["h01", "h02"]}`. Print `{"hub_ids": []}` when nothing matches.   
+
+Pochi
+💭 Thinking for 3 characters   
+<think> Let   
+💭 Thinking for 53 characters   
+💭 Thinking for 64 characters   
+💭 Thinking for 53 characters   
+💭 Thinking for 59 characters   
+💭 Thinking for 62 characters   
+💭 Thinking for 40 characters   
+💭 Thinking for 55 characters   
+💭 Thinking for 27 characters   
+💭 Thinking for 62 characters   
+💭 Thinking for 77 characters   
+💫 Executing ls -la /home/user/geo-search 2>/dev/null || echo "Directory does not exist" ✔ 
+💫 Executing which typesense && typesense --version 2>/dev/null || echo "Typesense not in PATH"; ls /usr/local/bin/ 2>/dev/null | grep -i typesense; ls /opt/typesense 2>/dev/null; find / -name "typesense" -type f 2>/dev/null | head -20 ✔ 
+💫 Executing python3 --version && pip3 list 2>/dev/null | grep -i typesense ✔ 
+💭 Thinking for 4 characters   
+<think> Good   
+💭 Thinking for 30 characters   
+💭 Thinking for 92 characters   
+💭 Thinking for 54 characters   
+💭 Thinking for 60 characters   
+💫 Executing typesense-server --version 2>&1; typesense-server --help 2>&1 | head -50 ✔ 
+💫 Executing echo "TYPESENSE_API_KEY=$TYPESENSE_API_KEY"; ls /usr/local/bin/typesense* -la ✔ 
+💭 Thinking for 3 characters   
+<think> Now   
+💭 Thinking for 43 characters   
+💭 Thinking for 60 characters   
+💭 Thinking for 41 characters   
+💭 Thinking for 30 characters   
+💭 Thinking for 68 characters   
+💭 Thinking for 48 characters   
+📋 Updating todo list (4 items) ✔ 
+💭 Thinking for 3 characters   
+<think> Let   
+💭 Thinking for 62 characters   
+💭 Thinking for 37 characters   
+💭 Thinking for 53 characters   
+💭 Thinking for 65 characters   
+💭 Thinking for 59 characters   
+💭 Thinking for 25 characters   
+💭 Thinking for 48 characters   
+💭 Thinking for 40 characters   
+💭 Thinking for 36 characters   
+💭 Thinking for 71 characters   
+💭 Thinking for 1 characters   
+✏️  Writing /home/user/geo-search/start.sh ✔ 
+💭 Thinking for 3 characters   
+<think> Now   
+💭 Thinking for 54 characters   
+💭 Thinking for 58 characters   
+💭 Thinking for 66 characters   
+💭 Thinking for 44 characters   
+✏️  Writing /home/user/geo-search/seed.py ✔ 
+💭 Thinking for 3 characters   
+<think> Now   
+💭 Thinking for 56 characters   
+💭 Thinking for 34 characters   
+💭 Thinking for 70 characters   
+💭 Thinking for 72 characters   
+💭 Thinking for 18 characters   
+💭 Thinking for 49 characters   
+💭 Thinking for 38 characters   
+💭 Thinking for 27 characters   
+💭 Thinking for 49 characters   
+💭 Thinking for 38 characters   
+💭 Thinking for 44 characters   
+💭 Thinking for 81 characters   
+💭 Thinking for 68 characters   
+💭 Thinking for 50 characters   
+💭 Thinking for 85 characters   
+💭 Thinking for 69 characters   
+💭 Thinking for 57 characters   
+💭 Thinking for 52 characters   
+💭 Thinking for 60 characters   
+💭 Thinking for 41 characters   
+💭 Thinking for 41 characters   
+💭 Thinking for 37 characters   
+💭 Thinking for 75 characters   
+💭 Thinking for 65 characters   
+💭 Thinking for 49 characters   
+💭 Thinking for 42 characters   
+💭 Thinking for 75 characters   
+💭 Thinking for 63 characters   
+💭 Thinking for 37 characters   
+💭 Thinking for 51 characters   
+💭 Thinking for 44 characters   
+💭 Thinking for 61 characters   
+💭 Thinking for 50 characters   
+💭 Thinking for 39 characters   
+💭 Thinking for 52 characters   
+💭 Thinking for 42 characters   
+💭 Thinking for 52 characters   
+💭 Thinking for 40 characters   
+💭 Thinking for 43 characters   
+💭 Thinking for 62 characters   
+💭 Thinking for 52 characters   
+💭 Thinking for 64 characters   
+💭 Thinking for 59 characters   
+💭 Thinking for 63 characters   
+💭 Thinking for 66 characters   
+💭 Thinking for 45 characters   
+💭 Thinking for 53 characters   
+💭 Thinking for 36 characters   
+💭 Thinking for 58 characters   
+💭 Thinking for 61 characters   
+💭 Thinking for 55 characters   
+💭 Thinking for 54 characters   
+💭 Thinking for 20 characters   
+💭 Thinking for 72 characters   
+💭 Thinking for 67 characters   
+💭 Thinking for 83 characters   
+💭 Thinking for 84 characters   
+💭 Thinking for 45 characters   
+💭 Thinking for 52 characters   
+💭 Thinking for 62 characters   
+💭 Thinking for 50 characters   
+💭 Thinking for 1 characters   
+💭 Thinking for 42 characters   
+💭 Thinking for 60 characters   
+💭 Thinking for 82 characters   
+💭 Thinking for 69 characters   
+💭 Thinking for 18 characters   
+✏️  Writing /home/user/geo-search/search.py ✔ 
+💭 Thinking for 3 characters   
+<think> Now   
+💭 Thinking for 56 characters   
+💫 Executing chmod +x /home/user/geo-search/start.sh /home/user/geo-search/seed.py /home/user/geo-search/search.py && ls -la /home/user/geo-search/ ✔ 
+💭 Thinking for 3 characters   
+<think> Let   
+💭 Thinking for 30 characters   
+💫 Executing bash /home/user/geo-search/start.sh && echo "START_OK" && curl -sS http://localhost:8108/health ✔ 
+💭 Thinking for 75 characters   
+<think> Server is healthy. Let me run seed and verify. </think> Server is healthy.   
+💭 Thinking for 50 characters   
+💫 Executing python3 /home/user/geo-search/seed.py ✖ "Command exited with code 1"
+💭 Thinking for 3 characters   
+<think> The   
+💭 Thinking for 50 characters   
+💭 Thinking for 75 characters   
+💭 Thinking for 47 characters   
+💭 Thinking for 73 characters   
+💭 Thinking for 53 characters   
+💭 Thinking for 36 characters   
+💭 Thinking for 81 characters   
+💭 Thinking for 54 characters   
+💭 Thinking for 83 characters   
+💭 Thinking for 78 characters   
+💭 Thinking for 28 characters   
+💭 Thinking for 30 characters   
+💫 Executing grep -rn "action" /usr/local/lib/python3.12/dist-packages/typesense/documents.py | head -20 ✔ 
+💭 Thinking for 3 characters   
+<think> Let   
+💭 Thinking for 40 characters   
+💭 Thinking for 43 characters   
+📖 Reading /usr/local/lib/python3.12/dist-packages/typesense/documents.py ✔ 
+💭 Thinking for 7 characters   
+<think> Looking   
+💭 Thinking for 49 characters   
+💭 Thinking for 48 characters   
+💭 Thinking for 81 characters   
+💭 Thinking for 73 characters   
+💭 Thinking for 69 characters   
+💭 Thinking for 78 characters   
+💭 Thinking for 58 characters   
+💭 Thinking for 68 characters   
+💭 Thinking for 58 characters   
+💭 Thinking for 69 characters   
+💭 Thinking for 62 characters   
+💭 Thinking for 65 characters   
+💭 Thinking for 65 characters   
+💭 Thinking for 68 characters   
+💭 Thinking for 77 characters   
+💭 Thinking for 57 characters   
+💭 Thinking for 74 characters   
+💭 Thinking for 59 characters   
+💭 Thinking for 91 characters   
+💭 Thinking for 35 characters   
+💭 Thinking for 57 characters   
+💭 Thinking for 89 characters   
+💭 Thinking for 62 characters   
+💭 Thinking for 65 characters   
+💭 Thinking for 84 characters   
+💭 Thinking for 64 characters   
+💭 Thinking for 80 characters   
+💭 Thinking for 50 characters   
+💭 Thinking for 95 characters   
+💭 Thinking for 91 characters   
+💭 Thinking for 54 characters   
+💭 Thinking for 22 characters   
+💭 Thinking for 3 characters   
+<think> Let   
+💭 Thinking for 64 characters   
+💭 Thinking for 66 characters   
+💭 Thinking for 54 characters   
+💭 Thinking for 23 characters   
+📋 Updating todo list (4 items) ✔ 
+🔧 Applying diff to /home/user/geo-search/seed.py ✔ 
+💭 Thinking for 3 characters   
+<think> Now   
+💭 Thinking for 30 characters   
+💫 Executing python3 /home/user/geo-search/seed.py ✖ "Command exited with code 1"
+💭 Thinking for 3 characters   
+<think> The   
+💭 Thinking for 62 characters   
+💭 Thinking for 68 characters   
+💭 Thinking for 53 characters   
+💭 Thinking for 58 characters   
+💭 Thinking for 59 characters   
+💭 Thinking for 73 characters   
+💭 Thinking for 62 characters   
+💭 Thinking for 55 characters   
+💭 Thinking for 37 characters   
+💭 Thinking for 16 characters   
+💭 Thinking for 61 characters   
+💭 Thinking for 53 characters   
+💭 Thinking for 54 characters   
+💭 Thinking for 69 characters   
+💭 Thinking for 44 characters   
+💭 Thinking for 43 characters   
+💭 Thinking for 59 characters   
+💭 Thinking for 56 characters   
+💭 Thinking for 51 characters   
+💭 Thinking for 59 characters   
+💭 Thinking for 28 characters   
+💭 Thinking for 21 characters   
+💭 Thinking for 68 characters   
+💭 Thinking for 27 characters   
+🔧 Applying diff to /home/user/geo-search/seed.py ✔ 
+💭 Thinking for 3 characters   
+<think> Let   
+💭 Thinking for 19 characters   
+💭 Thinking for 10 characters   
+💭 Thinking for 12 characters   
+💫 Executing python3 /home/user/geo-search/seed.py ✔ 
+💭 Thinking for 4 characters   
+<think> Seed   
+💭 Thinking for 42 characters   
+💭 Thinking for 80 characters   
+💭 Thinking for 46 characters   
+💭 Thinking for 44 characters   
+💭 Thinking for 35 characters   
+💭 Thinking for 35 characters   
+💭 Thinking for 36 characters   
+💭 Thinking for 38 characters   
+💭 Thinking for 30 characters   
+💭 Thinking for 53 characters   
+💭 Thinking for 31 characters   
+💭 Thinking for 18 characters   
+💭 Thinking for 29 characters   
+💭 Thinking for 34 characters   
+💭 Thinking for 37 characters   
+💭 Thinking for 37 characters   
+💭 Thinking for 38 characters   
+💭 Thinking for 46 characters   
+💭 Thinking for 40 characters   
+💭 Thinking for 35 characters   
+💭 Thinking for 29 characters   
+💭 Thinking for 42 characters   
+💭 Thinking for 43 characters   
+💭 Thinking for 63 characters   
+💭 Thinking for 31 characters   
+💭 Thinking for 54 characters   
+💫 Executing python3 /home/user/geo-search/search.py --polygon "37.77,-122.44,37.80,-122.44,37.80,-122.41,37.77,-122.41" ✔ 
+💭 Thinking for 3 characters   
+<think> Hmm   
+💭 Thinking for 33 characters   
+💭 Thinking for 35 characters   
+💭 Thinking for 46 characters   
+💭 Thinking for 45 characters   
+💭 Thinking for 28 characters   
+💭 Thinking for 52 characters   
+💭 Thinking for 44 characters   
+💭 Thinking for 54 characters   
+💭 Thinking for 21 characters   
+💭 Thinking for 55 characters   
+💭 Thinking for 29 characters   
+💭 Thinking for 28 characters   
+💭 Thinking for 50 characters   
+💭 Thinking for 42 characters   
+💭 Thinking for 39 characters   
+💭 Thinking for 54 characters   
+💭 Thinking for 45 characters   
+💭 Thinking for 52 characters   
+💭 Thinking for 41 characters   
+💭 Thinking for 24 characters   
+💭 Thinking for 55 characters   
+💭 Thinking for 64 characters   
+💭 Thinking for 87 characters   
+💭 Thinking for 42 characters   
+💭 Thinking for 74 characters   
+💭 Thinking for 37 characters   
+💭 Thinking for 42 characters   
+💭 Thinking for 37 characters   
+💭 Thinking for 55 characters   
+💭 Thinking for 89 characters   
+💭 Thinking for 65 characters   
+💭 Thinking for 32 characters   
+💭 Thinking for 48 characters   
+💭 Thinking for 13 characters   
+💭 Thinking for 18 characters   
+💭 Thinking for 53 characters   
+💭 Thinking for 51 characters   
+💭 Thinking for 88 characters   
+💭 Thinking for 45 characters   
+💫 Executing python3 /home/user/geo-search/search.py --polygon "37.76,-122.45,37.80,-122.45,37.80,-122.41,37.76,-122.41" ✔ 
+💫 Executing python3 /home/user/geo-search/search.py --polygon "37.80,-122.45,37.82,-122.45,37.82,-122.41,37.80,-122.41" ✔ 
+💭 Thinking for 9 characters   
+<think> Excellent   
+💭 Thinking for 41 characters   
+💭 Thinking for 38 characters   
+💭 Thinking for 33 characters   
+💭 Thinking for 32 characters   
+💭 Thinking for 60 characters   
+💭 Thinking for 76 characters   
+💭 Thinking for 75 characters   
+💭 Thinking for 79 characters   
+💭 Thinking for 38 characters   
+💭 Thinking for 55 characters   
+💭 Thinking for 77 characters   
+💭 Thinking for 26 characters   
+💫 Executing echo "=== Without status filter ==="; python3 /home/user/geo-search/search.py --polygon "37.76,-122.45,37.80,-122.45,37.80,-122.41,37.76,-122.41"; echo; echo "=== Exclude active ==="; python3 /home/user/geo-search/search.py --polygon "37.76,-122.45,37.80,-122.45,37.80,-122.41,37.76,-122.41" --exclude-status active; echo; echo "=== Exclude maintenance ==="; python3 /home/user/geo-search/search.py --polygon "37.76,-122.45,37.80,-122.45,37.80,-122.41,37.76,-122.41" --exclude-status maintenance; echo; echo "=== Empty result ==="; python3 /home/user/geo-search/search.py --polygon "0,0,1,0,1,1,0,1" ✔ 
+💭 Thinking for 3 characters   
+<think> All   
+💭 Thinking for 45 characters   
+💭 Thinking for 43 characters   
+💭 Thinking for 51 characters   
+💭 Thinking for 40 characters   
+💭 Thinking for 49 characters   
+💭 Thinking for 49 characters   
+💭 Thinking for 62 characters   
+💭 Thinking for 81 characters   
+💭 Thinking for 15 characters   
+💫 Executing echo "=== Run seed twice (idempotency) ==="; python3 /home/user/geo-search/seed.py; python3 /home/user/geo-search/seed.py; echo; echo "=== Verify all 10 docs in collection ==="; curl -sS -H "X-TYPESENSE-API-KEY: $TYPESENSE_API_KEY" "http://localhost:8108/collections/hubs/documents/search?q=*&per_page=20" | python3 -c "import sys,json;d=json.load(sys.stdin);print('count:',d.get('found'));[print(h['document']['id'], h['document']['location'], h['document']['status']) for h in d['hits']]" ✔ 
+💭 Thinking for 10 characters   
+<think> Everything   
+💭 Thinking for 57 characters   
+💭 Thinking for 68 characters   
+💭 Thinking for 54 characters   
+💭 Thinking for 66 characters   
+💭 Thinking for 51 characters   
+💭 Thinking for 54 characters   
+💭 Thinking for 41 characters   
+💭 Thinking for 47 characters   
+💭 Thinking for 82 characters   
+💭 Thinking for 23 characters   
+💭 Thinking for 59 characters   
+💭 Thinking for 67 characters   
+💭 Thinking for 51 characters   
+💭 Thinking for 57 characters   
+💭 Thinking for 71 characters   
+💭 Thinking for 60 characters   
+💭 Thinking for 74 characters   
+💭 Thinking for 28 characters   
+💭 Thinking for 58 characters   
+💭 Thinking for 46 characters   
+💭 Thinking for 74 characters   
+💭 Thinking for 45 characters   
+💫 Executing echo "=== start.sh idempotent ==="; time bash /home/user/geo-search/start.sh && echo "  second run returned $?"; echo; echo "=== invalid polygon (too few vertices) ==="; python3 /home/user/geo-search/search.py --polygon "37.78,-122.42,37.79,-122.42"; echo; echo "=== narrow vertical strip ==="; python3 /home/user/geo-search/search.py --polygon "37.7,-122.44,37.82,-122.44,37.82,-122.40,37.7,-122.40"; echo; echo "=== polygon covering everything (very large) ==="; python3 /home/user/geo-search/search.py --polygon "30,-130,50,-130,50,-100,30,-100" --exclude-status maintenance ✔ 
+💭 Thinking for 3 characters   
+<think> All   
+💭 Thinking for 44 characters   
+💭 Thinking for 47 characters   
+💭 Thinking for 50 characters   
+💭 Thinking for 36 characters   
+💭 Thinking for 42 characters   
+💭 Thinking for 47 characters   
+💭 Thinking for 39 characters   
+💭 Thinking for 30 characters   
+💭 Thinking for 31 characters   
+💭 Thinking for 37 characters   
+💭 Thinking for 53 characters   
+💭 Thinking for 45 characters   
+💭 Thinking for 23 characters   
+💭 Thinking for 28 characters   
+💭 Thinking for 26 characters   
+💭 Thinking for 26 characters   
+💭 Thinking for 32 characters   
+💭 Thinking for 31 characters   
+💭 Thinking for 25 characters   
+💭 Thinking for 33 characters   
+💭 Thinking for 32 characters   
+💭 Thinking for 26 characters   
+💭 Thinking for 33 characters   
+💭 Thinking for 29 characters   
+💭 Thinking for 58 characters   
+💭 Thinking for 61 characters   
+💭 Thinking for 22 characters   
+💭 Thinking for 34 characters   
+💭 Thinking for 43 characters   
+💭 Thinking for 55 characters   
+💭 Thinking for 48 characters   
+💭 Thinking for 48 characters   
+💭 Thinking for 30 characters   
+💭 Thinking for 35 characters   
+💭 Thinking for 32 characters   
+💭 Thinking for 61 characters   
+💭 Thinking for 45 characters   
+💭 Thinking for 31 characters   
+💭 Thinking for 50 characters   
+💭 Thinking for 60 characters   
+💭 Thinking for 52 characters   
+💭 Thinking for 38 characters   
+💭 Thinking for 73 characters   
+💭 Thinking for 24 characters   
+💭 Thinking for 67 characters   
+💭 Thinking for 44 characters   
+💭 Thinking for 49 characters   
+💭 Thinking for 61 characters   
+💭 Thinking for 27 characters   
+📋 Updating todo list (4 items) ✔ 
+📂 Listing files in /home/user/geo-search ✔ 
+💭 Thinking for 3 characters   
+<think> All   
+💭 Thinking for 61 characters   
+💭 Thinking for 44 characters   
+💭 Thinking for 54 characters   
+💭 Thinking for 54 characters   
+💭 Thinking for 46 characters   
+💭 Thinking for 53 characters   
+💭 Thinking for 48 characters   
+💭 Thinking for 55 characters   
+🎉 Task Completed
+Built a Typesense-backed polygon geo-fencing system for delivery hubs at `/home/user/geo-search/`.
+
+## Files
+
+**`/home/user/geo-search/start.sh`**
+- Launches `/usr/local/bin/typesense-server` on `localhost:8108` using the API key from `$TYPESENSE_API_KEY`, with a local data dir, log file, and pid file under `/home/user/geo-search/`.
+- Polls `http://localhost:8108/health` until `{"ok":true}`.
+- Idempotent: if a healthy server is already listening, it simply returns 0 in milliseconds (verified).
+- Detached via `nohup ... &`, so the server keeps running between seed and search calls.
+
+**`/home/user/geo-search/seed.py`**
+- Drops and recreates the `hubs` collection, declaring `name` (string), `status` (string, `facet: True`), and `location` (`geopoint`).
+- Loads all 10 hubs from the spec, storing `location` as `[latitude, longitude]` in that exact order.
+- Uses `action=create` against the freshly-empty collection (the Python client v0.21 rejects the deprecated `replace` action).
+- Polls `num_documents` until all 10 are indexed before exiting, so re-running is safe.
+
+**`/home/user/geo-search/search.py`**
+- Parses `--polygon "lat1,lng1,lat2,lng2,..."` (the comma-separated lat/lng string) into a list of `(lat, lng)` tuples, validating that the count is even and ≥ 6 numbers.
+- Builds a Typesense filter clause of the form `location:(lat,lng,lat,lng,...)` — true point-in-polygon containment, no radius approximation.
+- When `--exclude-status <status>` is given, ANDs in `status:!=<value>` (not-equal).
+- Pages through results with `per_page=100` to guarantee no silent truncation.
+- Sorts the returned ids ascending-lexicographically and prints exactly one JSON object: `{"hub_ids": [...]}` (or `{"hub_ids": []}` when nothing matches).
+
+## Verified end-to-end
+
+| Scenario | Result |
+|---|---|
+| Big square (lat 37.76-37.80, lng -122.45 to -122.41) | `{"hub_ids": ["h01", "h02", "h07", "h08", "h09", "h10"]}` |
+| Square around h03 alone | `{"hub_ids": ["h03"]}` |
+| Strip excluding h04/h05 | `{"hub_ids": ["h01","h02","h03","h06","h07","h08","h09","h10"]}` |
+| Same square + `--exclude-status maintenance` | `{"hub_ids": ["h01","h02","h07","h08"]}` |
+| Same square + `--exclude-status active` | `{"hub_ids": ["h09","h10"]}` |
+| Polygon far away | `{"hub_ids": []}` |
+| Only 4 numbers passed (invalid) | argparse error + exit 2 |
+| `start.sh` called twice | returns 0 in ~56 ms the second time |
+| `seed.py` called twice | still 10 docs, with locations stored as `[lat, lng]` |
+
+Server PID is recorded in `/home/user/geo-search/typesense.pid` and ready for further searches.   
+  

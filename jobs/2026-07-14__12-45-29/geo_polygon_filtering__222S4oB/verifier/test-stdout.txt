@@ -1,0 +1,59 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-7.4.4, pluggy-1.4.0
+rootdir: /tests
+plugins: json-ctrf-0.5.2
+collected 5 items
+
+../tests/test_final_state.py .....                                       [100%]
+
+==================================== PASSES ====================================
+______________________ test_collection_exists_and_seeded _______________________
+---------------------------- Captured stdout setup -----------------------------
+=== start.sh stdout ===
+
+=== start.sh stderr ===
+
+=== seed.py stdout ===
+{"collection": "hubs", "hubs_indexed": 10}
+
+=== seed.py stderr ===
+
+____________________ test_polygon_with_exclusion_main_case _____________________
+----------------------------- Captured stdout call -----------------------------
+=== search cmd: ['python3', '/home/user/geo-search/search.py', '--polygon', '37.80,-122.45,37.80,-122.39,37.74,-122.42', '--exclude-status', 'maintenance'] ===
+=== search stdout ===
+{"hub_ids": ["h01", "h02", "h07"]}
+
+=== search stderr ===
+
+________________________ test_polygon_without_exclusion ________________________
+----------------------------- Captured stdout call -----------------------------
+=== search cmd: ['python3', '/home/user/geo-search/search.py', '--polygon', '37.80,-122.45,37.80,-122.39,37.74,-122.42'] ===
+=== search stdout ===
+{"hub_ids": ["h01", "h02", "h07", "h09", "h10"]}
+
+=== search stderr ===
+
+___________________ test_bounding_box_polygon_with_exclusion ___________________
+----------------------------- Captured stdout call -----------------------------
+=== search cmd: ['python3', '/home/user/geo-search/search.py', '--polygon', '37.773,-122.425,37.773,-122.415,37.782,-122.415,37.782,-122.425', '--exclude-status', 'maintenance'] ===
+=== search stdout ===
+{"hub_ids": ["h01"]}
+
+=== search stderr ===
+
+__________________ test_edge_discrimination_inside_vs_outside __________________
+----------------------------- Captured stdout call -----------------------------
+=== search cmd: ['python3', '/home/user/geo-search/search.py', '--polygon', '37.80,-122.45,37.80,-122.39,37.74,-122.42'] ===
+=== search stdout ===
+{"hub_ids": ["h01", "h02", "h07", "h09", "h10"]}
+
+=== search stderr ===
+
+=========================== short test summary info ============================
+PASSED ../tests/test_final_state.py::test_collection_exists_and_seeded
+PASSED ../tests/test_final_state.py::test_polygon_with_exclusion_main_case
+PASSED ../tests/test_final_state.py::test_polygon_without_exclusion
+PASSED ../tests/test_final_state.py::test_bounding_box_polygon_with_exclusion
+PASSED ../tests/test_final_state.py::test_edge_discrimination_inside_vs_outside
+============================== 5 passed in 4.79s ===============================

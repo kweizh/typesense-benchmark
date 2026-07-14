@@ -1,0 +1,110 @@
+{
+    "reportFormat": "CTRF",
+    "specVersion": "0.0.0",
+    "timestamp": "2026-07-14T04:21:33.163743+00:00",
+    "generatedBy": "pytest",
+    "results": {
+        "tool": {
+            "name": "pytest",
+            "version": "7.4.4"
+        },
+        "summary": {
+            "tests": 9,
+            "passed": 9,
+            "failed": 0,
+            "skipped": 0,
+            "pending": 0,
+            "other": 0,
+            "start": 1784002891946,
+            "stop": 1784002893163
+        },
+        "environment": {
+            "buildName": "Pytest JSON CTRF Report",
+            "buildNumber": "000",
+            "buildUrl": "https://ctrf.io"
+        },
+        "tests": [
+            {
+                "name": "test_final_state.py::test_setup_is_idempotent",
+                "status": "passed",
+                "duration": 311,
+                "start": 1784002892005,
+                "stop": 1784002892316,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            },
+            {
+                "name": "test_final_state.py::test_health_ok",
+                "status": "passed",
+                "duration": 3,
+                "start": 1784002892317,
+                "stop": 1784002892320,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            },
+            {
+                "name": "test_final_state.py::test_collection_exists_and_populated",
+                "status": "passed",
+                "duration": 3,
+                "start": 1784002892320,
+                "stop": 1784002892323,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            },
+            {
+                "name": "test_final_state.py::test_stopwords_set_created",
+                "status": "passed",
+                "duration": 3,
+                "start": 1784002892323,
+                "stop": 1784002892326,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            },
+            {
+                "name": "test_final_state.py::test_preset_created_with_expected_parameters",
+                "status": "passed",
+                "duration": 3,
+                "start": 1784002892326,
+                "stop": 1784002892329,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            },
+            {
+                "name": "test_final_state.py::test_preset_search_returns_points_sorted_results",
+                "status": "passed",
+                "duration": 103,
+                "start": 1784002892329,
+                "stop": 1784002892432,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            },
+            {
+                "name": "test_final_state.py::test_stopwords_are_ignored_during_query",
+                "status": "passed",
+                "duration": 210,
+                "start": 1784002892432,
+                "stop": 1784002892642,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            },
+            {
+                "name": "test_final_state.py::test_preset_matches_explicit_parameters",
+                "status": "passed",
+                "duration": 418,
+                "start": 1784002892642,
+                "stop": 1784002893060,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            },
+            {
+                "name": "test_final_state.py::test_single_token_search",
+                "status": "passed",
+                "duration": 103,
+                "start": 1784002893060,
+                "stop": 1784002893163,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            }
+        ]
+    }
+}

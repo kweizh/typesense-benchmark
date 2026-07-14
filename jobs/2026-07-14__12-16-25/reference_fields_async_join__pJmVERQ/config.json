@@ -1,0 +1,29 @@
+{
+    "task": {
+        "path": "/home/kw/code/zealt/typesense-benchmark/scratchpad/pending-tasks/reference_fields_async_join",
+        "source": "pending-tasks"
+    },
+    "trial_name": "reference_fields_async_join__pJmVERQ",
+    "trials_dir": "jobs/2026-07-14__12-16-25",
+    "agent": {
+        "import_path": "agents.pochi:Pochi",
+        "model_name": "google/gemini-3.5-flash",
+        "env": {
+            "POCHI_API_KEY": "${POCHI_API_KEY}"
+        }
+    },
+    "environment": {
+        "type": "daytona",
+        "mounts": [
+            {
+                "type": "bind",
+                "source": "test_initial_state.py",
+                "target": "/bootstrap/test_initial_state.py"
+            }
+        ]
+    },
+    "artifacts": [
+        "/home/user"
+    ],
+    "job_id": "d7270f96-3bab-496a-9df4-f5ada20be274"
+}
